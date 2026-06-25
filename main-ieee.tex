@@ -1,0 +1,64 @@
+% RPL-ClusterIDS — IEEE two-column manuscript.
+% Submit main-ieee.pdf (not main.pdf from main.tex).
+% Build:
+%   pdflatex main-ieee.tex
+%   bibtex main-ieee
+%   pdflatex main-ieee.tex
+%   pdflatex main-ieee.tex
+\input{preamble-ieee}
+\input{metadata}
+
+\begin{document}
+
+\title{\PaperTitleIEEE}
+
+\hypersetup{%
+  pdftitle={\PaperTitle},%
+  pdfauthor={\PaperAuthorsPDF},%
+  pdfkeywords={RPL, IoT, intrusion detection, clustering, energy-aware security, context adaptation, distributed detection, Contiki-NG}%
+}
+
+% Journal mode: byline = author name only; affiliation/e-mail/ORCID in page-1 footnote block.
+\author{\PaperIEEEJournalAuthor}
+
+\IEEEaftertitletext{%
+  \par\vskip 0.6\baselineskip
+  \noindent{\footnotesize\PaperIEEEAuthorMark\PaperIEEEAffiliationFootnote\par}%
+}
+
+\maketitle
+
+\begin{abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\begin{IEEEkeywords}
+Internet of Things, intrusion detection, RPL, clustering, energy-aware security, context adaptation, distributed detection, Contiki-NG.
+\end{IEEEkeywords}
+
+\FloatBarrier
+
+\input{sections/introduction}
+\input{sections/related_work}
+\input{sections/threat_model}
+\input{sections/architecture}
+\input{sections/implementation}
+\input{sections/experimental_setup}
+\input{sections/results}
+\input{sections/discussion}
+\input{sections/limitations}
+\input{sections/conclusion}
+\input{sections/reproducibility}
+
+\section*{Author contributions}
+\textbf{\PaperAuthorNameShort{}} conceived the RPL-ClusterIDS architecture, implemented the Contiki-NG IDS modules, designed the Cooja attack scenarios, and wrote the manuscript.
+
+\section{Data Availability}
+The Contiki-NG IDS firmware, campaign specification (\texttt{SIMULATION\_CAMPAIGN\_READY/}), and figure-generation pipeline are maintained in the \texttt{IDS\_IOT/} repository.
+Measured evaluation logs populate \texttt{data/real/} (pilot campaign).
+See Section~\ref{sec:reproducibility} for the full reproducibility statement.
+
+\bibliographystyle{templates/ieee/IEEEtran}
+\bibliography{bib/references}
+
+\end{document}

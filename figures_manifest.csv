@@ -1,0 +1,12 @@
+figure_id,filename,metric,protocols,csv_source,status
+1,Fig_1_ClusterIDS_Architecture.tex,architecture_diagram,N/A,manual,ILLUSTRATIVE
+2,Fig_2_DODAG_Cluster_Overlay.tex,cluster_topology_overlay,N/A,manual,ILLUSTRATIVE
+3,Fig_3_Context_Policy_Weights.tex,context_policy_weights,RPL-ClusterIDS,manual,ILLUSTRATIVE
+4,Fig_4_Detection_Rate_Comparison.tex,detection_rate,B1-B3-Ours,data/real/parsed/detection_rate.csv,REAL_RESULT
+5,Fig_5_Detection_Latency_Comparison.tex,detection_latency,B1-B3-Ours,data/real/parsed/latency.csv,REAL_RESULT
+6,Fig_6_FPR_By_Scenario.tex,false_positive_rate,C0-C3,data/real/parsed/agg/fig6_fpr.csv,REAL_RESULT
+7,Fig_7_Energy_Overhead_Comparison.tex,energest_overhead,member-CH,data/real/parsed/energy.csv,REAL_RESULT
+8,Fig_8_Alert_Control_Overhead.tex,alert_overhead,B1-B3-Ours,data/real/parsed/alerts.csv,REAL_RESULT
+9,Fig_9_Cluster_Stability.tex,cluster_stability,RPL-ClusterIDS,data/real/parsed/stability.csv,REAL_RESULT
+10,Fig_10_Temporal_Detection_Stratification.tex,temporal_detection,mixed_campaign,data/real/parsed/temporal.csv,REAL_RESULT
+11,Fig_11_Operating_Mode_Sensitivity.tex,operating_modes,Full-Balanced-Eco,data/real/parsed/modes.csv,REAL_RESULT

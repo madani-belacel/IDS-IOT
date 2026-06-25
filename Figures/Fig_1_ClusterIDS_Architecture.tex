@@ -1,0 +1,29 @@
+% Fig. 1 — RPL-ClusterIDS architecture (illustrative).
+\begin{tikzpicture}[
+  font=\footnotesize,
+  node distance=0.55cm and 0.75cm,
+  box/.style={draw, rounded corners=2pt, align=center, minimum width=2.35cm, minimum height=0.75cm, fill=gray!8},
+  br/.style={box, fill=blue!8},
+  ch/.style={box, fill=orange!12},
+  mem/.style={box, fill=green!10},
+  arr/.style={-{Latex[length=2mm]}, thick}
+]
+  \node[br] (br) {Border Router\\{\scriptsize optional fusion}};
+  \node[ch, below=of br] (ch1) {Cluster Head\\{\scriptsize rules + two-stage verification}};
+  \node[ch, left=1.6cm of ch1] (ch2) {Cluster Head};
+  \node[ch, right=1.6cm of ch1] (ch3) {Cluster Head};
+  \node[mem, below left=0.9cm and 0.1cm of ch1] (m1) {Member\\{\scriptsize rules + LAS}};
+  \node[mem, below=0.9cm of ch1] (m2) {Member};
+  \node[mem, below right=0.9cm and 0.1cm of ch1] (m3) {Member};
+  \node[mem, below=0.9cm of ch2] (m4) {Member};
+  \node[mem, below=0.9cm of ch3] (m5) {Member};
+  \draw[arr] (m1) -- (ch1);
+  \draw[arr] (m2) -- (ch1);
+  \draw[arr] (m3) -- (ch1);
+  \draw[arr] (m4) -- (ch2);
+  \draw[arr] (m5) -- (ch3);
+  \draw[arr, dashed] (ch1) -- node[above, font=\scriptsize]{sparse summaries} (ch2);
+  \draw[arr, dashed] (ch1) -- (ch3);
+  \draw[arr, dashed] (ch1) -- (br);
+  \node[below=0.15cm of m2, font=\scriptsize\itshape] {RPL DODAG (underlying routing plane)};
+\end{tikzpicture}

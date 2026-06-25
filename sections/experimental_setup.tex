@@ -1,0 +1,53 @@
+\section{Experimental Setup}
+\label{sec:experimental-setup}
+
+This section specifies the Cooja evaluation campaign designed to validate RPL-ClusterIDS against three baselines: (B1) centralized rule-based IDS on the border router; (B2) flat distributed rule IDS with peer alert flooding (planned for a future full campaign); and (B3) member-based IDS with cluster-head verification but without the clustering layer, also pending full deployment. The pilot campaign focuses on B1 and RPL-ClusterIDS.
+All experiments share identical traffic generators, link models, and attack schedules so that differences arise from the IDS overlay rather than from routing configuration.
+
+\subsection{Simulation Environment}
+Experiments target Contiki-NG~4.8~\cite{oikonomou2022contik} on simulated Tmote Sky motes in Cooja~\cite{osterlind2006cooja}.
+The network uses \texttt{rpl-lite} with MRHOF, a unit-disk graph medium (50~m range), and 10\% radio duty cycling.
+Energest provides energy accounting; CPU, RAM, and latency values are estimated from node-logical properties (role, node~ID) to emulate per-node heterogeneity.
+Table~\ref{tab:experimental-setup} summarizes the full experimental configuration.
+
+\input{tables/table05_experimental_setup}
+
+\subsection{Network Scales and Topologies}
+We evaluate a 50-node grid topology in the pilot campaign. Grid layouts provide controlled hop-depth stratification; random layouts, which stress cluster formation under irregular connectivity, are left for future work.
+Scenario specifications are archived under \path{SIMULATION_CAMPAIGN_READY/scenarios/}.
+
+\subsection{Attack Scenarios}
+Five attack families are injected after a 30-minute stabilization phase (the 30~min duration is chosen to exceed the worst-case convergence time of RPL across all tested network sizes and allows the network to reach a steady DODAG before any malicious activity; 15~min was insufficient for 300+ node topologies in preliminary tests):
+\begin{enumerate}
+  \item \textbf{Rank attack:} malicious nodes advertise artificially low ranks;
+  \item \textbf{Selective forwarding:} attackers drop 60\% of downstream data packets;
+  \item \textbf{Wormhole:} two colluding nodes tunnel control traffic to bias parent selection;
+  \item \textbf{DAO flooding:} attackers emit DAO messages at ten times the baseline rate;
+  \item \textbf{Mixed campaign:} rank manipulation combined with selective drops on $C3$ flows.
+\end{enumerate}
+Each attack event lasts 60~minutes of simulated time, ensuring sufficient window for detection latency measurement and temporal stratification.
+Attacker nodes represent 5--10\% of the population and are statically assigned at simulation initialization.
+Detailed injection parameters are documented in \path{SIMULATION_CAMPAIGN_READY/attacks/}.
+
+\subsection{Metrics}
+We report detection rate (DR), false-positive rate (FPR), mean detection latency ($L_{\mathrm{det}}$), Energest energy overhead ($\Delta E$), CPU and RAM overhead, alert and control packet overhead ($O_{\mathrm{alert}}$, $O_{\mathrm{ctrl}}$), network lifetime ($T_{\mathrm{life}}$), and cluster stability ($S_{\mathrm{clust}}$).
+Metric definitions follow \path{SIMULATION_CAMPAIGN_READY/metrics/METRICS.md}.
+
+\subsection{Statistical Protocol}
+The pilot campaign repeats each configuration over \textbf{3 independent random seeds} (listed in \path{SIMULATION_CAMPAIGN_READY/seeds.txt}).
+Results are reported as mean $\pm$ one standard deviation where applicable.
+A full campaign with additional seeds is planned for future work.
+
+\subsection{Parameter Configuration}
+Table~\ref{tab:parameters} lists clustering weights, detection thresholds, and policy-engine constants used in all variants.
+Table~\ref{tab:traffic-classes} maps application traffic to priority classes $C0$--$C3$.
+
+\input{tables/table04_parameters}
+
+\subsection{Rule Engine Configuration}
+Cluster heads apply a two-stage threshold verification whose parameters are listed in Table~\ref{tab:rule-params}.
+Table~\ref{tab:rules} specifies the four member-level rules and their weights; Table~\ref{tab:ch-features} summarizes the inputs to the cluster-head decision.
+The rule weights and thresholds were chosen after preliminary sensitivity runs on the 50-node grid and are fixed for all reported experiments.
+
+\input{tables/table06_dataset}
+\input{tables/table07_ml_hyperparameters}

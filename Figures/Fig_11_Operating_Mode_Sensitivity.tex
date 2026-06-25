@@ -1,0 +1,19 @@
+% Fig. 11 — Operating mode sensitivity (Full / Balanced / Eco).
+\begin{tikzpicture}[font=\footnotesize]
+\begin{axis}[
+  width=0.85\columnwidth, height=0.55\columnwidth,
+  ybar=0pt, bar width=6pt,
+  enlarge x limits={0.2},
+  symbolic x coords={Full,Balanced,Eco},
+  xtick=data,
+  xlabel={Operating mode},
+  ylabel={Value},
+  ymajorgrids=true,
+  legend style={at={(0.5,-0.22)},anchor=north,legend columns=3,font=\scriptsize},
+  legend entries={Detection rate,FPR,CPU overhead (\%)},
+]
+\addplot[fill=blue!50] table[x=mode,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
+\addplot[fill=red!50] table[x=mode,y=mean_fpr,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
+\addplot[fill=orange!60] table[x=mode,y=mean_cpu,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
+\end{axis}
+\end{tikzpicture}

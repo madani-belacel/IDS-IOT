@@ -1,0 +1,5 @@
+#  Données brutes de la campagne de simulation.
+#  Fichiers trop volumineux pour git — décompresser avec gunzip *.csv.gz
+#  pour retrouver les CSVs originaux.  Les fichiers dans agg/ et stats/
+#  sont petits et versionnés.
+*.csv.gz

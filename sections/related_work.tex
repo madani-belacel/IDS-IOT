@@ -1,0 +1,72 @@
+\section{Related Work}
+\label{sec:related}
+
+\subsection{Rule-Based, Trust-Centric, and Federated IDS for RPL}
+Early RPL intrusion detection exploited protocol-visible invariants because monitoring them costs almost nothing on constrained hardware.
+Mayzaud \textit{et al.}~\cite{mayzaud2016} correlate DIO rank advertisements with parent-change dynamics to flag rank attacks.
+Raza \textit{et al.}~\cite{raza2017} propose a lightweight internally supervised scheme that blends MAC- and network-layer statistics into distributed trust scores.
+Surveys systematizing IoT IDS taxonomies~\cite{sfar2018,granjal2015rplsec,yan2014iotsec,sicari2015security} stress the need for protocol-aware detection under severe resource envelopes.
+Taxonomies of RPL attacks~\cite{raza2020rplids,anton2024rpl} catalog rank, version-number, and flooding vectors that define our threat model in Section~\ref{sec:threat}.
+
+More recently, federated learning has emerged as a privacy-preserving alternative to centralized model training.
+FL-DSFA~\cite{fldsfa2024} applies SVM and k-NN classifiers to detect selective forwarding in RPL networks without exposing raw node data, achieving 95\% accuracy across 1\,000-node topologies.
+Fed-RPL~\cite{fedrpl2024} extends this direction by combining GRU-based anomaly detection with quantization to reduce communication overhead in heterogeneous IoT deployments.
+These distributed learning approaches address the privacy bottleneck of centralized ML-based IDS, but they still rely on a global aggregation server and do not adapt detection intensity to node-level energy or traffic conditions --- gaps that our clustering architecture fills directly.
+
+Energy- and QoS-aware RPL routing studies~\cite{belacel2025rplmqos,belacel2025rplaer} motivate context-sensitive adaptation in constrained deployments, a principle we extend here from routing metrics to intrusion detection.
+
+\subsection{Machine-Learning, TinyML, and Explainable IDS}
+Learning-based IDS proposals improve sensitivity to weak or composite attack signatures.
+Lightweight models and hybrid deep-learning pipelines applied to RPL attack traces~\cite{hindy2020,hamdi2024,shahid2024hybrid} report high accuracy on benchmarks such as ROUT-4-2023~\cite{emec2023rout4}, but inference buffers and model storage often exceed 10~KB RAM or assume border-router-class hardware.
+Hybrid rule-plus-ML frameworks~\cite{garg2023} reduce false positives by reserving models for ambiguous cases, though most still centralize analysis at the DODAG root.
+
+A parallel thread addresses the computational bottleneck through TinyML.
+Sharma \textit{et al.}~\cite{sharma2025tinyml} propose a stacking ensemble of lightweight neural networks and decision trees that runs on microcontrollers, achieving 99.98\% accuracy on ToN-IoT with 0.12\,ms inference latency and 0.01\,mW power draw.
+Such on-device detection is promising for our cluster-head role, where model size must stay under 3~KB RAM.
+
+Explainability is another growing concern.
+Abbood \textit{et al.}~\cite{xaiids2026} combine CNN-BiLSTM with SHAP and LIME to interpret detections of sinkhole, version-number, and flooding attacks generated from Cooja simulations.
+Causal-FL-ID~\cite{causalfl2026} integrates causal inference into federated learning to provide counterfactual explanations across distributed IoT devices.
+While our current system does not include a dedicated XAI module, the explicit LAS composition and rule-based thresholds provide intrinsic transparency --- every detection can be traced to specific violation flags, unlike black-box neural models.
+
+\subsection{Graph Neural Networks and Clustering for IoT Security}
+Clustering has long reduced transmission load in IEEE~802.15.4 networks: LEACH~\cite{heinzelman2000} and its successors rotate cluster-head responsibility to balance energy expenditure~\cite{heinzelman2002}.
+In security-oriented IoT research, clusters have been used mainly for key management, attestation, or aggregated monitoring~\cite{dib2024}, not as a live coordination layer for adaptive intrusion detection wired to RPL control-plane semantics.
+
+Graph neural networks (GNNs) offer a fundamentally different perspective: they treat the network topology as a graph and learn anomaly patterns from its structure.
+TrustAware-GNN~\cite{trustawaregnn2025} models device trustworthiness through direct, indirect, temporal, and contextual trust dimensions, modulating edge weights in a dynamic graph to detect compromised nodes. It achieves 94.83\% accuracy on EDGE-IIoTSET by incorporating reliability, capability, and location awareness into the message-passing pipeline.
+GATR~\cite{gatr2025} combines graph attention mechanisms with deep reinforcement learning for RPL routing optimization, using a centralized-training--decentralized-execution architecture that dynamically balances energy, reliability, and stability --- the same trade-offs RPL-ClusterIDS navigates for detection rather than forwarding.
+
+Spatio-temporal approaches extend GNNs to time-varying topologies.
+Chen \textit{et al.}~\cite{spatiotemporal2026} model mobile IoT networks as continuous temporal graphs and apply GRU-based sequence-to-sequence models with attention to distinguish mobility-induced transients from actual malicious behavior.
+Anomal-EFD~\cite{anomalefd2026} uses self-supervised contrastive learning with multi-head attention for anomaly detection in dynamic IoT networks, adapting time windows to varying network rhythms.
+These graph-based methods excel at capturing structural anomalies but typically require centralized training or global topology knowledge. RPL-ClusterIDS complements them by distributing detection decisions across local clusters, keeping the graph analysis scope manageable for constrained nodes.
+
+\subsection{Positioning of RPL-ClusterIDS}
+Table~\ref{tab:related} contrasts representative RPL IDS families with the proposed system.
+RPL-ClusterIDS is a \emph{hierarchical distributed} IDS: detection is delegated across cluster members and heads with sparse inter-cluster coordination, avoiding the $O(N^2)$ alert storms of flat designs by capping member-to-head and head-to-head signaling.
+It is energy-aware, context-adaptive, and RPL-specific, operating on rank, DAO, ETX, and neighborhood stability metrics exported by \texttt{rpl-lite}.
+Unlike federated approaches that rely on a central aggregation server, or GNN methods that assume global graph access, clustering here is the \emph{primary organizing principle} for detection work allocation --- not an auxiliary feature.
+
+\begin{table*}[!t]
+  \caption{Comparison of Representative RPL IDS Approaches and RPL-ClusterIDS}
+  \label{tab:related}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3.5pt}
+  \renewcommand{\arraystretch}{1.12}
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \textbf{Approach} & \textbf{Distr.} & \textbf{Clust.} & \textbf{Energy} & \textbf{Context} & \textbf{Hybrid} & \textbf{RPL} \\
+    \midrule
+    Rule-based trust IDS~\cite{raza2017}       & Yes & No  & No  & No  & No  & Yes \\
+    Lightweight ML IDS~\cite{hindy2020}        & Part. & No  & No  & No  & Yes & Yes \\
+    Centralized hybrid IDS~\cite{garg2023}     & No  & No  & No  & No  & Yes & Yes \\
+    Federated IDS~\cite{fldsfa2024}            & Part. & No  & No  & No  & Yes & Yes \\
+    TinyML on-device IDS~\cite{sharma2025tinyml}& Yes & No  & No  & No  & Yes & No  \\
+    GNN trust-based IDS~\cite{trustawaregnn2025}& Part. & No  & No  & Yes & Yes & No  \\
+    Behavior dataset framework~\cite{dib2024}  & Part. & No  & No  & Lim. & Yes & Yes \\
+    \textbf{RPL-ClusterIDS (this work)}        & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} & \textbf{Yes} \\
+    \bottomrule
+  \end{tabular}
+\end{table*}

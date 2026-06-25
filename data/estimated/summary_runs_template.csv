@@ -1,0 +1,2 @@
+variant,seed,scenario,nodes,topology,attack,mode,detection_rate,fpr,detection_latency_s,energy_overhead_pct,status
+CLUSTERIDS,1001,mixed,50,grid,mixed,balanced,ESTIMATED,ESTIMATED,ESTIMATED,ESTIMATED,TO_BE_REPLACED

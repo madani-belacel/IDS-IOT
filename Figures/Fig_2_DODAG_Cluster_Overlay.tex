@@ -1,0 +1,22 @@
+% Fig. 2 — Cluster overlay on RPL DODAG (illustrative).
+\begin{tikzpicture}[font=\footnotesize, scale=0.95, transform shape]
+  \node[circle, draw, fill=blue!10, minimum size=6mm] (r) at (0,0) {BR};
+  \node[circle, draw, fill=orange!15, minimum size=5mm] (a) at (-1.4,-1.1) {};
+  \node[circle, draw, fill=orange!15, minimum size=5mm] (b) at (0,-1.2) {};
+  \node[circle, draw, fill=orange!15, minimum size=5mm] (c) at (1.4,-1.1) {};
+  \node[circle, draw, fill=green!12, minimum size=4mm] (d) at (-2.1,-2.2) {};
+  \node[circle, draw, fill=green!12, minimum size=4mm] (e) at (-0.7,-2.3) {};
+  \node[circle, draw, fill=green!12, minimum size=4mm] (f) at (0.7,-2.3) {};
+  \node[circle, draw, fill=green!12, minimum size=4mm] (g) at (2.1,-2.2) {};
+  \draw[thick, -{Latex}] (r) -- (a); \draw[thick, -{Latex}] (r) -- (b); \draw[thick, -{Latex}] (r) -- (c);
+  \draw[thick, -{Latex}] (a) -- (d); \draw[thick, -{Latex}] (a) -- (e);
+  \draw[thick, -{Latex}] (b) -- (e); \draw[thick, -{Latex}] (b) -- (f);
+  \draw[thick, -{Latex}] (c) -- (f); \draw[thick, -{Latex}] (c) -- (g);
+  \draw[dashed, rounded corners=8pt, orange!60] (-2.5,-0.6) rectangle (-0.2,-2.7);
+  \draw[dashed, rounded corners=8pt, teal!60] (-0.5,-0.6) rectangle (1.0,-2.8);
+  \draw[dashed, rounded corners=8pt, violet!50] (0.8,-0.6) rectangle (2.6,-2.7);
+  \node[font=\scriptsize] at (-1.35,-0.35) {Cluster A};
+  \node[font=\scriptsize] at (0.25,-0.35) {Cluster B};
+  \node[font=\scriptsize] at (1.75,-0.35) {Cluster C};
+  \node[font=\scriptsize\itshape] at (0,-2.95) {Solid: RPL parents \quad Dashed: cluster groups};
+\end{tikzpicture}

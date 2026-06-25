@@ -1,0 +1,22 @@
+\section{Discussion}
+\label{sec:discussion}
+
+RPL-ClusterIDS shows that energy- and context-aware clustering can orchestrate hierarchical intrusion detection in RPL without modifying the routing protocol itself.
+The design is most advantageous when attacks are spatially correlated, when application traffic is heterogeneous, and when the network cannot afford uniform high-intensity monitoring on every node.
+
+\subsection{Why Clustering Matters}
+The ablation design in Table~\ref{tab:ablation} isolates four architectural components: clustering, CH threshold verification, context adaptation, and energy-aware policy.
+Clustering concentrates advanced analysis on a small set of capable heads rather than on every mote and bounds collaboration through LAS summarization and thresholded inter-head signaling.
+Flat distributed IDS designs may approach similar detection rates on small networks, but their alert traffic typically grows much faster with node count; this hypothesis is testable via Fig.~\ref{fig:alert-overhead} once the scalability campaign completes.
+
+\subsection{Positioning Relative to Baselines}
+Centralized baselines (B1, B3) benefit from global visibility but introduce a single point of failure and higher detection latency for spatially localized attacks.
+Flat distributed rules (B2) avoid centralization but risk alert storms.
+RPL-ClusterIDS occupies a middle ground: hierarchical distributed detection with optional border-router corroboration for network-wide campaigns.
+
+\subsection{Operating-Mode Trade-offs}
+The three-mode policy (\textsc{Full}, \textsc{Balanced}, \textsc{Eco}) makes the security--lifetime compromise explicit and measurable.
+Table~\ref{tab:modes} and Fig.~\ref{fig:mode-sensitivity} quantify this trade-off for the pilot campaign; full statistical validation is left for future work.
+Practitioners can select a mode based on application criticality ($C0$--$C3$) and remaining network energy.
+
+Limitations are discussed separately in Section~\ref{sec:limitations}.

@@ -1,0 +1,31 @@
+\section{Threat Model and RPL Vulnerabilities}
+\label{sec:threat}
+
+\subsection{Adversary Model}
+We consider an \emph{internal} adversary that compromises one or more legitimate RPL nodes after network formation.
+The attacker can observe one-hop or multi-hop traffic, inject or replay control messages, manipulate advertised ranks and version numbers, selectively discard forwarded data packets, and coordinate with a remote colluder to simulate shortened routes.
+We do not assume compromise of link-layer keying material; detection is based on behavioral and structural anomalies visible to honest neighbors.
+The adversary is resource-bounded like ordinary mesh nodes and cannot sustain arbitrarily high transmission rates without revealing itself through energy or control-plane signatures.
+
+Our trust assumptions are standard for distributed IDS overlays on RPL: honest nodes execute the detection modules faithfully, the border router is not malicious, and at least a fraction of cluster heads in an affected region remain uncompromised during an attack window.
+RPL-ClusterIDS does not modify RPL's cryptographic model; it complements it with protocol-aware monitoring.
+
+\subsection{RPL Attack Surface}
+\textbf{Rank and version attacks.}
+A malicious router advertises an artificially attractive rank or increments the DODAG version number to trigger repair storms, parent churn, and subtree instability~\cite{mayzaud2016,rfc7416}.
+
+\textbf{Selective forwarding.}
+A compromised relay forwards control traffic while dropping application packets, thereby evading simple reachability tests and degrading end-to-end delivery~\cite{karlof2003}.
+
+\textbf{Wormhole and sinkhole.}
+Colluding nodes tunnel traffic through a faster out-of-band path to bias parent selection toward an attacker-preferred region of the DODAG~\cite{hu2006}.
+
+\textbf{DAO and DIS flooding.}
+Excessive DAO or DIS transmissions inflate processing load, buffer occupancy, and energy consumption across downstream nodes~\cite{raza2017}.
+
+\textbf{Combined campaigns.}
+Realistic adversaries may couple rank manipulation with selective forwarding so that disruption is maximized while local signatures remain weak.
+
+\subsection{Detection Inputs}
+RPL-ClusterIDS monitors metrics already exposed by Contiki-NG \texttt{rpl-lite}: neighbor tables, rank and parent-change history, ETX estimates, DAO inter-arrival statistics, and per-priority traffic counters.
+No changes to RFC~6550 packet formats are required.

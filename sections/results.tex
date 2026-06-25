@@ -1,0 +1,99 @@
+\section{Results}
+\label{sec:results}
+
+This section presents evaluation results from the pilot Cooja campaign (3 seeds, 5 attack scenarios, 50-node grid).
+Tables and figures contain measured values from the campaign log parsing.
+Values with zero standard deviation reflect deterministic configuration parameters (e.g.,~FPR) and single-run per-seed latency measurements; statistical significance tests were not performed on these quantities.
+
+\subsection{Detection Performance}
+Table~\ref{tab:detection} summarizes detection rates and false-positive rates on the 50-node grid in \textsc{Balanced} mode across five attack scenarios.
+Fig.~\ref{fig:detection-rate} and Fig.~\ref{fig:detection-latency} visualize detection rate and latency trends; Fig.~\ref{fig:fpr-scenario} stratifies false positives by scenario and traffic-priority class.
+
+\input{tables/table02_detection}
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_4_Detection_Rate_Comparison.tex}}
+  \caption{\CaptionFigFour{} \CaptionFigStatusNote}
+  \label{fig:detection-rate}
+\end{figure}
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_5_Detection_Latency_Comparison.tex}}
+  \caption{\CaptionFigFive{} \CaptionFigStatusNote}
+  \label{fig:detection-latency}
+\end{figure}
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_6_FPR_By_Scenario.tex}}
+  \caption{\CaptionFigSix{} \CaptionFigStatusNote}
+  \label{fig:fpr-scenario}
+\end{figure}
+
+\subsection{Overhead, Energy, and Scalability}
+Fig.~\ref{fig:energy-overhead} reports Energest energy overhead on member and cluster-head nodes.
+Fig.~\ref{fig:alert-overhead} shows alert and control-packet overhead at 50 nodes (the pilot campaign scale; values beyond 50 nodes are design-target projections assuming sublinear scaling).
+Resource footprint targets (design-time estimates from profiling hooks) are documented in Section~\ref{sec:impl}; measured overheads appear here after the campaign.
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_7_Energy_Overhead_Comparison.tex}}
+  \caption{\CaptionFigSeven{} \CaptionFigStatusNote}
+  \label{fig:energy-overhead}
+\end{figure}
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_8_Alert_Control_Overhead.tex}}
+  \caption{\CaptionFigEight{} \CaptionFigStatusNote}
+  \label{fig:alert-overhead}
+\end{figure}
+
+\subsection{Ablation Study}
+Table~\ref{tab:ablation} compares five system variants on the mixed campaign scenario: full RPL-ClusterIDS, and ablations that disable clustering, CH threshold verification, context adaptation, or energy awareness.
+This four-component design isolates individual architectural contributions beyond what a single-component ablation could provide.
+
+\input{tables/table08_ablation}
+
+Fig.~\ref{fig:cluster-stability} links cluster-head tenure and reclustering rate to mean NRE as clusters adapt under energy pressure.
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_9_Cluster_Stability.tex}}
+  \caption{\CaptionFigNine{} \CaptionFigStatusNote}
+  \label{fig:cluster-stability}
+\end{figure}
+
+\subsection{Temporal Behavior and Operating Modes}
+Fig.~\ref{fig:temporal-detection} stratifies detection rate over stabilization, attack, and recovery phases in the mixed campaign.
+Table~\ref{tab:modes} and Fig.~\ref{fig:mode-sensitivity} compare \textsc{Full}, \textsc{Balanced}, and \textsc{Eco} operating modes. The campaign-level DR remains stable across modes because severe control-plane attacks (detected by R1--R2) dominate detection; per-interval sensitivity and CPU overhead differ measurably.
+
+\input{tables/table03_operating_modes}
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_10_Temporal_Detection_Stratification.tex}}
+  \caption{\CaptionFigTen{} \CaptionFigStatusNote}
+  \label{fig:temporal-detection}
+\end{figure}
+
+\begin{figure}[!t]
+  \centering
+  \resizebox{\linewidth}{!}{\input{Figures/Fig_11_Operating_Mode_Sensitivity.tex}}
+  \caption{\CaptionFigEleven{} \CaptionFigStatusNote}
+  \label{fig:mode-sensitivity}
+\end{figure}
+
+\subsection{Statistical Validation}
+Table~\ref{tab:statistics} presents pairwise comparisons (RPL-ClusterIDS vs.\ B1 on DR; Full vs.\ Eco on DR).
+RPL-ClusterIDS achieves 80.6\% campaign-level DR, while the B1 baseline achieves 0\% DR, yielding $p < 0.0001$ (Welch's $t$-test).
+
+\input{tables/table09_statistics}
+
+\subsection{Sensitivity Analysis}
+A sensitivity sweep varying $\tau_{\mathrm{low}}$, $\tau_{\mathrm{CH}}$, $\tau_{\mathrm{inter}}$, $w_e$--$w_d$, and $\lambda_1$--$\lambda_4$ is left for future work, as the pilot campaign focused on the default parameter configuration defined in Table~\ref{tab:parameters}.
+
+\subsection{Scalability Across Network Sizes}
+Fig.~\ref{fig:alert-overhead} is designed to span 50--500 nodes. The pilot campaign covered the 50-node grid; larger-scale evaluation (100--500 nodes) is left for future work.

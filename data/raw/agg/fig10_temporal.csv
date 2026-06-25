@@ -1,0 +1,4 @@
+phase,mean_det_rate
+recovery,0.0099
+stabilization,0.0000
+attack,0.0100

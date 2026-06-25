@@ -1,0 +1,18 @@
+% Fig. 10 — Temporal detection stratification: stab / attack / recovery.
+\begin{tikzpicture}[font=\footnotesize]
+\begin{axis}[
+  width=0.85\columnwidth, height=0.55\columnwidth,
+  ybar=0pt, bar width=18pt,
+  enlarge x limits={0.4},
+  symbolic x coords={stabilization,attack,recovery},
+  xtick=data,
+  xlabel={Phase},
+  ylabel={Detection rate},
+  ymajorgrids=true,
+  nodes near coords,
+  nodes near coords align=vertical,
+  every node near coord/.append style={font=\scriptsize},
+]
+\addplot[fill=blue!50] table[x=phase,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig10_temporal.csv};
+\end{axis}
+\end{tikzpicture}

@@ -1,0 +1,32 @@
+% Table V — Experimental setup (pilot campaign).
+\begin{table*}[!t]
+  \caption{Experimental Setup for Cooja Evaluation Campaign}
+  \label{tab:experimental-setup}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.1}
+  \begin{tabular}{@{}ll@{}}
+    \toprule
+    \textbf{Item} & \textbf{Configuration} \\
+    \midrule
+    Simulator / OS       & Cooja + Contiki-NG 4.8 \\
+    Hardware model       & Tmote Sky (MSP430, 10~KB RAM) \\
+    Routing              & \texttt{rpl-lite}, MRHOF \\
+    Radio model          & UDGM, 50~m range, 10\% duty cycle \\
+    Network sizes        & 50 nodes \\
+    Topologies           & Grid \\
+    Baselines            & B1 centralized rules; B2 flat distributed (planned); B3 centralized (planned) \\
+    Proposed system      & RPL-ClusterIDS (Full / Balanced / Eco) \\
+    Attack scenarios     & Rank, selective forwarding, wormhole, DAO flooding, mixed \\
+    Malicious fraction   & 5--10\% of nodes, depth-stratified \\
+    Stabilization phase  & 30~min before attack injection \\
+    Run duration         & 3~h simulated time \\
+    Random seeds         & 3 per configuration (\texttt{seeds.txt}) \\
+    Energy accounting    & Contiki-NG Energest \\
+    Profiling            & Built-in CPU/RAM profiling hooks \\
+    Output logs          & \texttt{METRIC,...} serial lines $\rightarrow$ \texttt{data/real/} \\
+    Statistical analysis & 95\% CI, $\pm$1 SD, Student $t$-test, Mann--Whitney $U$ \\
+    \bottomrule
+  \end{tabular}
+\end{table*}

@@ -1,0 +1,21 @@
+\section{Limitations}
+\label{sec:limitations}
+
+Several limitations should be noted before generalizing the results.
+\begin{itemize}
+  \item \textbf{Simulation-only validation with limited seeds.} All results are obtained in Cooja with sky motes (3 seeds per configuration). Results should be interpreted with caution given the limited number of independent runs; a full campaign with 20 seeds is planned.
+  Hardware deployment may reveal timing jitter, radio asymmetry, and memory alignment effects not fully captured in simulation.
+  \item \textbf{50-node grid only.} The pilot campaign covers the 50-node grid (3 seeds, 5 attack scenarios).
+  Larger scales (100--500 nodes) and random topologies remain for future work; the current results may not generalize to denser or irregular deployments.
+  \item \textbf{Model portability.} The cluster-head verification thresholds are configured on Cooja traces.
+  Real deployments may require recalibration or retraining to avoid domain shift.
+  \item \textbf{Adversarial cluster heads.} A compromised head could suppress local alerts or inject false cluster-level alarms.
+  The current defense relies on randomized head rotation ($T_{\max}$ tenure limit), inter-cluster cross-checking (neighboring heads may detect anomalous suppression patterns), and an optional border-router corroboration path for network-wide campaigns.
+  Future work should strengthen these mechanisms through head attestation protocols, threshold-based quorum confirmation among multiple heads covering overlapping regions, and reputation-aware rotation that penalizes heads exhibiting inconsistent reporting behaviour.
+  \item \textbf{Traffic-priority labeling.} The evaluation assumes that flows can be mapped to $C0,\ldots,C3$ (Table~\ref{tab:traffic-classes}).
+  Unclassified traffic defaults to \textsc{Balanced} mode, which reduces the benefit of context adaptation.
+  \item \textbf{Attack scope.} External denial-of-service attacks against the border router and cryptographic key compromise are outside the present threat model.
+  \item \textbf{Optional border corroboration.} Although detection is hierarchical and distributed across clusters, network-wide confirmation may involve the border router; the system is therefore described as a \emph{hierarchical distributed IDS}, not a fully peer-symmetric one.
+\end{itemize}
+
+Despite these constraints, the architecture and campaign design provide a reproducible path toward validated RPL intrusion detection under severe resource limits.

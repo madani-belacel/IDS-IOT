@@ -1,0 +1,40 @@
+% Shared packages — RPL-ClusterIDS (IEEEtran-compatible; no lmodern).
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\IfFileExists{microtype.sty}{%
+  \usepackage{microtype}%
+  \microtypesetup{nopatch={verbatim}}%
+}{}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+\IfFileExists{pgfplots.sty}{\usepackage{pgfplots}\pgfplotsset{compat=1.18}}{}
+\IfFileExists{pgfplots.statistics.code.tex}{\usetikzlibrary{pgfplots.statistics}}{}
+\IfFileExists{booktabs.sty}{\usepackage{booktabs}}{%
+  \providecommand{\toprule}{\hline}%
+  \providecommand{\midrule}{\hline}%
+  \providecommand{\bottomrule}{\hline}%
+}
+\usepackage{amsmath,amssymb}
+\IfFileExists{caption.sty}{%
+  \usepackage{caption}%
+  \captionsetup{font=small,labelfont=bf}%
+}{}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{adjustbox}
+\usepackage{url}
+\usepackage[hidelinks,bookmarksopen=true]{hyperref}
+\makeatletter
+\g@addto@macro\UrlBreaks{\do\/\do\_}
+\makeatother
+\emergencystretch=2em
+\graphicspath{{Figures/}}
+\providecommand{\IEEEPARstart}[2]{\textbf{#1}#2}
+\input{status-macros}
+\input{Figures/CAPTIONS_EN}
+\hyphenation{RPL-ClusterIDS Contiki-NG Cooja DODAG}
+
+\newcommand{\RPLClusterIDS}{RPL-ClusterIDS}
+\newcommand{\RPLClusterIDSTag}{\texttt{RPL\_ClusterIDS}}

@@ -1,0 +1,13 @@
+% IEEE two-column build for RPL-ClusterIDS.
+%   pdflatex main-ieee.tex && bibtex main-ieee && pdflatex main-ieee.tex && pdflatex main-ieee.tex
+\documentclass[journal]{templates/ieee/IEEEtran}
+
+\input{preamble-clusterids}
+\usepackage{cite}
+\usepackage{placeins}
+\usepackage{ifpdf}
+\ifpdf
+  \IfFileExists{stfloats.sty}{\usepackage{stfloats}}{}
+\fi
+
+\newcommand{\PaperShortTitle}{RPL-ClusterIDS}

@@ -1,0 +1,21 @@
+% Fig. 4 — Detection rate comparison across attack scenarios.
+\begin{tikzpicture}[font=\footnotesize]
+\begin{axis}[
+  width=0.85\columnwidth, height=0.55\columnwidth,
+  ybar=0pt, bar width=5pt,
+  enlarge x limits={0.15},
+  symbolic x coords={rank,sel_fwd,wormhole,dao_flood,mixed},
+  xtick=data,
+  xticklabels={rank,sel\_fwd,wormhole,dao\_flood,mixed},
+  xlabel={Attack scenario},
+  ylabel={Detection rate},
+  ymajorgrids=true,
+  legend style={at={(0.5,-0.22)},anchor=north,legend columns=4,font=\scriptsize},
+  legend entries={B1,B2,B3,RPL-ClusterIDS},
+]
+\addplot[fill=gray!40] table[x=scenario,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig4_detection_rate_B1.csv};
+\addplot[fill=red!40] table[x=scenario,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig4_detection_rate_B2.csv};
+\addplot[fill=orange!50] table[x=scenario,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig4_detection_rate_B3.csv};
+\addplot[fill=blue!50] table[x=scenario,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig4_detection_rate_CLUSTERIDS.csv};
+\end{axis}
+\end{tikzpicture}

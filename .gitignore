@@ -1,0 +1,27 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# LaTeX build artifacts
+*.aux
+*.bbl
+*.blg
+*.log
+*.out
+*.spl
+*.pdf
+main-ieee.pdf
+test-elsarticle.pdf
+
+# Cooja build
+build/
+
+# Cooja CSC artifacts
+code_source_RPL_ClusterIDS/simulations/cooja/*.csc
+
+# Symlinks
+data/real/parsed/
+
+# OS
+.DS_Store
+Thumbs.db

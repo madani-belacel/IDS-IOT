@@ -1,0 +1,43 @@
+\section{Introduction}
+\label{sec:intro}
+
+\IEEEPARstart{L}{ow-power} wireless IoT networks increasingly rely on the Routing Protocol for Low-Power and Lossy Networks (RPL) to build IPv6 connectivity over lossy links and duty-cycled radios~\cite{rfc6550,baronti2007}.
+RPL organizes nodes into a destination-oriented directed acyclic graph (DODAG) rooted at a border router.
+Control messages---DIO, DAO, and DIS---drive parent selection, rank advertisement, and route repair; any participating router may emit them~\cite{rfc6550}.
+The design favors scalability and self-configuration, but it also assumes cooperative behavior.
+
+In practice, a compromised internal node can abuse the same control-plane interface to attract traffic, partition subtrees, or exhaust neighbor resources.
+Documented RPL attack families include rank manipulation, version-number abuse, selective forwarding, wormhole placement, and DAO or DIS flooding~\cite{mayzaud2016,raza2017,rfc7416}.
+Typical IoT motes run sub-100~MHz processors with tens of kilobytes of RAM and tight battery budgets, so conventional IDS architectures are hard to deploy wholesale.
+Centralized analyzers create a single point of failure and may not see local anomalies in time; fully distributed schemes can drown the network in alert traffic; and ML pipelines designed for gateway-class hardware simply do not fit inside ordinary mesh nodes~\cite{faheem2013,sfar2018}.
+
+A growing body of RPL-specific IDS research combines rule engines, trust metrics, or lightweight models to improve sensitivity~\cite{raza2017,hindy2020,garg2023}.
+Yet three limitations keep coming back across these proposals.
+First, many treat every node as an equally capable detector, even though residual energy and application priority should dictate how aggressively a device participates in security monitoring.
+Second, collaboration is either network-wide and expensive or strictly local, which leaves spatially extended attacks under-reported in large deployments.
+Third, clustering --- widely used in IoT for aggregation and duty cycling~\cite{heinzelman2000,heinzelman2002} --- has rarely been the \emph{primary organizing principle} for hierarchical, energy-aware intrusion detection over RPL. We believe it should be.
+
+This paper presents RPL-ClusterIDS, a distributed IDS where clustering is central rather than an afterthought.
+Nodes form clusters that adapt to three live signals: normalized residual energy (NRE), neighborhood topological stability, and the dominant traffic-priority class.
+Members execute a minimal rule set and compute a compact local anomaly score (LAS).
+Cluster heads aggregate member evidence, apply richer rules, and run a two-stage threshold verification for confirmation.
+Inter-cluster communication stays sparse: heads exchange summaries only when aggregated suspicion crosses a threshold, preserving scarce control-plane capacity.
+
+\noindent To summarize, our contributions are:
+\begin{enumerate}
+  \item a \textbf{dynamic energy- and context-aware clustering model} for RPL IDS that reorganizes clusters as energy, parent churn, and traffic-priority distributions evolve;
+  \item an \textbf{adaptive cluster-head election and rotation protocol} based on a composite fitness score over energy headroom, DODAG centrality, and neighborhood stability;
+  \item a \textbf{three-tier hierarchical detection pipeline} combining ultra-light member rules, two-stage threshold verification at cluster heads, and optional border-router corroboration for network-wide campaigns;
+  \item a \textbf{context-adaptive detection policy} that explicitly trades detection intensity for network lifetime when energy is low or traffic is non-critical;
+  \item a \textbf{Contiki-NG implementation and reproducible Cooja evaluation pilot campaign} on a 50-node grid with five attack scenarios (R1--R4 individually and combined) and 3 random seeds.
+\end{enumerate}
+
+The rest of this paper is laid out as follows.
+Section~\ref{sec:related} discusses related work.
+Section~\ref{sec:threat} defines the threat model and the RPL vulnerabilities we target.
+Section~\ref{sec:arch} describes the proposed architecture, focusing on the clustering layer.
+Section~\ref{sec:impl} walks through the Contiki-NG implementation.
+Section~\ref{sec:experimental-setup} details the experimental setup and campaign design.
+Section~\ref{sec:results} reports the results from the pilot Cooja campaign.
+Section~\ref{sec:discussion} examines implications; Section~\ref{sec:limitations} acknowledges limitations.
+Section~\ref{sec:concl} concludes; Section~\ref{sec:reproducibility} documents reproducibility artifacts.

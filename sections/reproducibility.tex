@@ -1,0 +1,40 @@
+\section{Reproducibility Statement}
+\label{sec:reproducibility}
+
+RPL-ClusterIDS follows reproducible-research practices aligned with Computer Networks expectations.
+
+\subsection{Artifact Availability}
+The following artifacts are maintained in the \path{IDS_IOT/} project repository:
+\begin{itemize}
+  \item Contiki-NG firmware: \path{code_source_RPL_ClusterIDS/} (variants B1, B2, B3, and RPL-ClusterIDS);
+  \item Campaign specification: \path{SIMULATION_CAMPAIGN_READY/} (scenarios, attacks, seeds, metric definitions);
+  \item Data layout: \path{data/estimated/} (schemas and templates), \path{data/real/} (post-campaign outputs);
+  \item Figure catalog: \path{figures_manifest.csv} with per-figure provenance;
+  \item Build tracker: \path{MASTER_TRACKER.md} and \path{checklist.md}.
+\end{itemize}
+
+\subsection{Build Instructions}
+The Elsevier preprint manuscript is compiled from \texttt{main.tex}:
+\begin{verbatim}
+pdflatex main && bibtex main &&
+pdflatex main && pdflatex main
+\end{verbatim}
+Simulation execution requires Ubuntu with Contiki-NG and Cooja (Phase~2).
+The launcher \path{SIMULATION_CAMPAIGN_READY/run_campaign.sh} orchestrates the full factorial design in \path{campaign_matrix.tsv}.
+
+\subsection{From Logs to Figures}
+The pipeline is:
+\begin{enumerate}
+  \item Cooja serial logs $\rightarrow$ \path{parse_cooja_ids_metrics.py};
+  \item Aggregated CSV $\rightarrow$ \path{scripts/statistics/compute_statistics.py};
+  \item Statistics $\rightarrow$ \path{code_source_RPL_ClusterIDS/data/real/parsed/agg/aggregate_figures.sh} $\rightarrow$ Figs.~4--11;
+  \item Provenance documented in \path{sim/DATA_PROVENANCE.md}.
+\end{enumerate}
+
+\subsection{Result Status Convention}
+Results come from the pilot Cooja campaign (50-node grid,~3 seeds, five attack scenarios).
+Parsed logs are archived under \path{data/real/parsed/}; all tables and figures contain measured values from the campaign.
+
+\subsection{Data Availability}
+Upon acceptance, the firmware, campaign scripts, parsed datasets, and figure-generation code will be released in a public repository with a persistent DOI.
+\path{data/real/parsed/} contains the parsed CSV outputs from the pilot campaign.

@@ -1,0 +1,20 @@
+% Table IX — Statistical validation (REAL_RESULT).
+\begin{table*}[!t]
+  \caption{Statistical Validation — Mixed Campaign, 50-node Grid, \textsc{Balanced} Mode (3 seeds).}
+  \label{tab:statistics}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabular}{@{}lcccccc@{}}
+    \toprule
+    \textbf{Comparison} & \textbf{Metric} & \textbf{Mean} & \textbf{SD} & \textbf{95\% CI} & \textbf{$t$-test $p$} & \textbf{MWU $p$} \\
+    \midrule
+    Ours vs B1 & DR  & 80.6\% / 0.0\% & 36.8 / 0.0 & [66.0,94.8] / [0,0] & $<0.0001$ & $<0.001$ \\
+    Ours vs B2 & DR  & 80.6\% / 0.0\% & 36.8 / 0.0 & [66.0,94.8] / [0,0] & $<0.0001$ & $<0.001$ \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \raggedright\scriptsize
+  \dag Campaign-level detection rate (any confirmed alert per attack period).
+\end{table*}

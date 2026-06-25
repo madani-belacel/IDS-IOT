@@ -1,0 +1,40 @@
+% Table VI — Member-level rule specification.
+\begin{table}[!t]
+  \caption{Member-Level Rule Specification for Local Anomaly Scoring}
+  \label{tab:rules}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabular}{@{}clcc@{}}
+    \toprule
+    \textbf{Rule} & \textbf{Target attack} & \textbf{Weight $\omega_k$} & \textbf{Signal range} \\
+    \midrule
+    R1 & Rank attack            & 3 & $[75,85]$ \\
+    R2 & Selective forwarding    & 2 & $[35,75]$ \\
+    R3 & DAO flooding            & 1 & $[60,70]$ \\
+    R4 & Wormhole                & 1 & $[70,80]$ \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \raggedright\scriptsize
+  Signal ranges are raw rule outputs on the firmware scale $[0,{\sim}175]$; LAS normalizes to $[0,1]$ via Eq.~\ref{eq:las}.
+\end{table}
+
+\begin{table}[!t]
+  \caption{Cluster-Head Decision Features for Two-Stage Verification}
+  \label{tab:ch-features}
+  \centering
+  \scriptsize
+  \begin{tabular}{@{}cll@{}}
+    \toprule
+    \# & \textbf{Input} & \textbf{Source} \\
+    \midrule
+    1  & Member LAS (4-bit)         & $(3 r_1 + 2 r_2 + r_3 + r_4) / 4$, quantized \\
+    2  & Member alarm flag          & LAS $> \tau_{\mathrm{las}}$ \\
+    3  & Attack active indicator    & Global simulation flag \\
+    4  & Cluster-head role          & From \texttt{ch\_elect} \\
+    5  & NRE energy-scaling factor  & Enabled when NRE $< 20\%$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}

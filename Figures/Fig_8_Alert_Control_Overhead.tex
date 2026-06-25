@@ -1,0 +1,18 @@
+% Fig. 8 — Alert overhead per network size.
+\begin{tikzpicture}[font=\footnotesize]
+\begin{axis}[
+  width=0.85\columnwidth, height=0.55\columnwidth,
+  xlabel={Network size (nodes)},
+  ylabel={Alerts / hour},
+  xmin=0, xmax=55,
+  ymin=0, ymax=60,
+  ymajorgrids=true,
+  legend style={at={(0.5,-0.22)},anchor=north,legend columns=4,font=\scriptsize},
+  legend entries={B1,B2,B3,RPL-ClusterIDS},
+]
+\addplot[only marks,mark=o,mark size=1.5,gray!60] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_B1.csv};
+\addplot[only marks,mark=square,mark size=1.5,red!60] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_B2.csv};
+\addplot[only marks,mark=triangle,mark size=1.5,orange!70] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_B3.csv};
+\addplot[only marks,mark=diamond,mark size=1.5,blue!70] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_CLUSTERIDS.csv};
+\end{axis}
+\end{tikzpicture}

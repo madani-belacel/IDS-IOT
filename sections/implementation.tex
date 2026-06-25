@@ -1,0 +1,32 @@
+\section{Implementation in Contiki-NG}
+\label{sec:impl}
+
+RPL-ClusterIDS is implemented as a modular extension to Contiki-NG~4.8~\cite{oikonomou2022contik} on top of \texttt{rpl-lite}, \texttt{energest}, and the standard IPv6/UDP stack.
+The design goal is to keep the IDS orthogonal to routing: no changes to RPL packet formats are required, and the modules can be disabled at compile time for baseline comparisons.
+
+\subsection{Software Modules}
+The firmware is organized into five components:
+\begin{itemize}
+  \item \texttt{clus\_form} computes cluster affinity (Eq.~\ref{eq:affinity}), maintains membership tables, and triggers reclustering according to Eq.~\ref{eq:recluster};
+  \item \texttt{ch\_elect} evaluates cluster-head fitness (Eq.~\ref{eq:chfit}), performs rotation, and publishes head status to cluster members;
+  \item \texttt{ids\_member} implements rules R1--R4, calculates LAS (Eq.~\ref{eq:las}), and schedules quantized reports to the local head;
+  \item \texttt{ids\_ch} aggregates LAS windows, executes the advanced rule engine, and applies two-stage threshold verification;
+  \item \texttt{ctx\_policy} maps NRE, traffic-priority telemetry, and control-plane load to \textsc{Full}, \textsc{Balanced}, or \textsc{Eco} modes.
+\end{itemize}
+Inter-cluster summaries are exchanged over a dedicated UDP port so that DIO and DAO timing remain unaffected.
+
+\subsection{Data Structures and Timing}
+Each member stores a 16-entry neighbor window, a 4-bit LAS history buffer, and a compact rule-state vector totaling less than 1.2~KB RAM (internal member data structures).
+Cluster heads maintain per-member LAS series over 32 time steps and ETX variance trackers.
+Reclustering and CH election run as periodic Contiki-NG processes with intervals derived from $\Delta_c$ and guarded by Energest sampling every 60~s simulated time.
+
+\subsection{Resource Footprint}
+On a simulated sky mote (MSP430-class), the \emph{design target} is approximately 2.8~KB additional RAM (total IDS module, including clustering and policy engine) and less than 6\% extra CPU time on members in \textsc{Balanced} mode, and up to 4.1~KB RAM and 11\% CPU on cluster heads during active alert windows.
+Flash overhead is 18~KB on members and 26~KB on heads.
+Measured means $\pm$ standard deviation over 3 simulation seeds are reported in Section~\ref{sec:results}.
+
+\subsection{Two-Stage Threshold Verification at Cluster Heads}
+When any member raises an alarm (LAS $> \tau_{\mathrm{las}}$), the cluster head performs a second threshold check: if the member LAS also exceeds $\tau_{\mathrm{ch}} = 0.70$, the event is promoted to a cluster-level alert; otherwise it is treated as a false positive.
+This two-stage design (Table~\ref{tab:rule-params}) exploits the spatial correlation of RPL attacks: a single member with a marginal LAS is likely a benign fluctuation, but a member whose LAS exceeds both thresholds has a higher probability of genuine compromise.
+Only cluster heads execute the second threshold, bounding the computational cost to a small subset of nodes.
+Rule weights and the four member-level rules R1--R4 are summarized in Table~\ref{tab:rules}; the cluster-head decision inputs are listed in Table~\ref{tab:ch-features}.

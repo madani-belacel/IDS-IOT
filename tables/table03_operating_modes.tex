@@ -1,0 +1,22 @@
+% Table III — Operating modes (REAL_RESULT).
+\begin{table}[!t]
+  \caption{Mixed-Campaign Detection and Member CPU Overhead by Operating Mode (50-node grid, RPL-ClusterIDS).}
+  \label{tab:modes}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{4pt}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    \textbf{Mode} & \textbf{DR\dag} & \textbf{FPR\dag} & \textbf{CPU} \\
+    \midrule
+    \textsc{Full}     & 80.6\% & 0.50\% &  5\% \\
+    \textsc{Balanced} & 80.6\% & 0.50\% &  6\% \\
+    \textsc{Eco}      & 80.6\% & 0.50\% &  7\% \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \raggedright\scriptsize
+  \dag Campaign-level detection rate (any confirmed alert per attack period).
+  Per-interval DR averages 1.1\% (see Fig.~\ref{fig:mode-sensitivity}).
+\end{table}

@@ -1,0 +1,24 @@
+% Table VIII — Ablation study (REAL_RESULT).
+\begin{table}[!t]
+  \caption{Ablation Study on Mixed Campaign (50-node grid, \textsc{Balanced} mode). Per-interval detection rate.}
+  \label{tab:ablation}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabular}{@{}lccc@{}}
+    \toprule
+    \textbf{Variant} & \textbf{DR\dag} & \textbf{FPR} & \textbf{$\Delta E$ (\%)} \\
+    \midrule
+    Full RPL-ClusterIDS              & 1.06\% & 0.50\% & 7.52\% \\
+    Without clustering               & 0.33\% & --- & --- \\
+    Without CH two-stage verification & 0.00\% & --- & --- \\
+    Without context adaptation       & 0.04\% & --- & --- \\
+    Without energy awareness         & 0.05\% & --- & --- \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \raggedright\scriptsize
+  \dag Per-interval detection rate (fraction of node-intervals with detection).
+  Ablation variants collected with 3 seeds; FPR and energy overhead pending full campaign. This variant disables the cluster-head second-stage verification, keeping only member-level rules R1--R4. In the mixed scenario, member LAS values remain below $\tau_{\mathrm{las}}$=0.60 without CH confirmation because no single rule triggers a strong enough signal; the resulting 0.00\% DR confirms that CH threshold verification is the essential trigger for non-zero detection. Member alarms alone are not counted as detections; only confirmed cluster-level alerts contribute to DR.
+\end{table}

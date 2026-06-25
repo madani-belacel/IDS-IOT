@@ -1,0 +1,37 @@
+services:
+  clusterids:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: rpl-clusterids-dev
+    working_dir: /workspace/IDS_IOT
+    volumes:
+      - ..:/workspace/IDS_IOT
+      - contiki-cache:/opt/contiki-ng
+    environment:
+      CONTIKI_NG: /opt/contiki-ng
+      IDS_ROOT: /workspace/IDS_IOT
+    stdin_open: true
+    tty: true
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+
+  pipeline-test:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    working_dir: /workspace/IDS_IOT
+    volumes:
+      - ..:/workspace/IDS_IOT
+    command: >
+      bash -c "
+        python3 scripts/python/generate_synthetic_csv.py &&
+        python3 scripts/statistics/compute_statistics.py --input data/estimated/aggregated --output data/estimated/aggregated/statistics &&
+        python3 scripts/python/generate_figures.py --csv data/estimated/aggregated --out Figures/ --dry-run &&
+        python3 -m unittest scripts/statistics/test_compute_statistics.py -v
+      "
+
+volumes:
+  contiki-cache:

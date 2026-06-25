@@ -1,0 +1,45 @@
+% English figure captions for RPL-ClusterIDS (11-figure plan).
+
+\newcommand{\CaptionFigOne}{%
+  Conceptual architecture of RPL-ClusterIDS over an RPL DODAG. Member nodes execute lightweight rules and local anomaly scores (LAS); cluster heads aggregate evidence and run hybrid detection; sparse inter-cluster summaries bound control traffic. The border router optionally fuses cluster-level alerts.%
+}
+
+\newcommand{\CaptionFigTwo}{%
+  Logical cluster overlay on a sample RPL DODAG. Cluster membership (dashed ovals) is decoupled from routing parents (solid arrows). Cluster heads sit on stable, energy-rich anchors while members report compact LAS summaries upward.%
+}
+
+\newcommand{\CaptionFigThree}{%
+  Context-adaptive policy weights $(w_e,w_s,w_t,w_d)$ and operating-mode thresholds as a function of mean normalized residual energy (NRE) and dominant traffic-priority class. Higher $C3$ share increases monitoring depth; low NRE shifts the policy toward \textsc{Eco}.%
+}
+
+\newcommand{\CaptionFigFour}{%
+  Detection rate across five RPL attack scenarios (50-node grid, \textsc{Balanced} mode, pilot campaign). RPL-ClusterIDS is compared with centralized rules (B1), flat distributed rules (B2), and centralized verification (B3).%
+}
+
+\newcommand{\CaptionFigFive}{%
+  Mean detection latency from attack onset to confirmed cluster alert. Localized rank and selective-forwarding attacks are contained within one cluster; wormhole campaigns require inter-cluster corroboration and exhibit higher latency.%
+}
+
+\newcommand{\CaptionFigSix}{%
+  False-positive rate stratified by traffic-priority class ($C0$--$C3$) in the mixed campaign scenario. Rule-only members contribute most benign alarms on $C0$ telemetry; cluster-head threshold verification suppresses correlated false positives.%
+}
+
+\newcommand{\CaptionFigSeven}{%
+  Additional Energest-reported energy overhead on member and cluster-head nodes relative to a no-IDS baseline. \textsc{Eco} mode reduces member duty by disabling rules R3--R4 and deferring CH verification at heads.%
+}
+
+\newcommand{\CaptionFigEight}{%
+  Alert and IDS control-packet overhead (packets per hour) at 50 nodes (pilot campaign; values beyond 50 nodes are design-target projections assuming sublinear scaling). RPL-ClusterIDS scales sublinearly because members signal only their cluster head and heads gate inter-cluster summaries.%
+}
+
+\newcommand{\CaptionFigNine}{%
+  Cluster stability proxy: mean cluster-head tenure and reclustering frequency versus mean NRE. As energy drains, clusters merge and $\Delta_c$ lengthens to preserve lifetime.%
+}
+
+\newcommand{\CaptionFigTen}{%
+  Temporal stratification of detection rate over the mixed attack campaign (stabilization, attack injection, recovery). RPL-ClusterIDS maintains sensitivity on $C3$ flows during the attack phase while \textsc{Eco} mode throttles non-critical checks during recovery.%
+}
+
+\newcommand{\CaptionFigEleven}{%
+  Operating-mode sensitivity (\textsc{Full}, \textsc{Balanced}, \textsc{Eco}) for mixed-campaign detection rate, false-positive rate, and member CPU overhead. The policy exposes an explicit security--lifetime trade-off.%
+}

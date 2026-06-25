@@ -1,0 +1,56 @@
+% Table IV — Parameter configuration (design values).
+\begin{table}[!t]
+  \caption{Parameter Configuration for Clustering, Detection, and Policy Engine}
+  \label{tab:parameters}
+  \centering
+  \scriptsize
+  \setlength{\tabcolsep}{3pt}
+  \renewcommand{\arraystretch}{1.08}
+  \begin{tabular}{@{}llc@{}}
+    \toprule
+    \textbf{Symbol} & \textbf{Description} & \textbf{Value} \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Cluster affinity weights (Eq.~\ref{eq:affinity})}} \\
+    $w_e$  & Energy (NRE) weight      & 0.35 \\
+    $w_s$  & Stability weight         & 0.25 \\
+    $w_t$  & Traffic-critical weight  & 0.25 \\
+    $w_d$  & Distance penalty         & 0.15 \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Cluster-head fitness weights (Eq.~\ref{eq:chfit})}} \\
+    $\lambda_1$ & NRE coefficient       & 0.40 \\
+    $\lambda_2$ & Stability coefficient & 0.25 \\
+    $\lambda_3$ & Centrality coefficient& 0.25 \\
+    $\lambda_4$ & Load penalty          & 0.10 \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textit{Thresholds}} \\
+    $\tau_{\mathrm{low}}$  & Low-energy merge threshold   & 0.25 \\
+    $\tau_{\mathrm{CH}}$   & CH eligibility NRE floor     & 0.40 \\
+    $\tau_{\mathrm{las}}$  & Member LAS report threshold  & 0.60 \\
+    $\tau_{\mathrm{ch}}$   & CH second-stage threshold    & 0.70 \\
+    $\theta_1$            & Min.\ member reports to trigger CH check & 1 \\
+    $\tau_{\mathrm{inter}}$& Inter-cluster alert threshold& 0.80 \\
+    \midrule
+    $\Delta_0$ & Baseline reclustering period (s) & 300 \\
+    $T_{\max}$ & Maximum CH tenure (s)            & 1800 \\
+    $\alpha$   & NRE sensitivity (Eq.~\ref{eq:recluster}) & 0.5 \\
+    $\beta$    & Control-load sensitivity         & 0.3 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{table}[!t]
+  \caption{Traffic-Priority Class Taxonomy ($C0$--$C3$)}
+  \label{tab:traffic-classes}
+  \centering
+  \scriptsize
+  \begin{tabular}{@{}cll@{}}
+    \toprule
+    \textbf{Class} & \textbf{Example application} & \textbf{IDS vigilance} \\
+    \midrule
+    $C0$ & Ambient temperature telemetry   & Minimal \\
+    $C1$ & Humidity / environmental sensing& Low \\
+    $C2$ & Healthcare vitals monitoring    & High \\
+    $C3$ & Industrial control / actuation  & Maximum \\
+    \bottomrule
+  \end{tabular}
+\end{table}

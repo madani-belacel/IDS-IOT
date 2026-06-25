@@ -1,0 +1,20 @@
+# Build provenance — RPL-ClusterIDS (IDS_IOT/)
+# Paste after each Cooja IDS campaign refresh.
+#
+# Contiki-NG root:
+#   git describe --always:
+#   git rev-parse HEAD:
+# Compiler:
+#   pdflatex --version:
+# Campaign:
+#   script: (TBD) sim/ids_campaign/run_ids_campaign.sh
+#   SIM_TIMEOUT_MS:
+#   seeds:
+#   attack scenarios: rank, sel.fwd, wormhole, DAO flood, mixed
+#   baselines: B1 central rules, B2 flat distributed, B3 central ML
+#   archive path: IDS_IOT/sim/ids_campaign/
+# Figures:
+#   manifest: IDS_IOT/figures_manifest.csv
+#   replace Figs. 4-11 placeholders with measured CSV exports
+# Date (UTC):
+# Submit target: IDS_IOT/main-ieee.pdf (NOT main.pdf)

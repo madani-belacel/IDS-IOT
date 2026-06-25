@@ -1,0 +1,16 @@
+% Fig. 9 — Cluster stability over simulation time.
+\begin{tikzpicture}[font=\footnotesize]
+\begin{axis}[
+  width=0.85\columnwidth, height=0.55\columnwidth,
+  xlabel={Simulation time (min)},
+  ylabel={CH tenure (s) / mean NRE},
+  xmin=0, xmax=180,
+  ymajorgrids=true,
+  legend style={at={(0.5,-0.22)},anchor=north,legend columns=3,font=\scriptsize},
+  legend entries={CH tenure,NRE,Re-cluster events},
+]
+\addplot[smooth,blue!70,no marks] table[x=time_min,y=mean_ch_tenure_s,col sep=comma]{data/real/parsed/agg/fig9_stability.csv};
+\addplot[smooth,green!50!black,no marks] table[x=time_min,y=mean_nre,col sep=comma]{data/real/parsed/agg/fig9_stability.csv};
+\addplot[smooth,red!70,dashed,no marks] table[x=time_min,y=mean_recluster_events,col sep=comma]{data/real/parsed/agg/fig9_stability.csv};
+\end{axis}
+\end{tikzpicture}

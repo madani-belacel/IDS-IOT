@@ -1,0 +1,14 @@
+% Fig. 3 — Context policy weights (illustrative).
+\begin{tikzpicture}[font=\footnotesize]
+  \begin{scope}
+    \draw[->] (0,0) -- (5.4,0) node[right]{\scriptsize Mean NRE};
+    \draw[->] (0,0) -- (0,3.0) node[above]{\scriptsize Weight};
+    \draw[thick, blue!70] plot coordinates {(0,0.25) (2.5,0.45) (5,0.65)};
+    \draw[thick, green!50!black] plot coordinates {(0,0.55) (2.5,0.35) (5,0.20)};
+    \draw[thick, orange!80!black, dashed] plot coordinates {(0,0.15) (2.5,0.30) (5,0.50)};
+    \node[blue!70] at (4.2,0.75) {\scriptsize $w_e$};
+    \node[green!50!black] at (4.2,0.15) {\scriptsize $w_s$};
+    \node[orange!80!black] at (3.5,0.55) {\scriptsize $w_t$};
+    \node[font=\scriptsize] at (2.5,-0.45) {Low NRE $\rightarrow$ \textsc{Eco} \quad High $C3$ $\rightarrow$ \textsc{Full}};
+  \end{scope}
+\end{tikzpicture}

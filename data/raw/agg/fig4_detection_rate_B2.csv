@@ -1,0 +1,6 @@
+variant,scenario,mean_det_rate
+B2,rank,0.0000
+B2,sel_fwd,0.0000
+B2,wormhole,0.0000
+B2,dao_flood,0.0000
+B2,mixed,0.4000
