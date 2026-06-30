@@ -1,7 +1,7 @@
 \section{Reproducibility Statement}
 \label{sec:reproducibility}
 
-RPL-ClusterIDS follows reproducible-research practices aligned with IEEE Internet of Things Journal expectations.
+RPL-ClusterIDS follows reproducible-research practices aligned with Computer Networks expectations.
 
 \subsection{Artifact Availability}
 The following artifacts are maintained in the public repository:
@@ -16,10 +16,10 @@ The following artifacts are maintained in the public repository:
 All code, simulation scenarios, raw and parsed logs, and figure-generation scripts are available in the release v1.0. A persistent DOI will be assigned upon acceptance.
 
 \subsection{Build Instructions}
-The IEEE manuscript is compiled from \texttt{main-ieee.tex}:
+The Elsevier preprint manuscript is compiled from \texttt{main.tex}:
 \begin{verbatim}
-pdflatex main-ieee && bibtex main-ieee &&
-pdflatex main-ieee && pdflatex main-ieee
+pdflatex main && bibtex main &&
+pdflatex main && pdflatex main
 \end{verbatim}
 Simulation execution requires Ubuntu with Contiki-NG and Cooja (Phase~2).
 The launcher \path{SIMULATION_CAMPAIGN_READY/run_campaign.sh} orchestrates the full factorial design in \path{campaign_matrix.tsv}.
