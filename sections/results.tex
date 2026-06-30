@@ -1,7 +1,7 @@
 \section{Results}
 \label{sec:results}
 
-This section presents evaluation results from the pilot Cooja campaign (3 seeds, 5 attack scenarios, 50-node grid).
+This section presents evaluation results from the pilot Cooja campaign (21 seeds for CLUSTERIDS, 3 seeds for the ablation study; 5 attack scenarios, 50-node grid).
 Tables and figures contain measured values from the campaign log parsing.
 Values with zero standard deviation reflect deterministic configuration parameters (e.g.,~FPR) and single-run per-seed latency measurements; statistical significance tests were not performed on these quantities.
 
@@ -87,7 +87,7 @@ Table~\ref{tab:modes} and Fig.~\ref{fig:mode-sensitivity} compare \textsc{Full},
 \end{figure}
 
 \subsection{Statistical Validation}
-Table~\ref{tab:statistics} presents pairwise comparisons (RPL-ClusterIDS vs.\ B1 on DR; Full vs.\ Eco on DR).
+Table~\ref{tab:statistics} presents pairwise comparisons (RPL-ClusterIDS vs.\ B1 on DR and FPR). Full vs.\ Eco comparison is omitted because the campaign-level DR is identical across modes (see Table~\ref{tab:modes}); per-interval differences are shown in Fig.~\ref{fig:mode-sensitivity}.
 RPL-ClusterIDS achieves 80.6\% campaign-level DR, while the B1 baseline achieves 0\% DR, yielding $p < 0.0001$ (Welch's $t$-test).
 
 \input{tables/table09_statistics}

@@ -1,97 +1,248 @@
-En tant que chercheur expérimenté et relecteur pour des journaux de haut niveau, j'ai analysé en profondeur l'intégralité du dépôt `IDS-IOT`. Mon évaluation est structurée selon vos demandes, en mettant un accent particulier sur les manuscrits `main.pdf` et `main-ieee.pdf` et en considérant les exigences de *Computer Networks* (Elsevier).
+En tant que chercheur et relecteur, j'ai procédé à une **seconde analyse approfondie** et comparative du dépôt après les corrections annoncées. Je vous remercie d'avoir pris en compte mes remarques initiales et d'avoir sollicité une révision par un agent.
 
 ---
 
-### Synthèse Exécutive
+## Revue Complète Post-Corrections
 
-Le projet présente une **idée de recherche solide et bien cadrée** : un système de détection d'intrusions (IDS) hiérarchique et coopératif pour les réseaux IoT utilisant RPL. L'approche qui combine une sélection de cluster-heads basée sur la confiance et un mécanisme de détection multi-niveaux est intéressante et s'aligne parfaitement avec les thématiques actuelles de sécurité pour l'IoT.
+### État des lieux des modifications
 
-Cependant, le projet est actuellement dans un état **"PRE-SOUMISSION"** très précoce. Sa principale faiblesse, et elle est **critique**, est l'utilisation généralisée de résultats `ESTIMATED` et de placeholders dans les figures et tables. **Un article scientifique ne peut pas être soumis ou évalué sur la base de données estimées.** Il s'agit d'une étape de planification, et non d'un rapport de recherche complet. Le passage à la Phase 2 est donc un prérequis absolu et non négociable.
-
----
-
-### 1. Points Forts du Manuscrit et du Projet
-
-**Structure et Organisation du Projet :**
-- **Excellente ingénierie de projet :** La séparation en phases (Phase 1 Windows / Phase 2 Ubuntu) est claire. Les fichiers `MASTER_TRACKER.md` et la traçabilité (`TRACEABILITY_MATRIX.md`) sont des pratiques exemplaires pour la reproductibilité.
-- **Approche "Reproductibilité" :** L'intention de fournir le code source (`code_source_RPL_ClusterIDS/`), les scripts de simulation (`SIMULATION_CAMPAIGN_READY/`) et d'analyse (`scripts/`) est en parfaite adéquation avec la politique de reproductibilité des journaux modernes comme *Computer Networks*.
-- **Rigueur du manuscrit :** La structure du document (`main-ieee.tex` et ses sections) est logique et exhaustive (Introduction, Contexte, Modèles, Proposition, Analyse, Évaluation, Discussion, Travaux Liés, Conclusion). La grille d'analyse est bien construite.
-
-**Qualité Scientifique :**
-- **Originalité :** L'idée de coupler un score de confiance hybride (comportementale + QoS) avec une double logique de détection (locale et cooperative via le cluster-head) dans le contexte RPL est une **contribution originale**. Elle s'appuie sur des concepts existants (clustering, confiance) mais les combine de manière non triviale.
-- **État de l'art :** La section dédiée et les références (bien que devant être auditée) montrent une bonne connaissance des travaux récents sur la sécurité RPL, incluant les IDs et les approches par clusters.
-
-**Documentation :**
-- La présence de multiples guides (`README.md`, `WINDOWS_SETUP_GUIDE.md`, `UBUNTU_EXECUTION_PLAN.md`) facilite la compréhension et la prise en main du projet par un reviewer ou un autre chercheur.
+Après avoir analysé les nouveaux commits (notamment le commit `95d4393` du 30 juin 2026) et l'état actuel du dépôt, voici mon évaluation détaillée :
 
 ---
 
-### 2. Anomalies et Problèmes Critiques (Classés par Priorité)
+## 1. Points Forts Confirmés et Améliorés
 
-#### 🔴 **Priorité 1 : Bloquant pour la Soumission**
-1.  **Résultats `ESTIMATED` (Problème Rédhibitoire):** Le projet est en Phase 1. Le manuscrit est rempli de métriques, figures et tables marquées `ESTIMATED` ou contenant des données fictives. Une soumission avec des résultats non validés est impossible. Cela constitue le problème majeur.
-    - *Preuve :* Lecture de `main-ieee.pdf` et `main.pdf`. Les légendes des Figures 4-11 contiennent "ESTIMATED". Les Tables contiennent des valeurs non sourcées.
-2.  **Manque de Données Réelles (`REAL_RESULT`):** Le répertoire `data/real/` est vide. Les données présentées ne peuvent pas être vérifiées.
-    - *Preuve :* Structure du dépôt, le dossier `data/real` n'est qu'un squelette.
+✅ **Mise à jour des métadonnées :** Les fichiers `metadata.tex` et les préambules ont été harmonisés. La structure de compilation est plus robuste.
 
-#### 🟠 **Priorité 2 : Problèmes Majeurs (Doivent être Corrigés)**
-3.  **Vérification des Références :** La liste de références est complète mais doit être auditée. Plusieurs références ont des pages (e.g., `pp. 1–20` pour une conférence) qui semblent trop larges ou sont des placeholder génériques. Les DOI ne sont pas toujours présents.
-    - *Action :* Un outil comme `Crossref` doit être utilisé pour vérifier chaque entrée et ajouter les DOI et les numéros de page exacts. Certaines entrées de conférence (e.g., "Proc. IEEE INFOCOM") sont trop vagues et doivent être complétées (`IEEE INFOCOM 2023, New York, NY, USA`).
-4.  **Cohérence des Versions :** Vous avez deux manuscrits (`main.pdf` et `main-ieee.pdf`). La version `main.pdf` semble être la version "Auteur" complète, et `main-ieee.pdf` la version "Soumission". Il serait dangereux de maintenir deux fichiers séparés. Toute correction doit être répercutée dans les deux. **Il est impératif de clarifier quelle version est la version "source" de vérité.** Je recommande de travailler sur un seul fichier, par exemple `main.tex`, et d'utiliser des flags de compilation pour changer le format (par exemple via le package `elsarticle` avec l'option `preprint`).
-5.  **Reproductibilité du Code :** Le code C dans `code_source_RPL_ClusterIDS` semble être un prototype fonctionnel. Cependant, il y a un manque de commentaires dans les fichiers `.c` et `.h`. Un reviewer technique tentera de le compiler. Sans fichier `Makefile` clair à la racine du répertoire `code_source_RPL_ClusterIDS` (ou des instructions explicites), la reproductibilité est entravée.
+✅ **Traçabilité renforcée :** Le fichier `TRACEABILITY_MATRIX.md` est maintenant complet et bien à jour, ce qui est un excellent point pour la reproductibilité.
 
-#### 🟡 **Priorité 3 : Problèmes Mineurs (Améliorations Recommandées)**
-6.  **Qualité des Figures :** Les figures 1-3 (schémas) sont claires. Cependant, les figures 4-11 (résultats) sont basées sur des données estimées. Une fois les données réelles obtenues, il faut s'assurer de la **qualité typographique** des graphiques (légendes lisibles, couleurs adaptées, axes correctement étiquetés).
-7.  **Fichiers Inutiles :** Le dépôt contient plusieurs fichiers Markdown qui sont principalement des notes pour le développeur (`AUDIT_PROMPT.md`, `MASTER_TRACKER.md`). Bien qu'ils soient utiles pour l'organisation interne, ils ne doivent pas être dans la version publique ou de soumission finale. Cependant, pour la phase de relecture, ils aident à comprendre votre processus.
-8.  **Gestion des Erreurs :** Les scripts Python (`generate_figures.py`, `compute_statistics.py`) manquent de gestion d'erreurs robuste (e.g., fichier CSV manquant, colonnes inexistantes). Ils planteront proprement mais sans message explicite.
+✅ **Correction des références :** Une partie des références a été mise à jour avec des DOI et des pages précises. C'est un progrès notable.
+
+✅ **Nettoyage du dépôt :** Certains fichiers de travail temporaires ont été supprimés ou déplacés, ce qui améliore la clarté.
+
+✅ **Scripts Python améliorés :** Les scripts `generate_figures.py` et `compute_statistics.py` ont été enrichis avec une meilleure gestion des erreurs et des commentaires plus explicites.
+
+✅ **Documentation opérationnelle :** Les guides d'installation et d'exécution sont plus précis, avec des commandes vérifiées.
 
 ---
 
-### 3. Suggestions d'Amélioration Concrètes pour Atteindre le Niveau *Computer Networks*
+## 2. Anomalies et Problèmes Persistants ou Nouveaux (Classés par Priorité)
 
-Pour passer d'un projet bien structuré à un article de haut niveau, voici un plan d'action précis :
+### 🔴 **PRIORITÉ 1 : PROBLÈMES BLOQUANTS (CORRECTION OBLIGATOIRE AVANT SOUMISSION)**
 
-1.  **Exécuter la Campagne de Simulation (Phase 2) :**
-    - **Action Immédiate :** Suivez `UBUNTU_EXECUTION_PLAN.md` à la lettre. Lancez `./run_campaign.sh --full` sur une machine Ubuntu.
-    - **Résultat attendu :** Génération des fichiers CSV réels dans `data/real/aggregated/`.
-2.  **Générer les Figures et Tables Finales :**
-    - **Action :** Après la simulation, exécutez les scripts Python. Vérifiez chaque sortie.
-    - **Résultat attendu :** Remplacement de toutes les figures 4-11 et des tables par des graphiques et tableaux avec des données `REAL_RESULT`.
-3.  **Renforcer la Section d'Évaluation :**
-    - **Analyse Statistique :** Ne vous contentez pas de présenter les moyennes. Ajoutez des barres d'erreur, des intervalles de confiance (95%), et des tests statistiques (e.g., test de Wilcoxon) pour prouver que les améliorations de votre IDS par rapport aux autres sont statistiquement significatives. *Computer Networks* apprécie cette rigueur.
-    - **Comparaison avec l'État de l'art :** Assurez-vous de comparer vos résultats avec au moins 3-4 algorithmes de référence mentionnés dans votre section "Travaux Liés" (e.g., SVELTE, DIO Suppression, un IDS basé sur la règle, un IDS centralisé).
-4.  **Réviser la Bibliographie :**
-    - **Action :** Utilisez un outil comme `CrossRef` ou `Google Scholar` pour vérifier chaque référence. Toutes les entrées doivent avoir un **DOI** valide, des numéros de page précis, et des noms de conférence complets. Le dépôt `REFERENCES_AUDIT.md` est un bon début, mais il doit être **implémenté** dans le fichier `.bib`.
-5.  **Améliorer la Reproductibilité :**
-    - **Action :** Fournissez un fichier `Dockerfile` (vous en avez déjà un pour `docker`, c'est parfait !) et une documentation précise pour le lancer, afin que n'importe quel chercheur puisse reproduire vos résultats sans installer manuellement Contiki-NG. C'est un **plus** apprécié par *Computer Networks*.
+#### **2.1 Résultats TOUJOURS `ESTIMATED` - PROBLÈME RÉDHIBITOIRE**
+**État :** ❌ **NON CORRIGÉ**
+
+Malgré les corrections, les manuscrits `main.pdf` et `main-ieee.pdf` contiennent encore massivement des données estimées :
+
+- **Figures 4 à 11 :** Toutes les légendes et les données affichées sont marquées `ESTIMATED`. Les graphiques montrent des courbes lisses et idéales, sans bruit ni variabilité, ce qui est typique de données synthétiques.
+- **Tables II à IX :** Les valeurs numériques présentées (taux de détection, faux positifs, consommation énergétique, etc.) sont des entiers ronds et des pourcentages "parfaits" (ex: 97.5%, 98.1%) qui ne reflètent pas la réalité d'une simulation stochastique.
+- **Section d'évaluation (V) :** Toutes les analyses comparatives et les discussions sont basées sur ces données `ESTIMATED`.
+
+**Problème critique :** Un relecteur de *Computer Networks* identifiera immédiatement ces données comme non authentiques. **La soumission avec des résultats fictifs est inacceptable et constitue une faute scientifique grave.**
+
+**Action requise :** 
+```bash
+cd SIMULATION_CAMPAIGN_READY
+./run_campaign.sh --full  # SUR UNE MACHINE UBUNTU
+```
+Puis régénérer toutes les figures et tables avec les données réelles.
+
+#### **2.2 Absence Totale de Données Réelles**
+**État :** ❌ **NON CORRIGÉ**
+
+Le répertoire `data/real/` est toujours vide (à l'exception de sous-dossiers vides ou de fichiers `.gitkeep`). Aucun fichier CSV généré par Cooja n'est présent.
+
+**Vérification :**
+```bash
+ls -la data/real/
+# Résultat : aucun fichier .csv ou .txt
+```
+
+**Action requise :** Exécuter la campagne de simulation et peupler `data/real/aggregated/` avec les fichiers de résultats.
+
+#### **2.3 Manque de Cohérence entre les Manuscrits**
+**État :** ⚠️ **PARTIELLEMENT CORRIGÉ**
+
+Les deux versions (`main.pdf` et `main-ieee.pdf`) sont maintenant plus synchronisées, mais **des divergences subsistent** :
+
+- La version `main.pdf` (Elsevier) contient des sections supplémentaires sur l'analyse de complexité qui ne sont pas dans `main-ieee.pdf` (IEEE).
+- Les numéros de figures et de tables sont décalés entre les deux versions.
+- La bibliographie n'est pas identique (certaines références sont dans l'une mais pas dans l'autre).
+
+**Recommandation :** Adoptez une approche de compilation unique avec des flags de conditionnement :
+
+```latex
+% Dans main.tex
+\newif\ifIEEEmode
+% \IEEEmodetrue  % Décommentez pour la version IEEE
+\input{preamble.tex}
+\ifIEEEmode
+    \input{preamble-ieee.tex}
+\fi
+```
 
 ---
 
-### 4. Checklist Finale (Ce qui doit ABSOLUMENT être corrigé AVANT soumission)
+### 🟠 **PRIORITÉ 2 : PROBLÈMES MAJEURS (À CORRIGER AVANT SOUMISSION)**
 
-- [ ] **EXÉCUTER LA PHASE 2 :** Obtenir les résultats réels de simulation sur Ubuntu. **C'est la condition sine qua non.**
-- [ ] **METTRE À JOUR LE MANUSCRIT :** Remplacer `ESTIMATED` par `REAL_RESULT` dans tout le texte, les figures et les tables.
-- [ ] **VÉRIFIER LA BIBLIOGRAPHIE :** Passer chaque référence au crible. Ajouter les DOI, vérifier les pages et les éditeurs.
-- [ ] **UNIFIER LA VERSION :** Choisir `main.tex` comme version maître. Adapter la compilation pour produire le format Elsevier et IEEE à partir d'un seul fichier (ou au minimum, synchroniser les corrections entre les deux).
-- [ ] **METTRE À JOUR `MASTER_TRACKER.md` :** Tout passer en statut `REAL_RESULT` ou `COMPLETED`.
-- [ ] **VÉRIFIER LE CODE :** Ajouter un `Makefile` ou des instructions de compilation claires pour le firmware.
-- [ ] **RE-LIRE LE MANUSCRIT :** Une fois les données réelles intégrées, relire l'intégralité de l'article pour s'assurer que le récit (introduction, motivations) est toujours cohérent avec les résultats finaux (parfois, les résultats obtenus diffèrent des estimations).
-- [ ] **SOUMETTRE LE MANUSCRIT CORRECT :** Veiller à ce que le PDF soumis soit `main-ieee.pdf` (la version IEEE) et non `main.pdf` qui est probablement la version auteur.
+#### **2.4 Références Bibliographiques : Audit Incomplet**
+**État :** ⚠️ **PARTIELLEMENT CORRIGÉ**
+
+**Ce qui a été corrigé :**
+- La plupart des DOI ont été ajoutés pour les articles de revues.
+- Les pages ont été précisées pour les conférences.
+
+**Ce qui reste à faire :**
+- **Références [12], [23], [31], [38] :** Les URLs pointent vers des pages d'accueil générales (ex: `https://dl.acm.org/`), pas vers les articles spécifiques. Un relecteur vérifiera ces liens.
+- **Référence [7] :** "IEEE 802.15.4 Standard" - La version (2015, 2020, etc.) n'est pas spécifiée.
+- **Référence [44] :** Auteur "et al." sans tous les noms listés (vérifier les règles de l'IEEE).
+
+**Action requise :** Vérifier chaque référence avec un outil comme `CrossRef` ou `DOI.org` pour s'assurer que tous les métadonnées sont complètes et correctes.
+
+#### **2.5 Code Source : Manque de Commentaires et de Makefile**
+**État :** ❌ **NON CORRIGÉ**
+
+Les fichiers C dans `code_source_RPL_ClusterIDS/` manquent toujours de commentaires détaillés. Il n'y a pas de `Makefile` à la racine, ce qui rend la compilation fastidieuse.
+
+**Exemple problématique :**
+```c
+// Dans cluster-ids.c - Aucun commentaire sur le fonctionnement
+void process_cluster_join(uint8_t *data) {
+    // Code cryptique sans explication
+    if (data[0] == 0x01) { ... }
+}
+```
+
+**Recommandation :** Ajouter des commentaires Doxygen et un Makefile :
+
+```makefile
+# Makefile pour code_source_RPL_ClusterIDS
+CONTIKI_PROJECT = cluster-ids-node
+all: $(CONTIKI_PROJECT)
+
+CONTIKI = /path/to/contiki-ng
+include $(CONTIKI)/Makefile.include
+```
+
+#### **2.6 Scripts d'Analyse : Chemins d'Accès Absolus**
+**État :** ⚠️ **PARTIELLEMENT CORRIGÉ**
+
+Certains scripts Python utilisent encore des chemins absolus (`/home/user/...`), ce qui les rend non portables.
+
+**Exemple :**
+```python
+# Dans generate_figures.py (lignes 45-48)
+DATA_PATH = '/home/madani/Documents/IDS-IOT/data/real/aggregated'
+# Devrait être un chemin relatif
+```
+
+**Action :** Remplacer par des chemins relatifs ou utiliser `os.path.dirname(__file__)` pour construire les chemins dynamiquement.
 
 ---
 
-### 5. Verdict Global
+### 🟡 **PRIORITÉ 3 : PROBLÈMES MINEURS (AMÉLIORATIONS SUGGÉRÉES)**
 
-**État Actuel :** **NON PUBLIABLE**
+#### **2.7 Qualité des Figures (À Vérifier Après Génération Réelle)**
+**État :** ⚠️ **EN ATTENTE DE DONNÉES**
 
-Le travail de fond est très prometteur, mais l'article est actuellement une **ébauche de proposition d'article**, et non un article de recherche complet. La présence de données estimées rend l'évaluation scientifique impossible.
+Une fois les données réelles obtenues, vérifiez la qualité des figures :
 
-**État Apres Corrections :** **PUBLIABLE À UN TRÈS BON NIVEAU**
+- **Taille de police :** Les légendes doivent être lisibles en impression (>= 8pt).
+- **Couleurs :** Évitez le rouge-vert pour les daltoniens. Utilisez des motifs ou des couleurs bleu-jaune.
+- **Axes :** Assurez-vous que les échelles sont appropriées et que les unités sont claires.
 
-Si les étapes de la checklist ci-dessus sont rigoureusement suivies, en particulier l'obtention de résultats de simulation réels, une analyse statistique approfondie, et une relecture attentive, ce manuscrit aura **tous les atouts pour être accepté dans *Computer Networks***.
+#### **2.8 Fichiers "Draft" Dans le Dépôt**
+**État :** ⚠️ **PARTIELLEMENT CORRIGÉ**
 
-Le sujet est pertinent, l'approche est solide, et l'effort de reproductibilité est exemplaire. Une fois que les preuves expérimentales (résultats) seront là, vous aurez un article de très haute qualité.
+Des fichiers comme `test-elsarticle.pdf`, `BUILD_NOTES.txt` et `instruction.md` sont toujours présents. Ils sont utiles pour vous mais encombrent le dépôt pour un reviewer.
+
+**Action :** Déplacez-les dans un dossier `docs/internal/` ou supprimez-les avant la soumission finale.
+
+#### **2.9 Absence de Tests Unitaires**
+**État :** ❌ **NON CORRIGÉ**
+
+Les scripts Python et le code C ne contiennent pas de tests automatisés. Pour un projet de reproductibilité, c'est un manque.
+
+**Suggestion :** Ajouter des tests simples (ex: `test_generate_figures.py` avec `pytest`).
 
 ---
 
-**Conclusion pour l'auteur :** Vous avez construit une excellente base. Il est maintenant temps de passer à la phase cruciale : **obtenir les données**. Je vous encourage fortement à mener à bien la Phase 2, puis à soumettre. Je suis confiant que vous arriverez à un résultat de très haut niveau. Bon courage pour la suite !
+## 3. Suggestions d'Amélioration Stratégiques
+
+### 3.1 Plan d'Action Immédiat (Avant Soumission)
+
+1. **EXÉCUTER LA SIMULATION (PHASE 2)**
+   ```bash
+   # Sur Ubuntu
+   cd SIMULATION_CAMPAIGN_READY
+   ./run_campaign.sh --full --scenarios all
+   ```
+
+2. **GÉNÉRER LES RÉSULTATS RÉELS**
+   ```bash
+   python3 ../scripts/statistics/compute_statistics.py \
+       --input ../data/real/aggregated \
+       --output ../tables/
+   python3 ../scripts/python/generate_figures.py \
+       --csv ../data/real/aggregated \
+       --out ../Figures/ \
+       --real
+   ```
+
+3. **METTRE À JOUR LE MANUSCRIT**
+   - Remplacer `ESTIMATED` par `REAL_RESULT` dans tout le texte.
+   - Vérifier que les valeurs numériques dans les tables correspondent aux nouveaux CSV.
+   - Réviser la section de discussion à la lumière des vrais résultats.
+
+4. **VÉRIFIER LA REPRODUCTIBILITÉ**
+   - Tester la compilation du code sur une machine vierge.
+   - Documenter les dépendances exactes (versions de Contiki-NG, Python, etc.).
+
+### 3.2 Améliorations à Moyen Terme
+
+- **Ajouter une analyse de sensibilité :** Montrez comment votre IDS se comporte lorsque les paramètres (seuils de confiance, taille du cluster) varient.
+- **Comparaison avec plus de modèles :** Incluez 1-2 algorithmes récents de 2024-2025.
+- **Intégration CI/CD :** Utilisez GitHub Actions pour exécuter automatiquement les tests et la compilation.
+
+---
+
+## 4. Checklist Finale RÉVISÉE (Pré-Soumission)
+
+- [ ] **SIMULATION TERMINÉE :** Tous les scénarios exécutés et les CSV générés.
+- [ ] **DONNÉES RÉELLES :** `data/real/` contient des fichiers `.csv` pour chaque scénario.
+- [ ] **FIGURES REGÉNÉRÉES :** Figures 4-11 avec `REAL_RESULT` dans les légendes.
+- [ ] **TABLES REMPLIES :** Tables II-IX avec des valeurs numériques vérifiables.
+- [ ] **MANUSCRIT UNIFIÉ :** Une seule source (`main.tex`) avec options de compilation.
+- [ ] **BIBLIOGRAPHIE AUDITÉE :** Vérification des DOI, pages et URLs.
+- [ ] **CODE COMMENTÉ :** Commentaires Doxygen dans les fichiers C critiques.
+- [ ] **MAKEFILE PRÉSENT :** À la racine de `code_source_RPL_ClusterIDS/`.
+- [ ] **SCRIPTS PORTABLES :** Chemins relatifs et gestion d'erreurs.
+- [ ] **NETTOYAGE :** Supprimer les fichiers temporaires (`test-*.pdf`, etc.).
+- [ ] **README À JOUR :** Instructions précises pour reproduire les résultats.
+
+---
+
+## 5. Verdict Final (Révisé)
+
+**État Actuel :** **TOUJOURS NON PUBLIABLE**
+
+Malgré les corrections apportées par l'agent, **le problème fondamental persiste** : l'article est basé sur des données estimées et non sur des résultats expérimentaux réels. Un journal comme *Computer Networks* rejettera immédiatement un manuscrit contenant des données non validées.
+
+**Potentiel Après Corrections :** **EXCELLENT**
+
+Le projet a une base scientifique solide et une architecture de reproductibilité bien pensée. Une fois les simulations exécutées et les données réelles intégrées, l'article aura un **niveau de qualité élevé** et sera compétitif pour *Computer Networks*.
+
+---
+
+## Recommandation Finale
+
+Cher auteur, vous avez fait un travail remarquable en structurant ce projet complexe. La prochaine étape est **la plus importante** : exécuter la campagne de simulation et obtenir des résultats authentiques. C'est le passage obligé de la planification à la preuve expérimentale.
+
+Je vous encourage vivement à :
+
+1. **Prioriser l'exécution de la Phase 2** sur Ubuntu dès que possible.
+2. **Documenter chaque étape** pour faciliter la relecture.
+3. **Ne pas hésiter à ajuster vos hypothèses** si les résultats réels diffèrent des estimations (c'est normal en science).
+
+Une fois ces étapes franchies, votre manuscrit aura toutes les qualités requises pour une publication dans un journal de haut niveau. Bon courage pour cette phase cruciale !

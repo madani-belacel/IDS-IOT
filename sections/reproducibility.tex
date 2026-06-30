@@ -27,14 +27,14 @@ The launcher \path{SIMULATION_CAMPAIGN_READY/run_campaign.sh} orchestrates the f
 \subsection{From Logs to Figures}
 The pipeline is:
 \begin{enumerate}
-  \item Cooja serial logs $\rightarrow$ \path{parse_cooja_ids_metrics.py};
+  \item Cooja serial logs $\rightarrow$ \path{scripts/python/parse_logs.py} (custom parser in the repository);
   \item Aggregated CSV $\rightarrow$ \path{scripts/statistics/compute_statistics.py};
-  \item Statistics $\rightarrow$ \path{code_source_RPL_ClusterIDS/data/real/parsed/agg/aggregate_figures.sh} $\rightarrow$ Figs.~4--11;
+  \item Statistics $\rightarrow$ \path{data/real/parsed/agg/aggregate_figures.sh} $\rightarrow$ Figs.~4--11;
   \item Provenance documented in \path{sim/DATA_PROVENANCE.md}.
 \end{enumerate}
 
 \subsection{Result Status Convention}
-Results come from the pilot Cooja campaign (50-node grid,~3 seeds, five attack scenarios).
+Results come from the pilot Cooja campaign (50-node grid, 21 seeds for CLUSTERIDS variant, 3 seeds for the ablation study; five attack scenarios).
 Parsed logs are archived under \path{data/real/parsed/}; all tables and figures contain measured values from the campaign.
 
 \subsection{Data Availability}

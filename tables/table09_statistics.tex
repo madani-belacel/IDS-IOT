@@ -10,12 +10,13 @@
     \toprule
     \textbf{Comparison} & \textbf{Metric} & \textbf{Mean} & \textbf{SD} & \textbf{95\% CI} & \textbf{$t$-test $p$} & \textbf{MWU $p$} \\
     \midrule
-    Ours vs B1 & DR  & 80.6\% / 0.0\% & 36.8 / 0.0 & [66.0,94.8] / [0,0] & $<0.0001$ & $<0.001$ \\
-    Ours vs B1 & FPR & 0.4\% / 0.0\% & 0.2 / 0.0 & [0.3,0.5] / [0,0] & $<0.0001$ & $<0.001$ \\
+    Ours vs B1 & DR  & 80.6\% / 0.0\% & 36.8 / 0.0 & [66.0,94.8] / [0,0] & $<0.05^{\dagger}$ & $<0.05^{\dagger}$ \\
+    Ours vs B1 & FPR & 0.4\% / 0.0\% & 0.2 / 0.0 & [0.3,0.5] / [0,0] & $<0.05^{\dagger}$ & $<0.05^{\dagger}$ \\
     \bottomrule
   \end{tabular}
   \vspace{2pt}
   \raggedright\scriptsize
   \dag{} Campaign-level detection rate (any confirmed alert per attack period).
-  \ddag{} B2 and B3 are excluded from statistical comparison because their detection data were not collected in this pilot campaign (n=3 seeds). The limited sample size (n=3) means $p$-values should be interpreted as preliminary; a full campaign with n=20 seeds is planned.
+  \ddag{} B2 and B3 are excluded from statistical comparison because their detection data were not collected in this pilot campaign (n=3 seeds).
+  $^{\dagger}$ Preliminary $p$-values with n=3 seeds; Welch's $t$-test and Mann--Whitney $U$ are underpowered at this sample size. A full campaign with n=20 seeds is planned for definitive statistical validation.
 \end{table*}

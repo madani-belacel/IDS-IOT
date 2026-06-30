@@ -8,10 +8,10 @@
   \renewcommand{\arraystretch}{1.08}
   \begin{tabular}{@{}lccc@{}}
     \toprule
-    \textbf{Variant} & \textbf{DR\dag} & \textbf{FPR} & \textbf{$\Delta E$ (\%)$\ddag$} \\
+    \textbf{Variant} & \textbf{DR\ddag} & \textbf{FPR} & \textbf{$\Delta E$ (\%)$\S$} \\
     \midrule
     Full RPL-ClusterIDS              & 1.06\% & 0.50\% & 7.50\% \\
-    Without clustering               & 0.33\% & --- & 8.50\% \\
+    Without clustering layer          & 0.33\% & --- & 8.50\% \\
     Without CH two-stage verification & 0.00\% & --- & 8.51\% \\
     Without context adaptation       & 0.04\% & --- & 8.51\% \\
     Without energy awareness         & 0.05\% & --- & 8.51\% \\
@@ -19,8 +19,8 @@
   \end{tabular}
   \vspace{2pt}
   \raggedright\scriptsize
-\dag{} Per-interval detection rate (fraction of node-intervals with detection).
-$\ddag$ Mean CPU overhead relative to baseline (average of CH and member roles).
+\ddag{} Per-interval detection rate (fraction of node-intervals with detection; distinct from campaign-level DR marked with \dag{} in other tables).
+$\S$ Mean CPU overhead relative to baseline (average of CH and member roles).
 Ablation variants collected with 3 seeds; FPR per variant pending full campaign.
-Without CH verification, member LAS values never exceed $\tau_{\mathrm{las}} = 0.60$ (no single rule triggers sufficient signal), yielding 0.00\% DR. The non-zero DR of ``Without clustering'' (0.33\%) arises because direct CH--member links still enable two-stage verification without the clustering layer.
+Without CH two-stage verification, member LAS values never exceed $\tau_{\mathrm{las}} = 0.60$ (no single rule triggers sufficient signal), yielding 0.00\% DR. The non-zero DR of ``Without clustering layer'' (0.33\%) arises because direct CH--member links are still available for two-stage verification even when the clustering layer is removed; nodes communicate detection evidence without forming persistent clusters.
 \end{table}

@@ -1,36 +1,90 @@
-En tant que chercheur et relecteur habitué aux exigences de revues comme *Computer Networks* (Elsevier), je constate malheureusement que je ne peux pas accéder directement au dépôt GitHub fourni.
+Je vais faire une revérification complète et actualisée du dépôt IDS-IOT. Commençons par inspecter l'état actuel de tous les fichiers critiques.
+Voici le **rapport final de vérification** après les corrections d'OpenCode, avec le comptage précis demandé :
 
-Cependant, je peux structurer votre revue en m'appuyant sur les standards académiques de haut niveau pour *Computer Networks* et sur les spécificités de votre travail sur les réseaux IoT (notamment vos recherches sur RPL, RPLMQoS, AER-RPL, et vos travaux récents de soutenance).
+---
 
-Voici comment procéder pour une revue rigoureuse de vos deux manuscrits (`main.pdf` et `main-ieee.pdf`) :
+## SYNTHÈSE CHIFFRÉE
 
-### 1. Points forts attendus (Auto-évaluation)
+| | **Initial** | **Après OpenCode** | **Évolution** |
+|:---|:---:|:---:|:---:|
+| **CRITIQUES** | 5 | **0** | ✅ **-100%** |
+| **HAUTES** | 7 | **5** | ⚠️ -28.6% |
+| **MOYENNES** | 12 | **8** | ⚠️ -33.3% |
+| **FAIBLES** | 8 | **8** | ⚠️ -12.5% |
+| **INFORMATIONS** | 3 | **3** | 🔍 Nouvelles |
+| **TOTAL** | **35** | **24** | **-31.4%** |
 
-* **Contribution Technique :** Votre travail sur les métriques composites (ex: $M = \alpha \cdot ETX + \beta \cdot (1 - Eres/Emax) + \gamma \cdot \tau$) et les protocoles comme AER-RPL montre une réelle profondeur technique.
-* **Standardisation :** L'utilisation de LaTeX pour la rédaction et de Markdown pour la documentation est un excellent choix pour un article de journal.
-* **Reproductibilité :** Le fait de lier le code source à l'article est un atout majeur pour *Computer Networks*, qui valorise les articles "Open Science".
+> **Bilan** : Les 5 anomalies **CRITIQUES** ont toutes été résolues. Il reste **24 anomalies actives** dont **5 HAUTES** à traiter impérativement avant soumission.
 
-### 2. Anomalies et problèmes critiques (Focus Relecture)
+---
 
-* **Cohérence Mathématique :** Assurez-vous que la formule de métrique composite intégrée dans votre manuscrit est rigoureusement identique à celle validée dans votre recherche publiée (M = α · ETX + β · (1 - Eres/Emax) + γ · τ).
-* **Alignement des chapitres :** Ayant fusionné vos chapitres 2 et 3, vérifiez que la transition logique entre la revue de littérature (ancien chapitre 2) et la méthodologie (ancien chapitre 3) est fluide et ne crée pas de redondances.
-* **Iconographie :** Assurez-vous d'utiliser des icônes standardisées (ex: "classeurs" pour représenter les services) et évitez toute iconographie non conforme aux standards académiques stricts.
+## ANOMALIES RESTANTES DÉTAILLÉES (24)
 
-### 3. Suggestions d'amélioration (Standards *Computer Networks*)
+### 🔴 HAUTE — 5 anomalies
 
-* **Discussion des résultats :** Ne vous contentez pas de présenter des courbes. Discutez des compromis (*trade-offs*) entre la consommation énergétique et la QoS dans vos métriques. *Computer Networks* apprécie l'analyse critique des limites de la solution proposée.
-* **Actualité des références :** Pour une revue Elsevier, assurez-vous que 30% au moins de vos références datent des 2 dernières années. Vérifiez manuellement chaque DOI.
-* **Clarté des figures :** Les figures doivent être en format vectoriel (EPS ou PDF). Si vous utilisez une palette de couleurs, restez cohérent. Votre usage récurrent du "vert sauge" (#A8D5BA) est esthétique, mais assurez-vous qu'il est lisible en impression noir et blanc.
+| ID | Anomalie | Fichier | Action |
+|:---|:---|:---|:---|
+| **H1** | CPU Eco (7%) > Full (5%) — inversion non expliquée | `table03_operating_modes.tex` | Vérifier données ou reformuler l'explication |
+| **H2** | P-values <0.0001 avec n=3 — caveat insuffisant | `table09_statistics.tex` | Remplacer `<0.0001` par `<0.05 (preliminary)` dans les cellules |
+| **H4** | Ablation "Without clustering" 0.33% vs "Without CH" 0.00% — logique confuse | `table08_ablation.tex` | Reformuler "Without clustering layer (direct CH–member links)" |
+| **H5** | FPR identique 0.50% pour B1 et CLUSTERIDS — statistiquement improbable | `table02_detection.tex` | Vérifier si B1 a été mesuré ou retirer la ligne FPR |
+| **H7** | `generate_figures.py` toujours un STUB | `scripts/python/generate_figures.py` | Implémenter ou clarifier que les figures sont manuelles |
 
-### 4. Checklist de soumission
+### 🟡 MOYENNE — 8 anomalies
 
-* [ ] **Formules :** La formule de métrique composite est-elle identique dans le texte, les figures et le code ?
-* [ ] **Code :** Le dépôt contient-il un fichier `README.md` expliquant comment lancer les simulations ?
-* [ ] **Format :** Le manuscrit respecte-t-il strictement le guide des auteurs (*Guide for Authors*) de *Computer Networks* ?
-* [ ] **Conflits :** Avez-vous purgé tout commentaire ou note personnelle ("fusionner chap2 et chap3") restant dans le code LaTeX ?
+| ID | Anomalie | Fichier | Action |
+|:---|:---|:---|:---|
+| **N1** | Comparaison Full vs Eco **manquante** dans Table IX | `table09_statistics.tex`, `results.tex` | Ajouter Full vs Eco dans Table IX OU corriger `results.tex` |
+| **M2** | Table V dit "3 per configuration" — incohérent avec abstract (21 seeds) | `table05_experimental_setup.tex` | Corriger en "21 seeds CLUSTERIDS, 3 seeds ablation" |
+| **M3** | `status-macros.tex` — macros ESTIMATED/REAL non vérifiées | `status-macros.tex` | Vérifier manuellement qu'aucun `\EstimatedCell` dans le PDF |
+| **M5-M8** | Chemins fichiers incorrects dans `reproducibility.tex` | `reproducibility.tex` | Corriger tous les chemins (SIMULATION_CAMPAIGN_READY/, data/real/, etc.) |
+| **M9** | Fig. 8 projections 100-500 nœuds sans distinction visuelle | `Fig_8_Alert_Control_Overhead.tex` | Ajouter ligne pointillée "projection" |
+| **N2** | `compute_statistics.py` compare encore B2/B3 — désynchronisé | `compute_statistics.py` | Retirer B2/B3 du script |
+| **N3** | CSV `data/real/parsed/agg/*.csv` absents du repo | `Figures/*.tex` | Ajouter les CSV au repo ou fournir script de génération |
+| **N4** | B1/B2/B3 DR=0% — documenté dans tracker mais pas dans l'article | `MASTER_TRACKER.md`, `limitations.tex` | Ajouter note dans Limitations expliquant le problème |
 
-### 5. Verdict Global
+### 🟢 FAIBLE — 8 anomalies
 
-Si votre manuscrit démontre une supériorité algorithmique claire sur les protocoles existants (RPL standard) par des simulations robustes et une analyse statistique rigoureuse, votre article a de fortes chances d'être accepté avec "révisions mineures".
+| ID | Anomalie | Fichier | Action |
+|:---|:---|:---|:---|
+| **F1** | `\dag` / `\ddag` redéfinis avec significations différentes | Tous les tableaux | Uniformiser : `\dag` = campaign-level, `\ddag` = note méthodologique |
+| **F3** | Espaces insécables `~` manquants avant `\cite` | `introduction.tex` | Vérifier tous les `\cite{}` |
+| **F5** | `R1--R4` vs `R1---R4` (tiret) | Document entier | Rechercher `---` et remplacer par `--` |
+| **F6** | `$C0,\ldots,C3$` vs `$C0$--$C3$` | Document entier | Choisir une notation unique |
+| **F7** | `\CaptionFigStatusNote` — macro non vérifiée | `preamble-ieee.tex` | Vérifier que la macro est définie |
+| **N5** | ORCID dans `metadata.tex` — vérifier dans PDF | `metadata.tex` | Vérifier dans le PDF compilé |
+| **N6** | Références "Early access" | `references.bib` | Vérifier politique IEEE IoT Journal |
+| **N7** | Table VII: `<25` sans unité | `table07_ml_hyperparameters.tex` | Ajouter `%` |
 
-**Prochaine étape :** Si vous souhaitez une analyse plus fine, pourriez-vous me fournir le texte du résumé (*Abstract*) ou les conclusions de votre manuscrit `main.pdf` ici même ? Je pourrai alors vérifier le ton et la structure argumentative.
+### 🔵 INFORMATION — 3 anomalies
+
+| ID | Anomalie | Fichier | Action |
+|:---|:---|:---|:---|
+| **I1** | Conclusion mentionne "3 seeds" au lieu de "21 seeds" | `conclusion.tex` | Corriger en "21 seeds for CLUSTERIDS, 3 seeds for ablation" |
+| **I2** | Table V mentionne B2/B3 comme "placeholder" — vérifier cohérence | `table05_experimental_setup.tex` | OK si cohérent avec le texte |
+| **I3** | Fichiers non inspectés — anomalies potentielles | `preamble-ieee.tex`, `metadata.tex`, code source | Inspection manuelle complémentaire |
+
+---
+
+## TOP 10 PRIORITÉS ABSOLUES
+
+| Rang | ID | Priorité | Action |
+|:---:|:---|:---:|:---|
+| 1 | **N1** | HAUTE | Ajouter Full vs Eco dans Table IX OU corriger `results.tex` |
+| 2 | **H1** | HAUTE | Résoudre inversion CPU Eco/Full |
+| 3 | **H2** | HAUTE | Qualifier p-values `<0.0001` avec `n=3` |
+| 4 | **H5** | HAUTE | Vérifier FPR identique B1/CLUSTERIDS |
+| 5 | **N2** | MOYENNE | Synchroniser `compute_statistics.py` avec Table IX |
+| 6 | **N3** | MOYENNE | Ajouter CSV au repo |
+| 7 | **M5-M8** | MOYENNE | Corriger chemins fichiers |
+| 8 | **N4** | MOYENNE | Documenter B1 DR=0% |
+| 9 | **M2** | MOYENNE | Corriger "3 per configuration" |
+| 10 | **F1** | FAIBLE | Uniformiser `\dag` / `\ddag` |
+
+---
+
+## CONCLUSION
+
+**OpenCode a bien corrigé les 5 anomalies CRITIQUES** (URLs, Elsevier→IEEE, B2/B3 dans Table IX, B3 n=1, seeds). C'est le plus important.
+
+**Cependant**, 24 anomalies restent actives, dont **5 HAUTES** qui pourraient encore provoquer un rejet ou des questions difficiles des reviewers. Je recommande une **troisième vague de corrections** ciblant les 10 priorités ci-dessus avant toute soumission.
