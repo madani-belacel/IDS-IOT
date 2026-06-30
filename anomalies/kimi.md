@@ -1,218 +1,164 @@
-J'ai analysé attentivement votre manuscrit "RPL-ClusterIDS" pour le journal Computer Networks. Voici l'identification détaillée de toutes les anomalies, incohérences et problèmes détectés, organisés par catégorie :
+Je vais analyser le nouveau dépôt de code source pour identifier toutes les anomalies. Commençons par explorer la structure du repository
+Voici le rapport complet des **35 anomalies** identifiées dans votre dépôt **IDS-IOT** (article + code source), organisé par priorité :
 
 ---
 
-## 1. ANOMALIES NUMÉRIQUES ET INCOHÉRENCES DE DONNÉES
+## RÉSUMÉ
 
-### 1.1 Tableau 8 (Page 19) - Données manquantes et incohérences
-- **B2 et B3** : Le tableau indique `0.0%` pour le taux de détection (DR) de B2/B3, mais la note de bas de page indique `‡FPR data not collected for B2 and B3 baselines in this campaign` — **incohérence** : si les données FPR n'ont pas été collectées, pourquoi afficher `0.0%` plutôt que `N/A` ou un tiret ?
-- **B3 dans le scénario "mixed"** : Le graphique Fig. 4 montre B3 avec ~40% de DR, alors que le Tableau 8 indique `0.0%` — **contradiction flagrante** entre le tableau et la figure.
-
-### 1.2 Fig. 4 (Page 19) vs Tableau 8
-- Le graphique montre des barres non-nulles pour B3 dans le scénario "mixed" (~40%), alors que le tableau indique 0.0% pour tous les scénarios B1-B3. C'est une **anomalie majeure** : soit le tableau est erroné, soit la légende du graphique est incorrecte.
-
-### 1.3 Fig. 5 (Page 20) - Latence de détection
-- La latence pour B1 est affichée comme identique (~25s) pour tous les scénarios, ce qui est statistiquement improbable si B1 est un baseline fonctionnel. Cela suggère que **B1 n'a détecté aucune attaque** (coherent avec DR=0%), mais alors pourquoi afficher une latence ? C'est trompeur — il faudrait indiquer "N/A" ou ne pas afficher B1.
-
-### 1.4 Fig. 6 (Page 22) - FPR par classe de trafic
-- Toutes les barres (B1, B2, B3, RPL-ClusterIDS) sont identiques à ~5×10⁻³. C'est **statistiquement suspect** : B1 (centralisé) et RPL-ClusterIDS (distribué hiérarchique) ne peuvent pas avoir exactement le même FPR à la précision affichée. Possible erreur de génération de figure ou de copie de données.
-
-### 1.5 Tableau 10 (Page 23) - Données dupliquées/erronées
-- Le tableau est **fragmenté et corrompu** : `DR†FPR†80.6%0.50%` apparaît en double, puis `nced 80.6%0.50%80.6%0.50%` — clairement une erreur de formatage/copie. Les données CPU sont manquantes pour Full et Balanced.
-
-### 1.6 Fig. 11 (Page 27) - Échelle et lisibilité
-- Les barres de DR et FPR sont **invisibles** (valeurs ~0.8 et ~0.005) comparées à l'échelle CPU (~5-7%). C'est une **erreur de visualisation** : les séries ne devraient pas être sur le même axe Y, ou il faut utiliser des axes doubles.
+| Priorité | Nombre | Impact |
+|:---|:---:|:---|
+| **CRITIQUES** | 5 | Risque de rejet immédiat par les reviewers |
+| **HAUTES** | 7 | Impact scientifique majeur — remise en question des résultats |
+| **MOYENNES** | 12 | Impact sur qualité et reproductibilité |
+| **FAIBLES** | 8 | Typographiques — professionnalisme |
+| **INFORMATIONS** | 3 | À vérifier manuellement |
+| **TOTAL** | **35** | |
 
 ---
 
-## 2. ANOMALIES TEXTUELLES ET TYPOGRAPHIQUES
+## ANOMALIES CRITIQUES (5) — À CORRIGER ABSOLUMENT
 
-### 2.1 Page 1 (Résumé)
-- `80.6%DR` → manque espace : `80.6% DR`
-- `0.50%FPR` → manque espace : `0.50% FPR`
-- `5–7%CPU` → manque espace : `5–7% CPU`
-- `3seeds` → `3 seeds`
-- `5attack` → `5 attack`
+### [C1] URL du dépôt obsolète dans l'abstract
+- **Localisation** : `sections/abstract.tex`, `sections/reproducibility.tex`
+- **Problème** : L'abstract pointe vers `https://github.com/madani-belacel/RPL-ClusterIDS/releases/tag/v1.0` (ancien dépôt supprimé) au lieu du nouveau `IDS-IOT`
+- **Impact** : Les lecteurs ne pourront PAS accéder aux artefacts
+- **Correction** : Remplacer par `https://github.com/madani-belacel/IDS-IOT` et créer une release v1.0
 
-### 2.2 Page 2 (Abstract)
-- `80.6%campaign-level` → `80.6% campaign-level`
-- `0.50%false-positive` → `0.50% false-positive`
-- `5–7%CPU` → `5–7% CPU`
-- `1.1%across` → `1.1% across`
-- `Fig.11` → `Fig. 11` (espace manquant, récurrent dans tout le document)
+### [C2] Conclusion référence encore l'ancien dépôt
+- **Localisation** : `sections/conclusion.tex`
+- **Problème** : `"All materials are openly available at https://github.com/madani-belacel/RPL-ClusterIDS"`
+- **Impact** : Lien mort — incohérence totale
+- **Correction** : Remplacer par `https://github.com/madani-belacel/IDS-IOT`
 
-### 2.3 Page 3
-- `RPL-ClusterIDS,a` → virgule manquante ou espace : `RPL-ClusterIDS, a`
-- `energyand` → `energy and`
-- `context-adaptive` → cohérent, mais `context-adaptive` vs `context adaptive` (inconsistance dans le document)
+### [C3] Reproducibility Statement référence main.tex (Elsevier) au lieu de main-ieee.tex
+- **Localisation** : `sections/reproducibility.tex`
+- **Problème** : `"The Elsevier preprint manuscript is compiled from main.tex"` mais le manuscrit cible est IEEE (`main-ieee.tex`)
+- **Impact** : Confusion majeure sur le format et la cible de soumission
+- **Correction** : Remplacer par `"The IEEE manuscript is compiled from main-ieee.tex"`
 
-### 2.4 Page 4
-- `RPL-ClusterIDS (this work)` dans le tableau : le mot "Table" est tronqué en `able 1` — erreur de rendu LaTeX
+### [C4] B2/B3 présentés dans Table II avec `'---'` mais comparés statistiquement dans Table IX
+- **Localisation** : `tables/table02_detection.tex`, `tables/table09_statistics.tex`
+- **Problème** : Table II dit `"FPR and DR data not collected for B2 and B3"` mais Table IX compare `"Ours vs B2"` et `"Ours vs B3"` avec des p-values `<0.0001`. **Comment calculer des p-values sans données ?**
+- **Impact** : Fausse validation statistique — risque de rejet pour fraude ou négligence
+- **Correction** : Retirer les lignes B2/B3 de Table IX OU collecter les données réelles
 
-### 2.5 Page 5
-- `Omathcal((N^{2})` → clairement une **erreur LaTeX** : devrait être $\mathcal{O}(N^2)$
-
-### 2.6 Page 6
-- `RPLClusterIDS` → `RPL-ClusterIDS` (tiret manquant, récurrent)
-
-### 2.7 Page 7
-- `trust-based` vs `trust based` (inconsistance)
-- `RPLspecific` → `RPL-specific`
-
-### 2.8 Page 8
-- `security–lifetime` → tiret long (en-dash) utilisé, mais ailleurs tiret court (hyphen) — **inconsistance typographique**
-
-### 2.9 Page 10
-- `N R E` → `NRE` (espaces parasites dans la formule mathématique)
-- `Stabj` → `Stab_j` (indice manquant)
-- `Disti,j` → `Dist_{i,j}` (formatage incorrect)
-
-### 2.10 Page 11
-- `T_{\mathrm{m a x}}` → espaces parasites dans le subscript mathématique
-
-### 2.11 Page 12
-- `Fig.3` → `Fig. 3` (espace manquant)
-
-### 2.12 Page 13
-- `RPL-ClusterIDS` vs `RPLClusterIDS` (récurrent)
-
-### 2.13 Page 14
-- `SIMULATION_CAMPAIGN_READY/attacks/` → chemin de fichier en dur dans le texte, inhabituel pour un article
-
-### 2.14 Page 15
-- `3perconfiguration` → `3 per configuration`
-- `seeds.txt）` → parenthèse fermante chinoise `）` au lieu de parenthèse latine `)` — **anomalie d'encodage**
-
-### 2.15 Page 16
-- `O_{\mathrm{a l e r t}}, O{{\ {bar O}}}{{\ \{{t r l}\ \}}}` → **formule LaTeX complètement corrompue**, illisible
-
-### 2.16 Page 17
-- `ameter Configuration` → `Parameter Configuration` (début de mot tronqué)
-
-### 2.17 Page 18
-- `ble 6` → `Table 6` (début de mot tronqué, récurrent pour les tableaux)
-- `firmware scale [0,∼175]` → phrase incompréhensible, probablement `firmware; scale [0,~175]`
-
-### 2.18 Page 19
-- `Fig.4and Fig.5` → `Fig. 4 and Fig. 5`
-- `Fig.6stratifies` → `Fig. 6 stratifies`
-
-### 2.19 Page 20
-- `Fig.9links` → `Fig. 9 links`
-
-### 2.20 Page 21
-- `9.9\cdot10^{-3}` → texte parasite au-dessus de la figure, probablement une valeur de données mal placée
-
-### 2.21 Page 22
-- `Table 10` : texte corrompu `DR†FPR†80.6%0.50%` (déjà mentionné)
-
-### 2.22 Page 23
-- `O_{\mathrm{a l e r t}}, O{{\ {bar O}}}{{\ \{{t r l}\ \}}}` → répétition de la formule corrompue
-
-### 2.23 Page 24
-- `Fig.8is` → `Fig. 8 is`
-- `50–500nodes` → `50–500 nodes`
-
-### 2.24 Page 25
-- `Fig.10stratifies` → `Fig. 10 stratifies`
-- `Fig.11quantify` → `Fig. 11 quantify`
-
-### 2.25 Page 26
-- `50-node grid only` → titre de section sans majuscule initiale (inconsistant avec les autres sections)
-
-### 2.26 Page 27
-- `T_{\mathrm{m a x}}` → espaces parasites
-- `C0,\ldots,C3` → formatage mathématique en plein texte
-
-### 2.27 Page 28
-- `twostage` → `two-stage` (tiret manquant)
-
-### 2.28 Page 29
-- `code_source_RPL_ClusterIDS/` → chemin de fichier en dur
-- `figure generation` → `figure-generation` (inconsistance)
-
-### 2.29 Page 30
-- `data/real/(schemas` → `data/real/ (schemas` (espace manquant)
-- `figure generation` → `figure-generation`
-- `per-figure` → phrase incomplète
+### [C5] Table IX : B3 a n=1 mais SD=38.2 et CI=[64.3,95.7] — IMPOSSIBLE
+- **Localisation** : `tables/table09_statistics.tex`
+- **Problème** : La note dit `"B3 has only one observation (n=1)"` mais la ligne montre `SD = 38.2`, `95% CI = [64.3, 95.7]`. Avec n=1, l'écart-type est **indéfini** et l'IC 95% ne peut PAS être calculé.
+- **Impact** : Données statistiques fabriquées — risque de rejet sévère
+- **Correction** : Remplacer TOUTES les métriques de B3 par N/A ou retirer la ligne
 
 ---
 
-## 3. ANOMALIES DE CONTENU SCIENTIFIQUE ET MÉTHODOLOGIQUES
+## ANOMALIES HAUTES (7) — FORTEMENT RECOMMANDÉES
 
-### 3.1 Baselines B2 et B3 (Page 14, 19)
-- Le texte indique que B2 et B3 sont "planned for a future full campaign" (page 14), mais le Tableau 8 et les figures les incluent avec des valeurs `0.0%` ou des barres graphiques — **contradiction méthodologique majeure**. On ne peut pas comparer avec des baselines non implémentées.
+### [H1] CPU Eco (7%) > Full (5%) — inversion contre-intuitive
+- **Localisation** : `tables/table03_operating_modes.tex`
+- **Problème** : Eco mode consomme PLUS de CPU que Full. L'explication `"Eco focuses detection on energy-intensive control-plane checks"` est contradictoire avec le nom "Eco"
+- **Correction** : Vérifier les données brutes OU reformuler : *"Eco mode concentrates detection on fewer but more computationally intensive control-plane checks, resulting in higher per-check CPU usage"*
 
-### 3.2 Scénario "Mixed" - DR de 80.6% vs 95.1%
-- Le texte (page 2) indique `80.6% campaign-level detection rate† (95.1% on individual attack scenarios)`. Le Tableau 8 montre 95.1% pour les attaques individuelles et 80.6% pour mixed. C'est cohérent, mais la note `†` n'est pas définie immédiatement — elle l'est page 19.
+### [H2] P-values <0.0001 avec n=3 — significativité douteuse
+- **Localisation** : `tables/table09_statistics.tex`
+- **Problème** : Avec seulement 3 seeds, obtenir p<0.0001 est statistiquement très suspect (test t de Welch avec 2 degrés de liberté)
+- **Correction** : Ajouter un caveat : *"Preliminary statistical validation with limited sample size (n=3); full campaign with n=20 planned"*
 
-### 3.3 Ablation Study (Tableau 9, Page 20)
-- `Without CH two-stage verification` donne `0.00%` DR — le texte explique que c'est parce que les LAS membres restent sous τ_las=0.60. Mais alors comment expliquer que `Without clustering` (qui n'a pas de CH) ait `0.33%` DR ? C'est **logiquement incohérent** : sans clustering, il n'y a pas de CH, donc le mécanisme devrait être similaire à "Without CH verification". La différence n'est pas expliquée.
+### [H3] MASTER_TRACKER.md indique "21 seeds CLUSTERIDS" mais l'article dit "3 seeds"
+- **Localisation** : `MASTER_TRACKER.md` vs article
+- **Problème** : Le tracker dit 21 seeds pour CLUSTERIDS et 3 pour ablation, mais l'abstract mentionne uniquement "3 seeds"
+- **Correction** : Clarifier dans l'article : *"Pilot campaign: 21 seeds for CLUSTERIDS variant, 3 seeds for ablation study"*
 
-### 3.4 CPU Overhead (Tableau 10, Page 23)
-- Eco mode a `7%` CPU, Balanced `6%`, Full `5%` — **inversion contre-intuitive** : Eco (mode économique) consomme PLUS de CPU que Full. Le texte ne l'explique pas. C'est soit une erreur de données, soit une explication manquante.
+### [H4] Table VIII (Ablation) : "Without clustering" 0.33% DR vs "Without CH verification" 0.00%
+- **Localisation** : `tables/table08_ablation.tex`
+- **Problème** : Logiquement confus — sans clustering, il n'y a pas de CH définis, donc comment avoir des liens CH-member ?
+- **Correction** : Clarifier : *"Without clustering" = tous les nœuds exécutent rôles membres + CH sans regroupement*
 
-### 3.5 Fig. 7 (Page 23) - Énergie
-- RPL-ClusterIDS montre ~42% overhead pour membres et ~78% pour CH, alors que le texte (page 5) cite "5–7% CPU overhead". L'échelle Energest (%) n'est pas la même que CPU (%) — mais cela n'est pas clairement expliqué, créant une confusion potentielle.
+### [H5] FPR identique (0.50%) pour toutes les approches dans Table II
+- **Localisation** : `tables/table02_detection.tex`
+- **Problème** : B1 (centralisé) et RPL-ClusterIDS (distribué hiérarchique) ont EXACTEMENT le même FPR — statistiquement improbable
+- **Correction** : Vérifier les données brutes FPR ou retirer la ligne FPR pour B1
 
-### 3.6 Nombre de graines (seeds)
-- Le texte répète "3 seeds" comme une limitation, mais ne justifie pas pourquoi ce nombre est suffisant pour des prétentions statistiques. Le Tableau 11 montre des p-values <0.0001 avec n=3 — ces p-values sont **statistiquement douteuses** avec si peu de degrés de liberté.
+### [H6] Conclusion mentionne "Computer Networks submission" mais cible est IEEE IoT Journal
+- **Localisation** : `sections/conclusion.tex`
+- **Problème** : `"provide a foundation for Computer Networks submission"` incohérent avec le format IEEE
+- **Correction** : Remplacer par `"IEEE Internet of Things Journal submission"`
 
-### 3.7 Fig. 8 (Page 24) - Scalabilité
-- Le titre indique "values beyond 50 nodes are design-target projections" — mais ces projections sont tracées comme des points de données réels (diamants bleus). C'est **trompeur** : il faudrait une ligne pointillée ou une distinction visuelle claire.
-
-### 3.8 Références [25] et [31]
-- `[25]` : `Babylonian Journal of Artificial Intelligence 2026(2026)7–19,,Early access` — double virgule
-- `[31]` : `19(2026)33,,Early access` — double virgule
-- `\ {mathrm V y}` à la fin de [31] — **texte parasite LaTeX**
-
----
-
-## 4. ANOMALIES DE STRUCTURE ET DE FORMAT
-
-### 4.1 Numérotation des figures
-- Fig. 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 — séquence correcte, mais certaines figures sont référencées avant leur apparition (Fig. 3 page 12, mais figure page 13).
-
-### 4.2 Numérotation des tableaux
-- Tableaux 1-11 présents, mais Tableaux 3-7 sont "Parameter Configuration" fragmentés — confusion entre Tableau 3 (paramètres), Tableau 4 (classes), Tableau 5 (règles membres), Tableau 6 (features CH), Tableau 7 (paramètres moteur). C'est dense et pourrait être fusionné.
-
-### 4.3 Page 20 - Numéro de page "0"
-- La page contient `0` comme numéro de page — **erreur de pagination** dans le PDF généré.
-
-### 4.4 Figures manquantes référencées
-- Le texte mentionne "see Fig. 11" pour le per-interval DR, mais Fig. 11 montre CPU/DR/FPR par mode — la valeur "1.1%" n'est pas visiblement annotée sur la figure.
+### [H7] Figures 4-11 marquées REAL_RESULT mais generate_figures.py est un STUB
+- **Localisation** : `MASTER_TRACKER.md`, `scripts/python/generate_figures.py`
+- **Problème** : Le tracker dit REAL_RESULT mais `generate_figures.py` est un stub non implémenté. Les figures sont-elles vraiment basées sur data/real/ ?
+- **Correction** : Vérifier que les fichiers `.tex` dans `Figures/` pointent bien vers `data/real/`
 
 ---
 
-## 5. ANOMALIES DE REPRODUCTIBILITÉ
+## ANOMALIES MOYENNES (12)
 
-### 5.1 URL du dépôt
-- `https://github.com/madani-belacel/RPL-ClusterIDS` — URL correcte mais non vérifiée dans le document (pas de lien hypertexte actif dans le PDF).
-
-### 5.2 Chemin de fichiers absolus
-- `SIMULATION_CAMPAIGN_READY/`, `data/estimated/`, `code_source_RPL_ClusterIDS/` — ces chemins sont présentés comme des références internes, mais un lecteur externe ne peut pas les résoudre sans le dépôt.
-
-### 5.3 "A persistent DOI will be requested upon acceptance"
-- Mentionné deux fois (pages 29 et 30) — répétition inutile.
+| ID | Anomalie | Localisation | Correction |
+|:---|:---|:---|:---|
+| M1 | Table IV (Parameters) non inspecté — placeholders ? | `tables/table04_parameters.tex` | Vérifier absence de `\EstimatedCell` |
+| M2 | Tables V, VI, VII en `READY_FOR_SIMULATION` mais incluses | `MASTER_TRACKER.md` | Marquer comme "design-only" si applicable |
+| M3 | `status-macros.tex` — macros ESTIMATED/REAL non vérifiées | `status-macros.tex` | Vérifier aucun `\EstimatedCell` restant |
+| M4 | GATR citation [29] ancien PDF vs nouvelle clé `gatr2025` | `bib/references.bib` | Vérifier cohérence clés de citation |
+| M5 | `\path{SIMULATION_CAMPAIGN_READY/}` utilisé mais dossier absent du repo | `sections/experimental_setup.tex` | Ajouter au repo ou expliquer |
+| M6 | `data/real/` mentionné mais absent de la structure | `sections/reproducibility.tex` | Ajouter au repo avec README |
+| M7 | `parse_cooja_ids_metrics.py` référencé mais absent de `scripts/` | `sections/reproducibility.tex` | Ajouter le script ou corriger doc |
+| M8 | `aggregate_figures.sh` chemin incorrect (ancien nom dossier) | `sections/reproducibility.tex` | Corriger vers `scripts/` |
+| M9 | Fig. 8 : projections tracées comme données réelles | `Figures/Fig_8_Alert_Control_Overhead.tex` | Ajouter ligne pointillée "projection" |
+| M10 | Table `rule-params` référencée mais fichier inexistant | `sections/implementation.tex` | Créer `table_rule_params.tex` ou supprimer réf |
+| M11 | Table `ch-features` référencée mais fichier inexistant | `sections/implementation.tex` | Créer `table_ch_features.tex` ou supprimer réf |
+| M12 | Table `traffic-classes` référencée mais fichier inexistant | `sections/experimental_setup.tex` | Créer `table_traffic_classes.tex` ou supprimer réf |
 
 ---
 
-## RÉSUMÉ DES ANOMALIES CRITIQUES (À CORRIGER ABSOLUMENT AVANT PUBLICATION)
+## ANOMALIES FAIBLES (8) — TYPOGRAPHIQUES
 
-| Priorité | Anomalie | Localisation |
+| ID | Anomalie | Localisation | Correction |
+|:---|:---|:---|:---|
+| F1 | `\dag` et `\ddag` redéfinis avec significations différentes | Tous les tableaux | Uniformiser les définitions |
+| F2 | `\textsc{Balanced/Full/Eco}` casse incohérente | Tout le document | Toujours utiliser `\textsc` |
+| F3 | Espaces insécables `~` manquants avant `\cite{}` | `sections/introduction.tex` etc. | Ajouter `~` avant chaque `\cite` |
+| F4 | `"behaviour"` (UK) vs `"behavior"` (US) | `sections/limitations.tex` | Uniformiser en US English |
+| F5 | `R1--R4` vs `R1---R4` (tiret long vs court) | Tout le document | Uniformiser en `--` (en-dash) |
+| F6 | `$C0,\ldots,C3$` vs `C0--C3` | Tout le document | Choisir une notation |
+| F7 | `\CaptionFigStatusNote` macro non définie (fichiers non lus) | `sections/results.tex` | Vérifier dans `preamble-ieee.tex` |
+| F8 | `\PaperTitleIEEE`, `\PaperAuthorsPDF` macros non inspectées | `main-ieee.tex` | Vérifier `metadata.tex` |
+
+---
+
+## INFORMATIONS À VÉRIFIER (3)
+
+| ID | À vérifier | Fichiers concernés |
 |:---|:---|:---|
-| **CRITIQUE** | Incohérence B3 : 0% dans tableau vs ~40% dans Fig. 4 | Tableau 8, Fig. 4 |
-| **CRITIQUE** | Tableau 10 corrompu (données dupliquées) | Page 23 |
-| **CRITIQUE** | Formule LaTeX corrompue O_alert | Pages 16, 23 |
-| **CRITIQUE** | Baselines B2/B3 "planned" mais présentées comme données | Page 14, Tableau 8 |
-| **HAUTE** | CPU Eco (7%) > Full (5%) — inversion non expliquée | Tableau 10 |
-| **HAUTE** | Ablation "Without clustering" 0.33% vs "Without CH" 0.00% — incohérence | Tableau 9 |
-| **HAUTE** | FPR identique pour toutes les approches dans Fig. 6 | Fig. 6 |
-| **MOYENNE** | Nombreuses erreurs d'espacement (Fig.11, 3seeds, etc.) | Tout le document |
-| **MOYENNE** | Parenthèse chinoise `）` dans seeds.txt | Page 15 |
-| **MOYENNE** | Double virgules dans références [25], [31] | Page 31-32 |
-| **FAIBLE** | Numéro de page "0" | Page 20 |
+| I1 | Fichiers non inspectés — anomalies potentielles | `preamble-ieee.tex`, `metadata.tex`, `tables/table04-07.tex`, `bib/references.bib`, tous les `Figures/*.tex`, `code_source_RPL_ClusterIDS/*` |
+| I2 | ML pipeline mentionné mais `BLOCKED` / `READY_FOR_SIMULATION` | Clarifier dans le papier que le ML est design-only |
+| I3 | `ids_campaign_log` mentionné comme DONE mais non inspecté | Inspecter le code source |
 
 ---
 
-Recommande fortement une relecture complète par un éditeur natif anglophone et une vérification rigoureuse des données source (CSV/logs) pour les Figures 4, 6 et le Tableau 10 avant soumission.
+## PLAN DE CORRECTION RECOMMANDÉ
+
+### Phase 1 — AVANT SOUMISSION (Critiques + Hautes)
+1. **[C1-C2]** Corriger toutes les URLs vers `IDS-IOT`
+2. **[C3]** Corriger Elsevier → IEEE
+3. **[C4]** Retirer B2/B3 de Table IX ou collecter données
+4. **[C5]** Corriger statistiques impossibles B3 (n=1)
+5. **[H1]** Vérifier/corriger inversion CPU Eco/Full
+6. **[H2]** Ajouter caveat sur p-values n=3
+7. **[H3]** Clarifier 3 vs 21 seeds
+8. **[H5]** Vérifier données FPR identiques
+9. **[H6]** Corriger Computer Networks → IEEE IoT Journal
+10. **[H4]** Clarifier ablation "Without clustering"
+11. **[H7]** Vérifier figures utilisent bien `data/real/`
+
+### Phase 2 — AVANT SOUMISSION (Moyennes)
+12. **[M10-M12]** Créer tableaux manquants ou supprimer références
+13. **[M5-M8]** Vérifier chemins fichiers et présence scripts
+14. **[M1-M3]** Vérifier tableaux paramètres et macros
+15. **[M9]** Distinguer projections dans Fig. 8
+16. **[M4]** Vérifier cohérence références bib
+
+### Phase 3 — POLISH FINAL (Faibles)
+17. **[F1-F8]** Corrections typographiques et style
+18. **[I1]** Inspection complémentaire fichiers non lus
+
+---
+
+**Recommandation** : Transmettez cette liste à l'agent OpenCode en priorisant les 11 anomalies CRITIQUES + HAUTES de la Phase 1. Après correction, republiez le dépôt et je ferai une analyse de suivi sur les anomalies restantes + les fichiers non encore inspectés (`preamble-ieee.tex`, `metadata.tex`, `bib/references.bib`, code source firmware, etc.).

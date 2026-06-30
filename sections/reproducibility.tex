@@ -1,13 +1,13 @@
 \section{Reproducibility Statement}
 \label{sec:reproducibility}
 
-RPL-ClusterIDS follows reproducible-research practices aligned with Computer Networks expectations.
+RPL-ClusterIDS follows reproducible-research practices aligned with IEEE Internet of Things Journal expectations.
 
 \subsection{Artifact Availability}
 The following artifacts are maintained in the public repository:
 \begin{itemize}
-  \item Repository: \url{https://github.com/madani-belacel/RPL-ClusterIDS}
-  \item Release v1.0 (complete ZIP package): \url{https://github.com/madani-belacel/RPL-ClusterIDS/releases/tag/v1.0}
+  \item Repository: \url{https://github.com/madani-belacel/IDS-IOT}
+  \item Release v1.0 (complete ZIP package): \url{https://github.com/madani-belacel/IDS-IOT/releases/tag/v1.0}
   \item Contiki-NG firmware: \path{code_source_RPL_ClusterIDS/} (variants B1, B2, B3, and RPL-ClusterIDS);
   \item Campaign specification: scenarios, attacks, seeds, metric definitions;
   \item Data layout: \path{data/estimated/} (schemas and templates), \path{data/real/} (post-campaign outputs);
@@ -16,10 +16,10 @@ The following artifacts are maintained in the public repository:
 All code, simulation scenarios, raw and parsed logs, and figure-generation scripts are available in the release v1.0. A persistent DOI will be assigned upon acceptance.
 
 \subsection{Build Instructions}
-The Elsevier preprint manuscript is compiled from \texttt{main.tex}:
+The IEEE manuscript is compiled from \texttt{main-ieee.tex}:
 \begin{verbatim}
-pdflatex main && bibtex main &&
-pdflatex main && pdflatex main
+pdflatex main-ieee && bibtex main-ieee &&
+pdflatex main-ieee && pdflatex main-ieee
 \end{verbatim}
 Simulation execution requires Ubuntu with Contiki-NG and Cooja (Phase~2).
 The launcher \path{SIMULATION_CAMPAIGN_READY/run_campaign.sh} orchestrates the full factorial design in \path{campaign_matrix.tsv}.
@@ -38,5 +38,5 @@ Results come from the pilot Cooja campaign (50-node grid,~3 seeds, five attack s
 Parsed logs are archived under \path{data/real/parsed/}; all tables and figures contain measured values from the campaign.
 
 \subsection{Data Availability}
-All firmware, campaign scripts, parsed datasets, and figure-generation code are publicly available at \url{https://github.com/madani-belacel/RPL-ClusterIDS/releases/tag/v1.0}.
+All firmware, campaign scripts, parsed datasets, and figure-generation code are publicly available at \url{https://github.com/madani-belacel/IDS-IOT/releases/tag/v1.0}.
 \path{data/real/parsed/} contains the parsed CSV outputs from the pilot campaign.
