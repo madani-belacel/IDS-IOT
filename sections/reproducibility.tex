@@ -8,9 +8,9 @@ The following artifacts are maintained in the public repository:
 \begin{itemize}
   \item Repository: \url{https://github.com/madani-belacel/IDS-IOT}
   \item Release v1.0 (complete ZIP package): \url{https://github.com/madani-belacel/IDS-IOT/releases/tag/v1.0}
-  \item Contiki-NG firmware: \path{code_source_RPL_ClusterIDS/} (variants B1, B2, B3, and RPL-ClusterIDS);
+  \item Contiki-NG firmware: \path{code_source_RPL_ClusterIDS/} (variants B1, B2, B3, CLUSTERIDS, and ablation variants);
   \item Campaign specification: scenarios, attacks, seeds, metric definitions;
-  \item Data layout: \path{data/estimated/} (schemas and templates), \path{data/real/} (post-campaign outputs);
+  \item Data layout: \path{data/estimated/} (synthetic templates for pipeline testing), \path{data/real/} (pilot campaign parsed outputs);
   \item Figure catalog: \path{figures_manifest.csv} with per-figure provenance.
 \end{itemize}
 All code, simulation scenarios, raw and parsed logs, and figure-generation scripts are available in the release v1.0. A persistent DOI will be assigned upon acceptance.
@@ -27,7 +27,7 @@ The launcher \path{SIMULATION_CAMPAIGN_READY/run_campaign.sh} orchestrates the f
 \subsection{From Logs to Figures}
 The pipeline is:
 \begin{enumerate}
-  \item Cooja serial logs $\rightarrow$ \path{scripts/python/parse_logs.py} (custom parser in the repository);
+  \item Cooja serial logs $\rightarrow$ \path{code_source_RPL_ClusterIDS/simulations/scripts/parse_cooja_ids_metrics.py};
   \item Aggregated CSV $\rightarrow$ \path{scripts/statistics/compute_statistics.py};
   \item Statistics $\rightarrow$ \path{data/real/parsed/agg/aggregate_figures.sh} $\rightarrow$ Figs.~4--11;
   \item Provenance documented in \path{sim/DATA_PROVENANCE.md}.
@@ -35,7 +35,7 @@ The pipeline is:
 
 \subsection{Result Status Convention}
 Results come from the pilot Cooja campaign (50-node grid, 21 seeds for CLUSTERIDS variant, 3 seeds for the ablation study; five attack scenarios).
-Parsed logs are archived under \path{data/real/parsed/}; all tables and figures contain measured values from the campaign.
+Parsed logs are archived under \path{data/real/parsed/}. CPU, RAM, and energy values in the pilot campaign are pipeline placeholders generated from node-logical properties; real Energest measurements will replace them in the full campaign. Detection rates and FPR reflect the simulated IDS overlay state as captured by the Cooja tick-based metrics pipeline.
 
 \subsection{Data Availability}
 All firmware, campaign scripts, parsed datasets, and figure-generation code are publicly available at \url{https://github.com/madani-belacel/IDS-IOT/releases/tag/v1.0}.

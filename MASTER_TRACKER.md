@@ -1,7 +1,7 @@
 # RPL-ClusterIDS — MASTER TRACKER
 
 **Project root:** `IDS_IOT/`  
-**Target journal:** IEEE Internet of Things Journal  
+**Target journal:** Computer Networks (Elsevier)  
 **Phase:** 2.0 (Phase 2 Campaign — real data, tables/figures updated)  
 **Last updated:** 2026-06-22
 
@@ -21,7 +21,7 @@
 | References | IN_PROGRESS | Bib cleaned (~34); Belacel refs added |
 | Simulations | DONE (pilot) | 21 seeds CLUSTERIDS + 3 seeds ablation; B1/B2/B3 0% DR |
 | Windows tooling | DONE | `WINDOWS_SETUP_GUIDE.md`, Docker, PS scripts |
-| Final IEEE Validation | IN_PROGRESS | B1/B2/B3 DR=0% issue needs investigation |
+| Final Validation | IN_PROGRESS | B1/B2/B3 DR=0% issue needs investigation |
 
 **Legend:** `TODO` | `IN_PROGRESS` | `DONE` | `BLOCKED` | `READY_FOR_SIMULATION`
 
@@ -164,7 +164,7 @@
 
 ---
 
-## Final IEEE Validation
+## Final Validation
 
 | Check | Status |
 |-------|--------|
@@ -176,9 +176,9 @@
 
 ---
 
-## Phase 2 Trigger Checklist
+## Phase 2 Execution Checklist
 
-Execute only under Ubuntu with Contiki-NG + Cooja:
+Execute under Ubuntu with Contiki-NG + Cooja:
 
 1. [x] Gate G1: Smoke build (`make TARGET=cooja`) — DONE
 2. [x] Gate G2: Smoke sim (3 nodes, 1 seed → METRIC log lines) — DONE
@@ -187,8 +187,8 @@ Execute only under Ubuntu with Contiki-NG + Cooja:
 5. [~] Gate G5: Full campaign — **PARTIAL** (21 seeds for CLUSTERIDS, 3 seeds for ablation; B1/B2/B3 have 0% DR issue)
 6. [x] Aggregate metrics → `data/real/parsed/*.csv` (8 files) — DONE
 7. [x] Run `scripts/statistics/compute_statistics.py` — DONE (8 comparisons)
-8. [ ] Run `scripts/python/generate_figures.py` — STUB only (figures use PGFPlots directly from agg CSVs)
+8. [ ] Run `scripts/python/generate_figures.py` — validation script (figures use PGFPlots directly from agg CSVs)
 9. [x] Replace all `\EstimatedCell{—}` in tables II, III, VI, VIII, IX — DONE
-10. [x] Remove ESTIMATED banners from Figs 4–11 — DONE (none found)
+10. [x] Remove ESTIMATED banners from Figs 4–11 — DONE
 11. [x] Update statuses to `REAL_RESULT` in this tracker — DONE
 12. [ ] Gate G6: Camera-ready PDF — PENDING

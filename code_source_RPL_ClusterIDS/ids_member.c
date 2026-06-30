@@ -1,9 +1,9 @@
 /*
- * ids_member.c — détection au niveau membre (règles R1 à R4).
- * Chaque règle a son propre EWMA pour éviter les faux positifs
- *   sur les fluctuations normales du réseau.
- * TODO: rendre le seuil EWMA (+15) configurable depuis project-conf ?
- *   (là c'est en dur, ce seuil marche bien en simu mais bon...)
+ * ids_member.c — member-level detection (rules R1 to R4).
+ * Each rule has its own EWMA to avoid false positives on
+ *   normal network fluctuations.
+ * TODO: make EWMA threshold (+15) configurable via project-conf?
+ *   (currently hardcoded; works well in simulation)
  */
 
 #include "ids_member.h"
@@ -45,23 +45,23 @@ ids_member_tick(uint8_t traffic_class, uint8_t nre_x100, uint8_t rule_mask)
      raw[3] = ids_attack_wormhole_signal();
    }
 
-   //  EWMA par règle — rolling baseline
-   //  Au lieu de balancer le raw signal direct, on lisse avec l'historique.
-   //  Si raw dépasse ewma+15, on le considère comme suspect.
-   //  (15, c'est un peu arbitraire, faudrait le calculer à partir de la variance)
-   for(i = 0; i < 4; i++) {
+   //  Per-rule EWMA — rolling baseline
+   //  Smooth raw signal against history instead of using raw values directly.
+   //  If raw exceeds ewma+15, the value is flagged as suspicious.
+    //  (15 is a heuristic; should be derived from observed variance)
+    for(i = 0; i < 4; i++) {
       ewma[i] = (uint8_t)(((uint16_t)ewma[i] * 7u + (uint16_t)raw[i]) / 8u);
       if(raw[i] > ewma[i] + 15) {
         det[i] = raw[i];
       }
    }
 
-   //  LAS = R1×3 + R2×2 + R3 + R4, le tout /4.
-   //  Les poids reflètent la sévérité perçue de chaque attaque.
-   //  À vérifier si ça correspond aux données de campagne.
+   //  LAS = R1×3 + R2×2 + R3 + R4, divided by 4.
+   //  Weights reflect the perceived severity of each attack type.
+   //  Should be validated against campaign data.
    las = (uint8_t)((det[0] * 3u + det[1] * 2u + det[2] + det[3]) / 4u);
    if(nre_x100 < 20) {
-      las = las / 2;  //  si le noeud est à court d'énergie, on divise le LAS par 2
+      las = las / 2;  //  energy-scaling: halve LAS when node is depleted
    }
    alarm = las > IDS_THRESHOLD_LAS ? 1 : 0;
 
@@ -83,7 +83,7 @@ ids_member_get_confusion(uint32_t *tp, uint32_t *fp, uint32_t *tn, uint32_t *fn)
   if(fp) *fp = fp_m;
   if(tn) *tn = tn_m;
   if(fn) *fn = fn_m;
-   //  NOTE: les pointeurs NULL sont gérés, mais normalement on passe toujours des bons
+    //  NOTE: NULL pointers are handled safely; callers should always pass valid pointers
 }
 
 uint8_t

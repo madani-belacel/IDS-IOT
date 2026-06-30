@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Validate CSV → Figure mapping for Figs. 4-11 (stub: no figure generation).
+Validate aggregated CSV files for Figs. 4-11 and report data provenance.
 
-This script validates that aggregated CSV files exist for all 8 figures.
-Actual figures are hand-written PGFPlods code in Figures/Fig_*.tex,
-which read directly from data/real/parsed/agg/ CSVs.
+Figures are maintained as hand-written PGFPlots TikZ code in Figures/Fig_*.tex,
+which read directly from data/real/parsed/agg/ CSVs via \\addplot table.
+This script validates all CSV files exist and have expected content.
 
 Usage:
   python generate_figures.py --csv data/real/parsed/agg --out Figures/
+  python generate_figures.py --csv data/real/parsed/agg --dry-run
 """
 from __future__ import annotations
 
@@ -15,17 +16,6 @@ import argparse
 import csv
 import sys
 from pathlib import Path
-
-FIG_MAP = {
-    4: ("detection_rate.csv", "Fig_4_Detection_Rate_Comparison.tex"),
-    5: ("detection_latency.csv", "Fig_5_Detection_Latency_Comparison.tex"),
-    6: ("fpr.csv", "Fig_6_FPR_By_Scenario.tex"),
-    7: ("energy_overhead.csv", "Fig_7_Energy_Overhead_Comparison.tex"),
-    8: ("alert_overhead.csv", "Fig_8_Alert_Control_Overhead.tex"),
-    9: ("cluster_stability.csv", "Fig_9_Cluster_Stability.tex"),
-    10: ("temporal_detection.csv", "Fig_10_Temporal_Detection_Stratification.tex"),
-    11: ("operating_modes.csv", "Fig_11_Operating_Mode_Sensitivity.tex"),
-}
 
 
 def load_csv(path: Path) -> list[dict[str, str]]:
@@ -37,33 +27,50 @@ def load_csv(path: Path) -> list[dict[str, str]]:
 
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--csv", type=Path, required=True)
-    ap.add_argument("--out", type=Path, required=True)
-    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--csv", type=Path, required=True, help="CSV data directory (data/real/parsed/agg/)")
+    ap.add_argument("--out", type=Path, required=True, help="Output directory (Figures/)")
+    ap.add_argument("--dry-run", action="store_true", help="Validate only, do not write")
     args = ap.parse_args()
 
-    missing = []
-    ready = []
-    for fig_num, (csv_name, tex_name) in FIG_MAP.items():
-        csv_path = args.csv / csv_name
-        rows = load_csv(csv_path)
-        if not rows:
-            missing.append(csv_name)
-        else:
-            ready.append((fig_num, csv_name, tex_name, len(rows)))
+    # Expected CSV files per figure (matched to existing files in data/real/parsed/agg/)
+    csv_checks = {
+        4: {"fig4_detection_rate.csv", "fig4_detection_rate_B1.csv", "fig4_detection_rate_CLUSTERIDS.csv"},
+        5: {"fig5_latency.csv", "fig5_latency_B1.csv", "fig5_latency_CLUSTERIDS.csv"},
+        6: {"fig6_fpr.csv", "fig6_B1.csv", "fig6_CLUSTERIDS.csv"},
+        7: {"fig7_energy.csv", "fig7_ch.csv", "fig7_member.csv"},
+        8: {"fig8_alerts.csv", "fig8_alerts_B1.csv", "fig8_alerts_CLUSTERIDS.csv"},
+        9: {"fig9_stability.csv"},
+        10: {"fig10_temporal.csv"},
+        11: {"fig11_modes.csv"},
+    }
 
-    if ready:
-        print("[REAL_RESULT] Ready to generate:")
-        for item in ready:
-            print(f"  Fig {item[0]}: {item[2]} ({item[3]} rows from {item[1]})")
+    all_ok = True
+    for fig_num, expected_files in sorted(csv_checks.items()):
+        present = []
+        missing = []
+        for fname in expected_files:
+            csv_path = args.csv / fname
+            rows = load_csv(csv_path)
+            if rows:
+                present.append((fname, len(rows)))
+            else:
+                missing.append(fname)
 
-    if missing:
-        print("\n[ESTIMATED] Missing CSV (Phase 1 expected):", ", ".join(missing))
-        if not args.dry_run:
-            sys.exit(1)
+        if missing:
+            all_ok = False
+            print(f"[WARNING] Fig {fig_num}: missing {', '.join(missing)}")
+        if present:
+            for fname, nrows in present:
+                print(f"[OK] Fig {fig_num}: {fname} ({nrows} rows)")
 
-    if not missing:
-        print("\n[TO_BE_REPLACED] Implement pgfplots/matplotlib export per figure.")
+    if all_ok:
+        print("\n[OK] All CSV files present for all 8 figures (Figs. 4-11).")
+        print("[NOTE] Figures are hand-written PGFPlots TikZ in Figures/Fig_*.tex.")
+        print("       Run pdflatex on main.tex to render them into the manuscript PDF.")
+    else:
+        print("\n[WARNING] Some CSV files are missing. Run the Cooja campaign + parse pipeline first.",
+              file=sys.stderr)
+        sys.exit(1)
 
 
 if __name__ == "__main__":

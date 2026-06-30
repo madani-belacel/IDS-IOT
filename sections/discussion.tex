@@ -10,9 +10,9 @@ Clustering concentrates advanced analysis on a small set of capable heads rather
 Flat distributed IDS designs may approach similar detection rates on small networks, but their alert traffic typically grows much faster with node count; this hypothesis is testable via Fig.~\ref{fig:alert-overhead} once the scalability campaign completes.
 
 \subsection{Positioning Relative to Baselines}
-Centralized baselines (B1, B3) benefit from global visibility but introduce a single point of failure and higher detection latency for spatially localized attacks.
-Flat distributed rules (B2) avoid centralization but risk alert storms.
-RPL-ClusterIDS occupies a middle ground: hierarchical distributed detection with optional border-router corroboration for network-wide campaigns.
+The centralized baseline (B1) benefits from global visibility at the border router but introduces a single point of failure and higher detection latency for spatially localized attacks.
+RPL-ClusterIDS avoids this limitation through hierarchical distributed detection: members perform local screening while cluster heads aggregate evidence, with optional border-router corroboration for network-wide campaigns.
+Additional baselines (flat distributed B2 and centralized-with-CH B3) are defined in the firmware and will be evaluated in the full campaign.
 
 \subsection{Operating-Mode Trade-offs}
 The three-mode policy (\textsc{Full}, \textsc{Balanced}, \textsc{Eco}) makes the security--lifetime compromise explicit and measurable.

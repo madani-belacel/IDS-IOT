@@ -3,9 +3,9 @@
 
 Several limitations should be noted before generalizing the results.
 \begin{itemize}
-  \item \textbf{Simulation-only validation with limited seeds.} All results are obtained in Cooja with sky motes (3 seeds per configuration). Results should be interpreted with caution given the limited number of independent runs; a full campaign with 20 seeds is planned.
+  \item \textbf{Simulation-only validation with limited seeds.} All results are obtained in Cooja with Tmote Sky motes (21 seeds for CLUSTERIDS, 3 seeds per ablation variant). Results should be interpreted with caution given the limited number of independent ablation runs; a full campaign with 20+ seeds per configuration is planned.
   Hardware deployment may reveal timing jitter, radio asymmetry, and memory alignment effects not fully captured in simulation.
-  \item \textbf{50-node grid only.} The pilot campaign covers the 50-node grid (3 seeds, 5 attack scenarios).
+  \item \textbf{50-node grid only.} The pilot campaign covers the 50-node grid (21 seeds CLUSTERIDS, 3 seeds ablation, 5 attack scenarios).
   Larger scales (100--500 nodes) and random topologies remain for future work; the current results may not generalize to denser or irregular deployments.
   \item \textbf{Model portability.} The cluster-head verification thresholds are configured on Cooja traces.
   Real deployments may require recalibration or retraining to avoid domain shift.

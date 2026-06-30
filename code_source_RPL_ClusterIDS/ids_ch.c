@@ -1,9 +1,9 @@
 /*
- * ids_ch.c — détection au niveau CH : confirmation et matrice de confusion.
- *   Le CH reçoit le LAS et l'alarme du membre, et si les deux dépassent
- *   le seuil, il confirme l'attaque.  Sinon c'est un faux positif.
- * TODO: ajouter un timeout de confirmation ?  Là on confirme immédiatement,
- *   c'est peut-être trop rapide (d'où les FP sur certaines attaques).
+ * ids_ch.c — CH-level detection: confirmation and confusion matrix.
+ *   The CH receives the member LAS and alarm; if both exceed the
+ *   threshold, the attack is confirmed. Otherwise it is a false positive.
+ * TODO: add a confirmation timeout? Current immediate confirmation may
+ *   be too fast (causing FPs on certain attacks).
  */
 
 #include "ids_ch.h"
@@ -35,7 +35,7 @@ ids_ch_tick(uint8_t member_las, uint8_t member_alarm)
 #endif
   confirmed = 0;
   if(member_alarm && member_las > IDS_THRESHOLD_CH) {
-    //  Alarme membre + LAS élevé → on confirme (ou FP si pas d'attaque)
+    //  Member alarm + high LAS → confirmed (or FP if no attack active)
     if(attack_active) {
        tp++;
        confirmed = 1;

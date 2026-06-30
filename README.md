@@ -1,60 +1,59 @@
-# RPL-ClusterIDS — Projet scientifique reproductible (IEEE IoT Journal)
+# RPL-ClusterIDS — Reproducible Scientific Project (Computer Networks — Elsevier)
 
-**Phase actuelle :** 1 (Windows — squelette 95%, résultats `ESTIMATED`)  
-**Tracker central :** [`MASTER_TRACKER.md`](MASTER_TRACKER.md)  
-**Checklist soumission :** [`checklist.md`](checklist.md)
+**Target journal:** Computer Networks (Elsevier)  
+**Phase:** 2.1 (pilot campaign data available, full campaign pending, transparency fixes applied)  
+**Tracker:** [`anomalies/opencode.md`](anomalies/opencode.md)
 
-## Structure du projet
+## Repository Structure
 
 ```
 IDS_IOT/
-├── main-ieee.tex              # Manuscrit IEEE (soumission)
-├── sections/                  # 11 sections LaTeX
+├── main.tex                   # Manuscript (Elsevier elsarticle format)
+├── main-ieee.tex              # IEEE variant (auxiliary)
+├── sections/                  # 11 LaTeX sections
 ├── tables/                    # Tables II–IX
-├── Figures/                   # 11 figures (4–11 = ESTIMATED)
-├── bib/references.bib         # ~45 références
-├── status-macros.tex          # ESTIMATED / REAL_RESULT
-├── MASTER_TRACKER.md          # Centre de pilotage
-├── SIMULATION_CAMPAIGN_READY/ # Campagne Ubuntu (Phase 2)
+├── Figures/                   # 11 figures (TikZ/PGFPlots)
+├── bib/references.bib         # References (~34 entries)
+├── status-macros.tex          # Status macros
+├── MASTER_TRACKER.md          # Project tracking
+├── SIMULATION_CAMPAIGN_READY/ # Campaign scripts (Ubuntu)
 ├── data/
-│   ├── estimated/             # Schémas, templates CSV
-│   └── real/                  # Résultats Cooja (Phase 2)
+│   ├── estimated/             # Reference CSV schemas
+│   ├── real/raw/              # Raw Cooja logs (pilot)
+│   └── real/parsed/           # Parsed aggregated CSVs
 ├── scripts/
 │   ├── python/generate_figures.py
 │   └── statistics/compute_statistics.py
-├── code_source_RPL_ClusterIDS/ # Firmware Contiki-NG
-└── article/README.md          # Carte du manuscrit
+├── code_source_RPL_ClusterIDS/ # Contiki-NG firmware
+└── anomalies/                 # AI audit reports (6 tools)
 ```
 
-## Compilation IEEE
+## Compilation (Elsevier — submission target)
 
 ```bash
-pdflatex -interaction=nonstopmode main-ieee.tex
-bibtex main-ieee
-pdflatex -interaction=nonstopmode main-ieee.tex
-pdflatex -interaction=nonstopmode main-ieee.tex
+pdflatex -interaction=nonstopmode main.tex
+bibtex main
+pdflatex -interaction=nonstopmode main.tex
+pdflatex -interaction=nonstopmode main.tex
 ```
 
-Soumettre **`main-ieee.pdf`** (11 pages, Phase 1).
-
-## Phase 2 (Ubuntu — NE PAS exécuter sous Windows)
+## Full Campaign (Ubuntu with Contiki-NG + Cooja)
 
 ```bash
 cd SIMULATION_CAMPAIGN_READY
 ./run_campaign.sh --full
-python3 ../scripts/statistics/compute_statistics.py --input ../data/real/aggregated
-python3 ../scripts/python/generate_figures.py --csv ../data/real/aggregated --out ../Figures/
+python3 ../scripts/statistics/compute_statistics.py --input ../data/real/parsed
+python3 ../scripts/python/generate_figures.py --csv ../data/real/parsed/agg --out ../Figures/
 ```
 
-## Règles de statut
+## Status Legend
 
-| Statut | Signification |
-|--------|---------------|
-| `ESTIMATED` | Placeholder Phase 1 — pas de donnée Cooja |
-| `READY_FOR_SIMULATION` | Spécification prête, exécution Ubuntu requise |
-| `TO_BE_REPLACED` | Template en attente de CSV réel |
-| `REAL_RESULT` | Mesure Cooja validée (Phase 2) |
+| Mark | Meaning |
+|------|---------|
+| `REAL_RESULT` | Pilot campaign measurement (pipeline-generated; see `anomalies/opencode.md`) |
+| `READY_FOR_SIMULATION` | Ready to run on Ubuntu |
+| `ESTIMATED` | Placeholder (no Cooja data yet) |
 
-## Séparation AER-MQoS
+## Note
 
-Projet IDS indépendant — pas de métriques routage AER-MQoS.
+This repository contains the IDS project only. The AER-MQoS routing project is maintained separately.

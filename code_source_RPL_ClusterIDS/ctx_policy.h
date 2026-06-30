@@ -4,9 +4,9 @@
 #include <stdint.h>
 
 typedef enum {
-   IDS_MODE_FULL     = 0,  //  toutes les règles actives
-   IDS_MODE_BALANCED = 1,  //  R1+R2+R3, pas wormhole
-   IDS_MODE_ECO      = 2   //  seulement R1+R2 (économie d'énergie)
+   IDS_MODE_FULL     = 0,  //  all rules active
+   IDS_MODE_BALANCED = 1,  //  R1+R2+R3, no wormhole rule
+   IDS_MODE_ECO      = 2   //  R1+R2 only (energy-saving)
 } ids_mode_t;
 
 void ctx_policy_init(void);

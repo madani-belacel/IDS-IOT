@@ -14,7 +14,7 @@
 #endif
 
 #ifndef IDS_ATTACK_START_S
-#define IDS_ATTACK_START_S 1800    //  Attaque démarre à 30 min
+#define IDS_ATTACK_START_S 1800    //  Attack starts at 30 min
 #endif
 
 #ifndef IDS_SIM_DURATION_S
@@ -23,10 +23,10 @@
 
 #define IDS_UDP_PORT 8765
 
-//  Seuils LAS (échelle brute ~0-175)
-#define IDS_THRESHOLD_LAS     60   //  Alarme membre
-#define IDS_THRESHOLD_CH      70   //  Vérification CH
-#define IDS_THRESHOLD_LOW     25   //  Déclenchement mode ECO (%)
-#define IDS_THRESHOLD_CH_ELIG 40   //  Éligibilité CH (NRE min %)
+//  LAS thresholds (raw scale ~0-175)
+#define IDS_THRESHOLD_LAS     60   //  Member alarm threshold
+#define IDS_THRESHOLD_CH      70   //  CH verification threshold
+#define IDS_THRESHOLD_LOW     25   //  ECO mode trigger (% NRE)
+#define IDS_THRESHOLD_CH_ELIG 40   //  CH eligibility floor (NRE %)
 
 #endif /* IDS_CONF_H_ */

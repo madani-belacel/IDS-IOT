@@ -1,9 +1,9 @@
-# RPL-ClusterIDS — IEEE IoT Journal Roadmap
+# RPL-ClusterIDS — Project Roadmap
 
-**Phase:** 1.7 (Computer Networks Audit — 21/25 anomalies corrigées)  
-**Tracker central:** `MASTER_TRACKER.md`  
-**Journal cible:** IEEE Internet of Things Journal  
-**Dernière mise à jour:** 2026-06-24
+**Phase:** 2.0 (pilot campaign data collected)  
+**Tracker:** `MASTER_TRACKER.md`  
+**Target journal:** Computer Networks (Elsevier)  
+**Last updated:** 2026-06-30
 
 ---
 
@@ -152,14 +152,14 @@ Métriques par run : DR, FPR, Latency, Energy, CPU, RAM, Alert, Control, Lifetim
 
 ---
 
-## Final IEEE Validation (Phase 2 only)
+## Final Validation (pre-submission)
 
 - [ ] No placeholders remaining
 - [ ] No estimated values remaining
 - [ ] Every figure generated from real data
 - [ ] Every result reproducible
 - [ ] P0/P1/P2 reviewer audit = 0 open items
-- [ ] Soumission ScholarOne
+- [ ] Submission to Editorial Manager
 
 ---
 

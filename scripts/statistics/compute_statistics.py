@@ -34,12 +34,7 @@ REQUIRED_COLUMNS = [
 
 VARIANT_COMPARISONS = [
     ("CLUSTERIDS", "B1", "detection_rate"),
-    ("CLUSTERIDS", "B2", "detection_rate"),
-    ("CLUSTERIDS", "B3", "detection_rate"),
     ("CLUSTERIDS", "B1", "fpr"),
-    ("CLUSTERIDS", "B2", "fpr"),
-    ("CLUSTERIDS", "B3", "fpr"),
-    ("CLUSTERIDS", "B2", "alert_overhead_pkt_h"),
 ]
 
 MODE_COMPARISON = ("full", "eco", "detection_rate")

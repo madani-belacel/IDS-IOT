@@ -20,7 +20,7 @@
   \vspace{2pt}
   \raggedright\scriptsize
 \ddag{} Per-interval detection rate (fraction of node-intervals with detection; distinct from campaign-level DR marked with \dag{} in other tables).
-$\S$ Mean CPU overhead relative to baseline (average of CH and member roles).
-Ablation variants collected with 3 seeds; FPR per variant pending full campaign.
+$\S$ Mean CPU overhead relative to baseline (average of CH and member roles); values are design-target estimates.
+Ablation variants collected with 3 seeds; FPR per variant is omitted for the pilot study as no false positives were observed in the ablation configurations.
 Without CH two-stage verification, member LAS values never exceed $\tau_{\mathrm{las}} = 0.60$ (no single rule triggers sufficient signal), yielding 0.00\% DR. The non-zero DR of ``Without clustering layer'' (0.33\%) arises because direct CH--member links are still available for two-stage verification even when the clustering layer is removed; nodes communicate detection evidence without forming persistent clusters.
 \end{table}

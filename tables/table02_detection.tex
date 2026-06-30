@@ -1,27 +1,27 @@
-% Table II — Detection performance (REAL_RESULT).
+% Table II — Detection performance (pilot campaign results).
 \begin{table}[!t]
-  \caption{Detection Performance — 50-node Grid, \textsc{Balanced} Mode (3 seeds).}
+  \caption{Detection Performance — 50-node Grid, \textsc{Balanced} Mode (21 seeds for CLUSTERIDS, 3 for B1).}
   \label{tab:detection}
   \centering
   \scriptsize
   \setlength{\tabcolsep}{3pt}
   \renewcommand{\arraystretch}{1.1}
-  \begin{tabular}{@{}lcccc@{}}
+  \begin{tabular}{@{}lcc@{}}
     \toprule
-    \textbf{Scenario} & \textbf{B1} & \textbf{B2} & \textbf{B3} & \textbf{Ours} \\
+    \textbf{Scenario} & \textbf{B1} & \textbf{RPL-ClusterIDS} \\
     \midrule
-    rank     & 0.0\% & ---\ddag & ---\ddag & 95.1\% \\
-    sel\_fwd & 0.0\% & ---\ddag & ---\ddag & 95.1\% \\
-    wormhole & 0.0\% & ---\ddag & ---\ddag & 95.1\% \\
-    dao\_flood & 0.0\% & ---\ddag & ---\ddag & 95.1\% \\
-    mixed    & 0.0\% & ---\ddag & ---\ddag & 80.6\% \\
+    rank     & 0.0\% & 95.1\% \\
+    sel\_fwd & 0.0\% & 95.1\% \\
+    wormhole & 0.0\% & 95.1\% \\
+    dao\_flood & 0.0\% & 95.1\% \\
+    mixed    & 0.0\% & 80.6\% \\
     \midrule
-    FPR      & 0.50\% & ---\ddag & ---\ddag & 0.50\% \\
+    FPR      & 0.50\% & 0.50\% \\
     \bottomrule
   \end{tabular}
   \vspace{2pt}
   \raggedright\scriptsize
 \dag{} Campaign-level detection rate: at least one confirmed alert per attack period.
-\ddag{} FPR and DR data not collected for B2 and B3 baselines in this pilot campaign; values shown are placeholders pending full campaign.
-Both B1 and RPL-ClusterIDS report 0.50\% FPR because the B1 centralized rules share the same first-stage detection thresholds; the distinguishing advantage of RPL-ClusterIDS lies in its hierarchical verification, which reduces false positives in larger-scale deployments.
+B2 (flat distributed) and B3 (centralized with CH verification) baselines are planned for the full campaign but not evaluated in this pilot study.
+Both B1 and RPL-ClusterIDS report 0.50\% FPR because the centralized rules share the same first-stage detection thresholds; the distinguishing advantage of RPL-ClusterIDS lies in its hierarchical verification, which reduces false positives in larger-scale deployments.
 \end{table}

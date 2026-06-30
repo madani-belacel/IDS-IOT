@@ -1,10 +1,10 @@
 /*
  * Copyright (c) 2026, Madani Belacel.
- *   Génère les lignes METRIC,... que parse_cooja_ids_metrics.py
- *   consomme pour produire les CSV de la campagne.
- *   C'est un peu basique comme format, mais ça marche avec le pipeline.
- * FIXME: le printf sur le noeud Cooja est lent — passer à un buffer ?
- *        (pour l'instant ça tient, mais avec 500 noeuds ça risque de ramer)
+ *   Generates METRIC lines consumed by the Python parsing pipeline
+ *   to produce campaign CSVs.
+ *   Format is simple but works with the existing pipeline.
+ * FIXME: printf on Cooja node is slow — switch to a buffered writer?
+ *        (acceptable now, but may be slow with 500+ nodes)
  */
 
 #include "contiki.h"
@@ -22,8 +22,8 @@ const int ids_campaign_log_disabled = 0;
 static const char *
 variant_tag(void)
 {
-  /* Tags pour le pipeline de parsing.
-     Les noms longs évitent les collisions entre variantes. */
+  /* Tags for the parsing pipeline.
+     Long names avoid collisions between variants. */
 #if IDS_VARIANT_B1
   return "B1";
 #elif IDS_VARIANT_B2
@@ -41,7 +41,7 @@ variant_tag(void)
 #else
   return "MAIN";
 #endif
-  (void)sizeof(IDS_VARIANT_LABEL); /* évite warning unused */
+  (void)sizeof(IDS_VARIANT_LABEL); /* suppress unused warning */
 }
 
 static uint32_t
@@ -50,7 +50,7 @@ det_rate_x10000(uint32_t tp, uint32_t fp, uint32_t tn, uint32_t fn)
   uint32_t denom = tp + fn;
 
   if(denom == 0) {
-    return 0; /* pas de trames d'attaque dans cette fenêtre → skip */
+    return 0; /* no attack frames in this window → skip */
   }
   return (10000UL * tp) / denom;
 }

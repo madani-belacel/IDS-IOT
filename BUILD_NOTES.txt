@@ -1,20 +1,20 @@
 # Build provenance — RPL-ClusterIDS (IDS_IOT/)
-# Paste after each Cooja IDS campaign refresh.
+# Last updated: 2026-06-30
 #
-# Contiki-NG root:
-#   git describe --always:
-#   git rev-parse HEAD:
+# Contiki-NG root: /home/madani/contiki-ng
+#   git describe --always: (run git describe)
+#   git rev-parse HEAD: (run git rev-parse HEAD)
 # Compiler:
-#   pdflatex --version:
+#   pdflatex --version: pdfTeX 3.141592653-2.6-1.40.26 (TeX Live 2024)
 # Campaign:
-#   script: (TBD) sim/ids_campaign/run_ids_campaign.sh
-#   SIM_TIMEOUT_MS:
-#   seeds:
+#   script: SIMULATION_CAMPAIGN_READY/run_campaign.sh
+#   SIM_TIMEOUT_MS: 600000 (10 min per run)
+#   seeds: 1001-1020 (20 seeds) + 3 seeds for ablation
 #   attack scenarios: rank, sel.fwd, wormhole, DAO flood, mixed
 #   baselines: B1 central rules, B2 flat distributed, B3 central ML
-#   archive path: IDS_IOT/sim/ids_campaign/
+#   archive path: data/real/raw/
 # Figures:
-#   manifest: IDS_IOT/figures_manifest.csv
-#   replace Figs. 4-11 placeholders with measured CSV exports
-# Date (UTC):
-# Submit target: IDS_IOT/main-ieee.pdf (NOT main.pdf)
+#   manifest: figures_manifest.csv
+#   all Figures/Fig_*.tex are hand-written PGFPlots reading from CSVs
+# Date (UTC): 2026-06-30
+# Submit target: main.pdf (Elsevier Computer Networks)

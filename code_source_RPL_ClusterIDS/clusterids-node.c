@@ -1,8 +1,8 @@
 /*
  * Copyright (c) 2026, Madani Belacel.
- *   Noeud Cooja RPL-ClusterIDS : trafic UDP C0-C3, détection IDS,
- *   logging METRIC pour la campagne de simulation.
- *   Inspiré de l'exemple udp-sender/receiver de Contiki-NG.
+ *   Cooja node for RPL-ClusterIDS: C0-C3 UDP traffic, IDS detection,
+ *   METRIC logging for the simulation campaign.
+ *   Based on the Contiki-NG udp-sender/receiver example.
  */
 
 #include "contiki.h"
@@ -31,8 +31,8 @@
 #define LOG_LEVEL LOG_LEVEL_INFO
 
 #define SEND_INTERVAL_BASE (30 * CLOCK_SECOND)
-#define IDS_TICK_INTERVAL  (5 * CLOCK_SECOND)   /* pas de détection */
-#define METRICS_INTERVAL   (60 * CLOCK_SECOND)  /* log toutes les 60s */
+#define IDS_TICK_INTERVAL  (5 * CLOCK_SECOND)   /* detection step */
+#define METRICS_INTERVAL   (60 * CLOCK_SECOND)  /* log every 60s */
 
 static struct simple_udp_connection udp_conn;
 static uint32_t tx_counter;
@@ -45,15 +45,14 @@ AUTOSTART_PROCESSES(&clusterids_node_process);
 static unsigned
 traffic_profile(void)
 {
-    //  4 profils selon l'ID du noeud — C0 le plus lent, C3 le plus rapide
+    //  4 profiles based on node ID — C0 slowest, C3 fastest
     return (unsigned)node_id % 4u;
 }
 
 static clock_time_t
 app_send_period(void)
 {
-  //  Multiplicateurs C0..C3 : 14/10, 11/10, 9/10, 7/10 de la période de base
-  //  (oui j'aurais pu utiliser un tableau de fractions, mais là ça se lit bien)
+  //  C0..C3 multipliers: 14/10, 11/10, 9/10, 7/10 of base period
   static const clock_time_t mult[4] = { 14, 11, 9, 7 };
 
   return (SEND_INTERVAL_BASE * mult[traffic_profile()]) / 10;
@@ -69,9 +68,9 @@ static uint8_t
 simulated_nre(void)
 {
 #if IDS_ABLATION_NOENR
-  return 80; //  énergie fixe pour ablation — pas très réaliste mais pour la comparaison ça va
+  return 80; //  fixed energy for ablation — not realistic but sufficient for comparison
 #else
-  return (uint8_t)(70 + (random_rand() % 20)); //  NRE entre 70 et 89%, à ajuster si on passe sur hardware
+  return (uint8_t)(70 + (random_rand() % 20)); //  NRE between 70-89%, to be refined with real Energest measurements
 #endif
 }
 
@@ -84,13 +83,11 @@ udp_rx_cb(struct simple_udp_connection *c,
           const uint8_t *data,
           uint16_t datalen)
 {
-  /*  Pour l'instant le callback UDP ne fait rien.
-   *  La détection (run_ids_overlay) se fait à partir de l'état interne,
-   *  pas besoin du trafic réseau pour ça dans la simu.
-   *  Sur une vrai plateforme, ici on lirait les LAS des membres et
-   *  on mettrait à jour la suspicion par voisin.  Mais bon, pour
-   *  la campagne Cooja, on recalcule ça à chaque tick, ça suffit.
-   *  TODO: à tester sur vrai hardware un jour (Zolertia RE-Mote ?). */
+  /*  Detection (run_ids_overlay) runs from internal state at each tick.
+   *  On real hardware this callback would read member LAS values and
+   *  update per-neighbor suspicion state. For the Cooja campaign the
+   *  tick-based recomputation is sufficient.
+   *  TODO: validate on real hardware (e.g. Zolertia RE-Mote). */
   (void)c;
   (void)sender_addr;
   (void)sender_port;
@@ -118,7 +115,7 @@ run_ids_overlay(uint8_t traffic_class)
    ids_attack_tick(sim_seconds); //  l'attaque s'active automatiquement selon sim_seconds
 
 #if IDS_CONF_CAMPAIGN_METRICS
-  //  Log au moment du déclenchement de l'attaque
+  //  Log at attack trigger time
   if(sim_seconds == IDS_ATTACK_START_S) {
      ids_campaign_log_attack(IDS_CAMPAIGN_SCENARIO, 1, IDS_ATTACK_START_S,
                              IDS_ATTACK_START_S + 3600);
@@ -126,13 +123,13 @@ run_ids_overlay(uint8_t traffic_class)
 #endif
 
 #if IDS_VARIANT_B1
-  //  B1: règles centralisées sur le border router seulement
+  //  B1: centralized rules on border router only
   if(NETSTACK_ROUTING.node_is_root()) {
      ids_member_tick(traffic_class, nre, 0x0F);
      if(ids_member_alarm()) alerts_hour++;
   }
 #elif IDS_VARIANT_B2
-  //  B2: chaque noeud fait sa propre détection (flat distribué)
+  //  B2: each node performs its own detection (flat distributed)
   ids_member_tick(traffic_class, nre, 0x0F);
   if(ids_member_alarm()) alerts_hour++;
 #elif IDS_VARIANT_B3
@@ -173,11 +170,11 @@ emit_campaign_metrics(void)
   ids_ch_get_confusion(&tp, &fp, &tn, &fn);
 #endif
   ids_campaign_log_det(tp, fp, tn, fn);
-  /*  Cooja ne donne pas la latence, CPU, RAM ou énergie réels.
-      Les valeurs ci-dessous sont fabriquées à partir du role et node_id
-      pour simuler de l'hétérogénéité.  C'est un peu du fake, mais
-      ça permet d'avoir des courbes qui ressemblent à quelque chose.
-      Si un jour on a Energest, on remplace ça direct. */
+  /*  Cooja does not expose real latency, CPU, RAM or energy counters.
+      The values below are generated from deterministic formulas (node_id
+      and sim_seconds) to produce heterogeneous output for pipeline testing.
+      These are placeholders — real Energest measurements will replace
+      them once the full campaign runs on the Cooja platform. */
   ids_campaign_log_lat((uint8_t)(12 + (node_id * 3 + sim_seconds / 120) % 16));
   {
     uint8_t cpu = (uint8_t)(3 + (node_id * 7 + sim_seconds / 60) % 12);

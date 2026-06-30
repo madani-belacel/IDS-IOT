@@ -1,13 +1,13 @@
 \section{Experimental Setup}
 \label{sec:experimental-setup}
 
-This section specifies the Cooja evaluation campaign designed to validate RPL-ClusterIDS against three baselines: (B1) centralized rule-based IDS on the border router; (B2) flat distributed rule IDS with peer alert flooding; and (B3) member-based IDS with cluster-head verification but without the clustering layer. The pilot campaign focuses on B1 and RPL-ClusterIDS; B2 and B3 results are placeholders pending full completion.
+This section specifies the Cooja evaluation campaign designed to validate RPL-ClusterIDS against a centralized baseline: (B1) rule-based IDS on the border router. Two additional baselines — (B2) flat distributed rule IDS with peer alert flooding and (B3) member-based IDS with cluster-head verification but without clustering — are defined in the firmware but not evaluated in this pilot campaign; their implementation is available for future work.
 All experiments share identical traffic generators, link models, and attack schedules so that differences arise from the IDS overlay rather than from routing configuration.
 
 \subsection{Simulation Environment}
 Experiments target Contiki-NG~4.8~\cite{oikonomou2022contik} on simulated Tmote Sky motes in Cooja~\cite{osterlind2006cooja}.
 The network uses \texttt{rpl-lite} with MRHOF, a unit-disk graph medium (50~m range), and 10\% radio duty cycling.
-Energest provides energy accounting; CPU, RAM, and latency values are estimated from node-logical properties (role, node~ID) to emulate per-node heterogeneity.
+Energest provides energy accounting; CPU, RAM, and latency values are estimated from node-logical properties (role, node~ID) to emulate per-node heterogeneity. These values are pipeline placeholders and will be replaced by direct Energest measurements in the full campaign.
 Table~\ref{tab:experimental-setup} summarizes the full experimental configuration.
 
 \input{tables/table05_experimental_setup}
@@ -34,7 +34,7 @@ We report detection rate (DR), false-positive rate (FPR), mean detection latency
 Metric definitions follow \path{SIMULATION_CAMPAIGN_READY/metrics/METRICS.md}.
 
 \subsection{Statistical Protocol}
-The pilot campaign repeats each configuration over \textbf{3 independent random seeds} (listed in \path{SIMULATION_CAMPAIGN_READY/seeds.txt}).
+The pilot campaign repeats each configuration over \textbf{21 independent random seeds for the CLUSTERIDS variant and 3 seeds for the ablation study} (listed in \path{SIMULATION_CAMPAIGN_READY/seeds.txt}).
 Results are reported as mean $\pm$ one standard deviation where applicable.
 A full campaign with additional seeds is planned for future work.
 

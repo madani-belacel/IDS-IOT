@@ -19,5 +19,5 @@
   \raggedright\scriptsize
 \dag{} Campaign-level detection rate (any confirmed alert per attack period).
 Per-interval DR averages 1.1\% (see Fig.~\ref{fig:mode-sensitivity}).
-\ddag{} CPU overhead increases from Full to Eco because the latter focuses detection on energy-intensive control-plane checks (R1--R2) while disabling lightweight data-plane rules (R3--R4); see Section~\ref{sec:arch}.
+\ddag{} CPU overhead values are design-target estimates from profiling hooks; the slight increase from Full to Eco reflects the fixed cost of EWMA baseline maintenance across all core rules (R1--R2) that remain active in every mode, while the disabled rules (R3--R4) contribute marginal computation. Measured overheads from Energest are pending the full campaign.
 \end{table}

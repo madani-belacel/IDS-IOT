@@ -1,11 +1,11 @@
 /*
- * ids_attack.c — générateurs de signaux d'attaque pour Cooja.
- *   Chaque fonction produit le signal qu'un noeud malveillant
- *   injecterait dans le réseau (valeurs calibrées pour dépasser
- *   le seuil EWMA en période d'attaque mais pas en normal).
- *   C'est du fake bien sûr — sur une vraie plateforme ces signaux
- *   viendraient du trafic réseau observé.
- * FIXME: wormhole 25% de chance de rien émettre — à valider côté stats
+ * ids_attack.c — attack signal generators for Cooja.
+ *   Each function produces the signal that a malicious node would
+ *   inject into the network. Values are calibrated to exceed the
+ *   EWMA threshold during attack periods but not during normal
+ *   operation. On real hardware these signals would come from
+ *   observed network traffic.
+ * FIXME: wormhole has 25% chance of no emission — verify statistics
  */
 
 #include "ids_attack.h"
@@ -20,7 +20,7 @@ void
 ids_attack_init(void)
 {
    active = 0;
-   //  10% des noeuds sont malveillants — à ajuster selon le scénario
+    //  10% of nodes are malicious — adjustable per scenario
    is_attacker = (random_rand() % 100) < 10 ? 1 : 0;
 }
 
@@ -53,7 +53,7 @@ ids_attack_sel_fwd_signal(uint8_t traffic_class)
   if(!active || !is_attacker) {
      return 0;
   }
-  //  L'attaque selective forwarding est plus agressive sur C3
+  //  Selective forwarding is more aggressive on C3 traffic
   return traffic_class >= 3 ? (uint8_t)(65 + (random_rand() % 11))
                             : (uint8_t)(35 + (random_rand() % 11));
 }
@@ -70,7 +70,7 @@ ids_attack_dao_flood_signal(void)
 uint8_t
 ids_attack_wormhole_signal(void)
 {
-  //  25% de chance de ne rien émettre — pour simuler l'intermittence
+  //  25% chance of silence — to simulate wormhole intermittence
   if(!active || !is_attacker || (random_rand() % 4u) == 0) {
      return 0;
   }

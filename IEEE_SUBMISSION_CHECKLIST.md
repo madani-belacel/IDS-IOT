@@ -1,9 +1,9 @@
-# IEEE IoT Journal — Submission Checklist
+# Computer Networks (Elsevier) — Submission Checklist
 
 **Project:** RPL-ClusterIDS  
-**Target journal:** IEEE Internet of Things Journal  
-**Last updated:** 2026-06-17  
-**Phase:** 1.6 (Pre-Phase 2) — requires Phase 2 campaign before submission
+**Target journal:** Computer Networks (Elsevier)  
+**Last updated:** 2026-06-30  
+**Phase:** 2.0 — pilot campaign data collected; full campaign pending
 
 ---
 
@@ -65,17 +65,17 @@
 - [ ] `checklist.md` Phase 2 items all checked
 - [ ] Public repository + DOI ready (or planned for acceptance)
 
-### IEEE Formatting
+### Elsevier Formatting (elsarticle)
 
-- [ ] IEEEtran.cls (V1.8b) — two-column journal format
-- [ ] Title capitalization correct
+- [ ] `elsarticle.cls` — preprint 12pt numbered format
+- [ ] Research Highlights (3–5 bullets, ~85 chars each)
+- [ ] Graphical Abstract (optional but recommended)
 - [ ] Author name(s) + affiliation(s) + ORCID
 - [ ] Abstract: 150–250 words
 - [ ] Keywords: 5–8 terms
-- [ ] All figures in vector format (TikZ/pgfplots)
-- [ ] All tables use `\toprule`/`\midrule`/`\bottomrule` (booktabs)
-- [ ] Bibliography in IEEE style
-- [ ] Author biography paragraph(s) present
+- [ ] All figures in vector format (TikZ/PGFPlots)
+- [ ] All tables use booktabs (`\toprule`/`\midrule`/`\bottomrule`)
+- [ ] Bibliography in elsarticle-num style
 
 ---
 
@@ -83,14 +83,14 @@
 
 ### Before Upload
 
-- [ ] Final PDF: `main-ieee.pdf`
+- [ ] Final PDF: `main.pdf` (Elsevier format)
 - [ ] Source files: `.tex`, `.bib`, `.sty`, `.cls`, figures
 - [ ] Readme with build instructions
-- [ ] ORCID iD linked to ScholarOne account
+- [ ] ORCID iD linked to Editorial Manager account
 
-### On ScholarOne
+### On Editorial Manager
 
-- [ ] Manuscript type: "Regular Paper"
+- [ ] Manuscript type: "Research Paper"
 - [ ] Cover letter (optional but recommended)
 - [ ] Suggested reviewers (optional)
 - [ ] All authors with correct affiliations
@@ -122,5 +122,5 @@
 | ML model | ❌ Not trained | Campaign traces needed |
 
 **Estimated acceptance probability:**
-- Current (pre-Phase 2): **~20%** (desk reject risk due to ESTIMATED markers)
-- Target (post-Phase 2, real data): **~85%**
+- Current (pre-full-campaign): **~30%** (pilot data present but B1/B2/B3 0% DR issue unresolved)
+- Target (post-full-campaign, real data): **~85%**

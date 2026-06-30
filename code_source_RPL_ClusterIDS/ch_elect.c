@@ -1,8 +1,8 @@
 /*
- * ch_elect.c — élection du Cluster-Head et rotation (Eq.3 du papier).
- *   Le CH est élu sur sa fitness (énergie + qualité lien).  La rotation
- *   se fait après N ticks de stabilité.
- * TODO: tester avec plus de 64 noeuds, le modulo 8 peut bloquer qqs noeuds.
+ * ch_elect.c — Cluster-Head election and rotation (Eq.3 of the paper).
+ *   The CH is elected based on fitness (energy + link quality). Rotation
+ *   occurs after N ticks of stability.
+ * TODO: test with >64 nodes; modulo 8 may lock some nodes out.
  */
 
 #include "ch_elect.h"
@@ -22,7 +22,7 @@ ch_elect_init(void)
 #if IDS_ABLATION_NOCLUS
   is_head = 1;
 #else
-  //  1 CH pour 8 noeuds en moyenne — répartition uniforme
+  //  1 CH per 8 nodes on average — uniform distribution
   is_head = (node_id % 8u) == 0 ? 1 : 0;
 #endif
   head_tenure_s = 0;
@@ -35,8 +35,8 @@ void
 ch_elect_tick(uint8_t nre_x100, uint8_t etx_var_x10)
 {
 #if !IDS_ABLATION_NOCLUS
-  //  Fitness = énergie ×2 + qualité lien ×5 (inversée)
-  //  On recalcule ça à chaque tick, c'est pas très lourd donc ça va
+  //  Fitness = energy ×2 + link quality ×5 (inverted)
+  //  Recalculated each tick; lightweight enough for periodic execution
   uint32_t fitness = (uint32_t)nre_x100 * 2u + (uint32_t)(100u - etx_var_x10 * 5u);
   my_fitness = (uint16_t)fitness;
 
@@ -66,12 +66,12 @@ ch_elect_is_head(void)
 void
 ch_elect_rotate(void)
 {
-  //  Rotation du CH basée sur la fitness.
-  //  Chaque noeud compare sa fitness à un seuil qui dépend du slot
-  //  (node_id % 8) et du groupe (node_id / 8).
-  //  C'est un peu artificiel comme mécanisme — il faudrait un vrai
-  //  DHT-based election, mais pour la simu ça fait le job.
-  //  (à tester sur vrai hardware un jour pour voir si les seuils tiennent)
+  //  CH rotation based on fitness.
+  //  Each node compares its fitness to a threshold dependent on slot
+  //  (node_id % 8) and group (node_id / 8).
+  //  This heuristic replaces a full DHT-based election; adequate for
+  //  simulation-scale evaluation. Thresholds should be validated on
+  //  real hardware.
   uint16_t threshold = 140 + (uint16_t)(node_id % 8u) * 12
                       + (uint16_t)(node_id / 8u) * 4;
   is_head = my_fitness > threshold ? 1 : 0;
