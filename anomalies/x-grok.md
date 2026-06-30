@@ -1,29 +1,39 @@
-Re-revue complète après corrections par l'agent opencode (commit récent du 30 juin 2026)J’ai re-analysé tout le dépôt (code, LaTeX, data, scripts, figures, tables, trackers, PDFs) avec un œil frais. Voici un bilan honnête et actualisé.Nombre d’anomalies identifiées (classées par criticité)Total : 7 anomalies majeures restantes (contre ~12-15 avant). Les corrections ont porté sur du nettoyage (placeholders, phrasing, références), mais les problèmes fondamentaux persistent partiellement :Anomalies critiques (P0 – 3 restantes) :Résultats toujours basés sur une pilot campaign limitée (21 seeds max pour CLUSTERIDS, 3 seeds ablation, 50 nodes). Les claims quantitatifs (DR 80.6 %, FPR 0.50 %, etc.) dans l’abstract/highlights et Results restent ceux du pilot. La full campaign (100-500 nodes, plus de seeds) est encore marquée PARTIAL/BLOCKED dans le MASTER_TRACKER. 
+Toujours **4 commits**, README inchangé, toujours "Phase actuelle : 1 (squelette 95%, ESTIMATED)" et "IEEE IoT Journal" dans le titre du README. Un nouveau dossier `anomalies/` est apparu dans la liste des fichiers — je vais l'explorer, ainsi que les autres documents clés.J'ai maintenant l'état précis et à jour. Je vois aussi le tableau "Simulations Phase 2" entièrement à **TODO** (régression par rapport à "21 seeds" mentionné ailleurs — incohérence interne). Je vais vérifier le dossier `anomalies/` puis les références.C'est encore le **document daté de Phase 1.5**, identique à ma première lecture — `raza2018cluster`, `anton2014rpl`, les 5 entrées "VERIFY", les ~19 orphelins : aucun de ces points n'est marqué comme corrigé ici. J'ai maintenant suffisamment d'éléments croisés pour produire le rapport complet demandé.## Synthèse — Revue Computer Networks, troisième passe
 
-raw.githubusercontent.com
+### Total : 44 anomalies (11 P0 bloquantes, 19 P1 majeures, 14 P2 mineures)
 
-Tables V, VI, VII (setup expérimental, dataset ML, hyperparamètres) toujours en READY_FOR_SIMULATION → incomplètes. Le ML (gradient-boosted trees au CH) n’est pas pleinement évalué avec artefacts entraînés.
-Reproductibilité non immédiate pour un reviewer : data/real/ contient des données pilot, mais pas la campagne complète. Pipeline existant, mais un reviewer externe ne peut pas facilement reproduire des résultats à grande échelle sans effort important.
+L'indicateur le plus parlant se trouve dans `checklist.md` lui-même : la section **"Final IEEE Validation"** (qui devrait s'appeler "Final Computer Networks Validation" si la cible est vraiment ce journal) a ses 5 critères **tous décochés** :
+- No placeholders remaining
+- No estimated values remaining
+- Every figure generated from real data
+- Every result reproducible
+- P0/P1/P2 reviewer audit = 0 open items
 
-Anomalies importantes (P1 – 3 restantes) :
-4. Positionnement et originalité : Le tableau de related work est bon, mais doit encore mieux distinguer l’apport exact vs. travaux récents (clustering + energy/context-aware). Certaines refs 2026 restent très forward-looking.
-5. Scalabilité et projections : Overhead au-delà de 50 nodes reste en "design-target projections". Cela affaiblit les claims pour Computer Networks.
-6. B1/B2/B3 à 0% DR : L’anomalie est reconnue mais pas suffisamment investiguée/résolue dans la discussion/limitations.Anomalies mineures (P2 – 1 restante) :
-7. Quelques incohérences résiduelles dans les trackers (README vs. MASTER_TRACKER) et captions/figures (même si les macros de statut sont vidées). 
+C'est l'auteur du projet qui le dit lui-même : aucun de ces critères n'est satisfait.
 
-raw.githubusercontent.com
+### Le problème n°1, avant même les données
 
-Points positifs des corrections :Nettoyage des placeholders visibles (ESTIMATED supprimés des macros et figures/tables principales).
-Mises à jour récentes sur tables/figures (REAL_RESULT pour II, III, VIII, IX).
-Structure LaTeX propre, biblio améliorée, et focus sur reproductibilité maintenu.
-Highlights et abstract plus prudents (mention explicite "pilot campaign").
+Vous me demandez une revue pour **Computer Networks**, mais le dépôt entier — README, MASTER_TRACKER, checklist — cible encore **IEEE Internet of Things Journal**, avec `main-ieee.pdf` comme fichier de soumission officiel. C'est la première chose à corriger, indépendamment de toute donnée expérimentale : il faut que `main.tex` (format `elsarticle.cls`) devienne l'unique référence, avec Research Highlights et Graphical Abstract ajoutés (exigences spécifiques Elsevier absentes du dépôt actuel).
 
-Verdict global actualisé pour Computer Networks (Elsevier)Le manuscrit est nettement amélioré mais pas encore au niveau d’acceptation. Il reste en Major Revision.Forces : Organisation exceptionnelle du projet, architecture intéressante (clustering adaptatif énergie/contexte pour RPL-IDS), reproductibilité forte, rédaction claire et technique.Faiblesses bloquantes : L’évaluation repose encore trop sur un pilot restreint. Computer Networks exige des résultats solides, à échelle raisonnable, avec comparaison rigoureuse et généralisation crédible dans le domaine des réseaux (pas seulement simulation Cooja limitée).Recommandations prioritaires pour soumission :Compléter absolument la full campaign (au moins 100+ nodes, 10+ seeds) et mettre à jour toutes les tables/figures/stats.
-Finaliser les parties ML (Tables VI-VII + artefacts).
-Renforcer la Discussion/Limitations sur les baselines à 0% DR et les projections de scalabilité.
-Mettre à jour le MASTER_TRACKER et README pour cohérence ("Phase 2.0 completed").
-Compiler et valider le main.pdf final (vérifier qu’aucun warning LaTeX ni placeholder résiduel).
+### Le problème n°2, le plus grave scientifiquement
 
-Conclusion : Avec ces 3-4 corrections majeures (surtout les données réelles à plus grande échelle), le papier deviendrait publiable après une révision mineure dans Computer Networks. Le squelette est excellent et le projet très professionnel. Vous êtes proche du but — concentrez-vous sur la campagne complète et l’analyse statistique robuste.Si vous me donnez l’accès à de nouvelles sorties de campagne ou un commit spécifique, je peux refaire une revue encore plus précise. Bon courage pour la soumission !
+`checklist.md` contient cette phrase : *"C3: det_rate fix livré, logs B2/B3 générés, DR=0 honnête"*. Le mot "honnête" m'inquiète : si 0% de détection sur les baselines B1/B2/B3 est désormais présenté comme un résultat légitime plutôt qu'un bug résiduel, il faut une justification scientifique explicite dans le manuscrit (pourquoi ces baselines ratent-elles structurellement toutes les attaques ?). Sans cette explication, un reviewer Computer Networks soupçonnera toujours une erreur de mesure invalidant les comparaisons des Tables II, VIII, IX.
 
+### Le tableau qui résume tout
 
+`checklist.md` contient un tableau "Simulations Phase 2" avec 25 cellules **Scale × Attack toutes à TODO** pour 50 à 500 nœuds — alors qu'ailleurs il est question de "21 seeds CLUSTERIDS exécutés". Cette contradiction interne doit être résolue avant toute autre action : soit la campagne pilote existe et le tableau est obsolète, soit elle n'existe pas et les statuts REAL_RESULT des figures 4-11 sont prématurés.
+
+### Checklist finale avant soumission, dans l'ordre
+
+1. Trancher le journal cible dans les 3 fichiers contradictoires (README, MASTER_TRACKER, checklist) → Computer Networks, `main.tex`
+2. Clarifier/corriger l'incohérence campagne pilote vs tableau TODO
+3. Expliquer ou corriger le DR=0% des baselines (anomalie C3)
+4. Ré-exécuter le bootstrap CI (pending re-run confirmé)
+5. Générer les boxplots/error bars manquants
+6. Collecter le dataset Cooja et entraîner le modèle ML
+7. Supprimer/vérifier les 19 références orphelines et les 5 entrées flaggées (`raza2018cluster`, `anton2014rpl`, 3×VERIFY)
+8. Ajouter Research Highlights + Graphical Abstract (format Elsevier)
+9. Archiver sur Zenodo pour un DOI
+10. Nettoyer les fichiers parasites de présentation (`test-elsarticle.pdf`, `push-project.sh`)
+
+**Score actuel pour Computer Networks : 4/10.** La structure et l'outillage sont prêts ; ce qui manque, c'est l'exécution des données et la clarification de la cible éditoriale.

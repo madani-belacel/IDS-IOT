@@ -27,8 +27,10 @@ ids_attack_init(void)
 void
 ids_attack_tick(uint32_t sim_s)
 {
-  if(sim_s >= IDS_ATTACK_START_S && is_attacker) {
+  if(sim_s >= IDS_ATTACK_START_S && sim_s < IDS_ATTACK_START_S + IDS_ATTACK_DURATION_S && is_attacker) {
      active = 1;
+  } else {
+     active = 0;
   }
 }
 

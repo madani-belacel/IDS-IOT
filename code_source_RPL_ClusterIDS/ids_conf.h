@@ -17,6 +17,10 @@
 #define IDS_ATTACK_START_S 1800    //  Attack starts at 30 min
 #endif
 
+#ifndef IDS_ATTACK_DURATION_S
+#define IDS_ATTACK_DURATION_S 1800 //  Attack duration after start (30 min)
+#endif
+
 #ifndef IDS_SIM_DURATION_S
 #define IDS_SIM_DURATION_S 10800   //  3h de simulation
 #endif

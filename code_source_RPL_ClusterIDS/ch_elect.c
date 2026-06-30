@@ -35,9 +35,13 @@ void
 ch_elect_tick(uint8_t nre_x100, uint8_t etx_var_x10)
 {
 #if !IDS_ABLATION_NOCLUS
-  //  Fitness = energy ×2 + link quality ×5 (inverted)
-  //  Recalculated each tick; lightweight enough for periodic execution
-  uint32_t fitness = (uint32_t)nre_x100 * 2u + (uint32_t)(100u - etx_var_x10 * 5u);
+  //  Fitness = energy ×2 + link quality ×5 (inverted), with the ETX term
+  //  clamped to avoid unsigned wraparound and to keep energy in the decision.
+  int16_t etx_term = 100 - (int16_t)etx_var_x10 * 5;
+  if(etx_term < 0) {
+    etx_term = 0;
+  }
+  uint32_t fitness = (uint32_t)nre_x100 * 2u + (uint32_t)etx_term;
   my_fitness = (uint16_t)fitness;
 
   if(is_head) {

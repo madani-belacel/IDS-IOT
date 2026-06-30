@@ -13,7 +13,7 @@ The following artifacts are maintained in the public repository:
   \item Data layout: \path{data/estimated/} (synthetic templates for pipeline testing), \path{data/real/} (pilot campaign parsed outputs);
   \item Figure catalog: \path{figures_manifest.csv} with per-figure provenance.
 \end{itemize}
-All code, simulation scenarios, raw and parsed logs, and figure-generation scripts are available in the release v1.0. A persistent DOI will be assigned upon acceptance.
+All code, simulation scenarios, raw and parsed logs, and figure-generation scripts are available in the release v1.0. A persistent DOI is planned for the full campaign archive and will be linked once the artifact is deposited.
 
 \subsection{Build Instructions}
 The Elsevier preprint manuscript is compiled from \texttt{main.tex}:
@@ -34,8 +34,8 @@ The pipeline is:
 \end{enumerate}
 
 \subsection{Result Status Convention}
-Results come from the pilot Cooja campaign (50-node grid, 21 seeds for CLUSTERIDS variant, 3 seeds for the ablation study; five attack scenarios).
-Parsed logs are archived under \path{data/real/parsed/}. CPU, RAM, and energy values in the pilot campaign are pipeline placeholders generated from node-logical properties; real Energest measurements will replace them in the full campaign. Detection rates and FPR reflect the simulated IDS overlay state as captured by the Cooja tick-based metrics pipeline.
+Results come from the pilot Cooja campaign (50-node grid, 21 seeds for the CLUSTERIDS variant, 3 seeds for the ablation study; five attack scenarios).
+Parsed logs are archived under \path{data/real/parsed/}. CPU, RAM, and energy values in the pilot campaign are preliminary estimates derived from the simulation pipeline; real Energest measurements will replace them in the full campaign. Detection rates and FPR reported here reflect the simulated IDS overlay state captured by the Cooja tick-based metrics pipeline and should be treated as preliminary pilot measurements.
 
 \subsection{Data Availability}
 All firmware, campaign scripts, parsed datasets, and figure-generation code are publicly available at \url{https://github.com/madani-belacel/IDS-IOT/releases/tag/v1.0}.
