@@ -1,19 +1,39 @@
 % Fig. 11 — Operating mode sensitivity (Full / Balanced / Eco).
+% Dual-axis: left for DR/FPR, right for CPU.
 \begin{tikzpicture}[font=\footnotesize]
 \begin{axis}[
   width=0.85\columnwidth, height=0.55\columnwidth,
-  ybar=0pt, bar width=6pt,
-  enlarge x limits={0.2},
+  ybar=0pt, bar width=5pt,
+  enlarge x limits={0.25},
   symbolic x coords={Full,Balanced,Eco},
   xtick=data,
   xlabel={Operating mode},
-  ylabel={Value},
+  ylabel={DR / FPR},
   ymajorgrids=true,
+  scale only axis,
   legend style={at={(0.5,-0.22)},anchor=north,legend columns=3,font=\scriptsize},
-  legend entries={Detection rate,FPR,CPU overhead (\%)},
+  legend entries={DR,FPR,CPU (\%)},
 ]
 \addplot[fill=blue!50] table[x=mode,y=mean_det_rate,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
 \addplot[fill=red!50] table[x=mode,y=mean_fpr,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
+\addplot[fill=orange!60,area legend] table[x=mode,y=mean_cpu,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
+\end{axis}
+\begin{axis}[
+  width=0.85\columnwidth, height=0.55\columnwidth,
+  ybar=0pt, bar width=5pt,
+  enlarge x limits={0.25},
+  symbolic x coords={Full,Balanced,Eco},
+  xtick=data,
+  xticklabels=\empty,
+  axis y line*=right,
+  ylabel={CPU overhead (\%)},
+  ylabel near ticks,
+  scale only axis,
+  ymin=0,
+  every axis plot/.style={fill=orange!60},
+  legend style={at={(0.5,-0.22)},anchor=north,font=\scriptsize},
+  legend entries={CPU (\%)},
+]
 \addplot[fill=orange!60] table[x=mode,y=mean_cpu,col sep=comma]{data/real/parsed/agg/fig11_modes.csv};
 \end{axis}
 \end{tikzpicture}

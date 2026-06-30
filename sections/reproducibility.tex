@@ -4,14 +4,16 @@
 RPL-ClusterIDS follows reproducible-research practices aligned with Computer Networks expectations.
 
 \subsection{Artifact Availability}
-The following artifacts are maintained in the \path{IDS_IOT/} project repository:
+The following artifacts are maintained in the public repository:
 \begin{itemize}
+  \item Repository: \url{https://github.com/madani-belacel/RPL-ClusterIDS}
+  \item Release v1.0 (complete ZIP package): \url{https://github.com/madani-belacel/RPL-ClusterIDS/releases/tag/v1.0}
   \item Contiki-NG firmware: \path{code_source_RPL_ClusterIDS/} (variants B1, B2, B3, and RPL-ClusterIDS);
-  \item Campaign specification: \path{SIMULATION_CAMPAIGN_READY/} (scenarios, attacks, seeds, metric definitions);
+  \item Campaign specification: scenarios, attacks, seeds, metric definitions;
   \item Data layout: \path{data/estimated/} (schemas and templates), \path{data/real/} (post-campaign outputs);
-  \item Figure catalog: \path{figures_manifest.csv} with per-figure provenance;
-  \item Build tracker: \path{MASTER_TRACKER.md} and \path{checklist.md}.
+  \item Figure catalog: \path{figures_manifest.csv} with per-figure provenance.
 \end{itemize}
+All code, simulation scenarios, raw and parsed logs, and figure-generation scripts are available in the release v1.0. A persistent DOI will be assigned upon acceptance.
 
 \subsection{Build Instructions}
 The Elsevier preprint manuscript is compiled from \texttt{main.tex}:
@@ -36,5 +38,5 @@ Results come from the pilot Cooja campaign (50-node grid,~3 seeds, five attack s
 Parsed logs are archived under \path{data/real/parsed/}; all tables and figures contain measured values from the campaign.
 
 \subsection{Data Availability}
-Upon acceptance, the firmware, campaign scripts, parsed datasets, and figure-generation code will be released in a public repository with a persistent DOI.
+All firmware, campaign scripts, parsed datasets, and figure-generation code are publicly available at \url{https://github.com/madani-belacel/RPL-ClusterIDS/releases/tag/v1.0}.
 \path{data/real/parsed/} contains the parsed CSV outputs from the pilot campaign.

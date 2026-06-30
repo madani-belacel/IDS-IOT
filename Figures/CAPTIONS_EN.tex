@@ -13,15 +13,15 @@
 }
 
 \newcommand{\CaptionFigFour}{%
-  Detection rate across five RPL attack scenarios (50-node grid, \textsc{Balanced} mode, pilot campaign). RPL-ClusterIDS is compared with centralized rules (B1), flat distributed rules (B2), and centralized verification (B3).%
+  Detection rate across five RPL attack scenarios (50-node grid, \textsc{Balanced} mode, pilot campaign). RPL-ClusterIDS is compared with centralized rules (B1); B2 and B3 are pending full campaign evaluation.%
 }
 
 \newcommand{\CaptionFigFive}{%
-  Mean detection latency from attack onset to confirmed cluster alert. Localized rank and selective-forwarding attacks are contained within one cluster; wormhole campaigns require inter-cluster corroboration and exhibit higher latency.%
+  Mean detection latency from attack onset to confirmed cluster alert. Localized rank and selective-forwarding attacks are contained within one cluster; wormhole campaigns require inter-cluster corroboration and exhibit higher latency. $^\dag$B1 latency values reflect false-positive alert timing (0\% detection rate).%
 }
 
 \newcommand{\CaptionFigSix}{%
-  False-positive rate stratified by traffic-priority class ($C0$--$C3$) in the mixed campaign scenario. Rule-only members contribute most benign alarms on $C0$ telemetry; cluster-head threshold verification suppresses correlated false positives.%
+  False-positive rate stratified by traffic-priority class ($C0$--$C3$) in the mixed campaign scenario. B1 and RPL-ClusterIDS exhibit identical FPR in the pilot campaign; B2 and B3 pending evaluation.%
 }
 
 \newcommand{\CaptionFigSeven}{%
@@ -41,5 +41,5 @@
 }
 
 \newcommand{\CaptionFigEleven}{%
-  Operating-mode sensitivity (\textsc{Full}, \textsc{Balanced}, \textsc{Eco}) for mixed-campaign detection rate, false-positive rate, and member CPU overhead. The policy exposes an explicit security--lifetime trade-off.%
+  Operating-mode sensitivity (\textsc{Full}, \textsc{Balanced}, \textsc{Eco}) for mixed-campaign detection rate, false-positive rate, and member CPU overhead. The policy exposes an explicit security-lifetime trade-off. DR and FPR share the left axis; CPU overhead is plotted on the right axis for readability.%
 }

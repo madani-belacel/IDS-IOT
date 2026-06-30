@@ -1,6 +1,0 @@
-variant,scenario,mean_det_rate
-CLUSTERIDS,rank,0.0146
-CLUSTERIDS,sel_fwd,0.0146
-CLUSTERIDS,wormhole,0.0146
-CLUSTERIDS,dao_flood,0.0146
-CLUSTERIDS,mixed,0.0106

@@ -8,10 +8,14 @@ __pycache__/
 *.blg
 *.log
 *.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
 *.spl
 *.pdf
 main-ieee.pdf
 test-elsarticle.pdf
+*.pdf.bak
 
 # Cooja build
 build/

@@ -1,4 +1,5 @@
 % Fig. 5 — Detection latency comparison across attack scenarios.
+% B1 latency values reflect false-positive alert timing (0% DR).
 \begin{tikzpicture}[font=\footnotesize]
 \begin{axis}[
   width=0.85\columnwidth, height=0.55\columnwidth,
@@ -11,12 +12,10 @@
   ylabel={Mean latency (s)},
   ymin=0,
   ymajorgrids=true,
-  legend style={at={(0.5,-0.22)},anchor=north,legend columns=4,font=\scriptsize},
-  legend entries={B1,B2,B3,RPL-ClusterIDS},
+  legend style={at={(0.5,-0.22)},anchor=north,legend columns=2,font=\scriptsize},
+  legend entries={B1$^\dag$,RPL-ClusterIDS},
 ]
 \addplot[fill=gray!40] table[x=scenario,y=mean_latency_s,col sep=comma]{data/real/parsed/agg/fig5_latency_B1.csv};
-\addplot[fill=red!40] table[x=scenario,y=mean_latency_s,col sep=comma]{data/real/parsed/agg/fig5_latency_B2.csv};
-\addplot[fill=orange!50] table[x=scenario,y=mean_latency_s,col sep=comma]{data/real/parsed/agg/fig5_latency_B3.csv};
 \addplot[fill=blue!50] table[x=scenario,y=mean_latency_s,col sep=comma]{data/real/parsed/agg/fig5_latency_CLUSTERIDS.csv};
 \end{axis}
 \end{tikzpicture}

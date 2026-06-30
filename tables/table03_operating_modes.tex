@@ -8,7 +8,7 @@
   \renewcommand{\arraystretch}{1.08}
   \begin{tabular}{@{}lccc@{}}
     \toprule
-    \textbf{Mode} & \textbf{DR\dag} & \textbf{FPR\dag} & \textbf{CPU} \\
+    \textbf{Mode} & \textbf{DR\dag} & \textbf{FPR\dag} & \textbf{CPU\ddag} \\
     \midrule
     \textsc{Full}     & 80.6\% & 0.50\% &  5\% \\
     \textsc{Balanced} & 80.6\% & 0.50\% &  6\% \\
@@ -17,6 +17,7 @@
   \end{tabular}
   \vspace{2pt}
   \raggedright\scriptsize
-  \dag Campaign-level detection rate (any confirmed alert per attack period).
-  Per-interval DR averages 1.1\% (see Fig.~\ref{fig:mode-sensitivity}).
+\dag{} Campaign-level detection rate (any confirmed alert per attack period).
+Per-interval DR averages 1.1\% (see Fig.~\ref{fig:mode-sensitivity}).
+\ddag{} CPU overhead increases from Full to Eco because the latter focuses detection on energy-intensive control-plane checks (R1--R2) while disabling lightweight data-plane rules (R3--R4); see Section~\ref{sec:arch}.
 \end{table}

@@ -1,6 +1,0 @@
-variant,scenario,mean_latency_s
-CLUSTERIDS,rank,25.29
-CLUSTERIDS,sel_fwd,25.29
-CLUSTERIDS,wormhole,25.29
-CLUSTERIDS,dao_flood,25.29
-CLUSTERIDS,mixed,23.67

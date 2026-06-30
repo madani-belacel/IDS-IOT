@@ -1,6 +1,0 @@
-variant,scenario,mean_latency_s
-B2,rank,19.51
-B2,sel_fwd,19.51
-B2,wormhole,19.51
-B2,dao_flood,19.51
-B2,mixed,19.51

@@ -1,4 +1,0 @@
-mode,mean_det_rate,mean_fpr,mean_cpu
-Eco,0.0002,0.0000,7.00
-Full,0.0001,0.0000,5.00
-Balanced,0.0005,0.0000,6.00
