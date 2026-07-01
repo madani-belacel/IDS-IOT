@@ -15,8 +15,8 @@
 \addplot[only marks,mark=square,mark size=1.5,red!60] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_B2.csv};
 \addplot[only marks,mark=triangle,mark size=1.5,orange!70] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_B3.csv};
 \addplot[only marks,mark=diamond,mark size=1.5,blue!70] table[x=nodes,y=mean_alerts_per_hour,col sep=comma]{data/real/parsed/agg/fig8_alerts_CLUSTERIDS.csv};
-\draw[dashed,thick,blue!40] (axis cs:50,44.2) -- (axis cs:500,88.4);
-\draw[dashed,thick,gray!60] (axis cs:50,0) -- (axis cs:500,0);
+\addplot[dashed,thick,blue!40] coordinates {(50,44.2) (500,88.4)};
+\addlegendentry{Projected (CLUSTERIDS)}
 \draw[dotted,thick,black!50] (axis cs:50,0) -- (axis cs:50,65);
 \node[anchor=south west,font=\tiny] at (axis cs:60,63) {Measured};
 \node[anchor=south east,font=\tiny] at (axis cs:490,63) {Projected};

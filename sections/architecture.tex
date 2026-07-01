@@ -27,7 +27,7 @@ Clustering is the mechanism that makes hierarchical detection scalable on resour
 Instead of fixing clusters at deployment time, RPL-ClusterIDS recomputes membership as local context evolves.
 
 \subsubsection{Traffic-priority classes}
-Application flows are mapped to four priority classes $C0,\ldots,C3$, where $C0$ denotes background telemetry and $C3$ denotes safety- or control-critical traffic.
+Application flows are mapped to four priority classes $C0$--$C3$, where $C0$ denotes background telemetry and $C3$ denotes safety- or control-critical traffic.
 This taxonomy modulates IDS vigilance only; it does not alter RPL parent selection~\cite{beno2018qosrpl}.
 Each node maintains the fraction of packets observed in each class over a sliding window.
 The dominant class in a neighborhood influences how aggressively that region is monitored.

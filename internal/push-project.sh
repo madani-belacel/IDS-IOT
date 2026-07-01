@@ -1,14 +1,21 @@
-cd ~/contiki-ng/examples/IDS_IOT
+#!/usr/bin/env bash
+set -euo pipefail
 
-# Voir tout ce qui a été modifié
+cd "$(dirname "$0")/.."
+
+echo "[git] Checking repository status..."
 git status
 
-# Ajouter tous les fichiers modifiés + nouveaux
+echo "[git] Staging changes..."
 git add .
 
-# Faire un commit
-git commit -m "Mise à jour multiple : corrections diverses"
+commit_message="${1:-chore: update project artifacts}"
+echo "[git] Creating commit: $commit_message"
+git commit -m "$commit_message"
 
-# Pousser sur GitHub
-git push
-# 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
+if [ -n "${GITHUB_TOKEN:-}" ]; then
+  echo "[git] Pushing to GitHub..."
+  git push
+else
+  echo "[git] GITHUB_TOKEN is not set. Export it before pushing."
+fi

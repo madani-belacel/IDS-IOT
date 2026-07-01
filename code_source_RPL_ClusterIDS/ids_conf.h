@@ -25,7 +25,9 @@
 #define IDS_SIM_DURATION_S 10800   //  3h de simulation
 #endif
 
+#ifndef IDS_UDP_PORT
 #define IDS_UDP_PORT 8765
+#endif
 
 //  LAS thresholds (raw scale ~0-175)
 #define IDS_THRESHOLD_LAS     60   //  Member alarm threshold

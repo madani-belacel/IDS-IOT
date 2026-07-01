@@ -76,6 +76,19 @@ class TestComputeStatistics(unittest.TestCase):
             cs.write_pairwise_csv(results, out / "pairwise_tests.csv")
             self.assertTrue((out / "pairwise_tests.csv").exists())
 
+    def test_run_comparisons_accepts_dash_mode_for_baselines(self):
+        rows = [
+            _base_row(variant="CLUSTERIDS", mode="balanced", detection_rate="0.90"),
+            _base_row(variant="B1", mode="—", detection_rate="0.10"),
+            _base_row(variant="CLUSTERIDS", mode="full", detection_rate="0.95"),
+            _base_row(variant="CLUSTERIDS", mode="eco", detection_rate="0.82"),
+        ]
+        results = cs.run_comparisons(rows)
+        self.assertTrue(any(r.comparison == "CLUSTERIDS vs B1" for r in results))
+        cluster_vs_b1 = next(r for r in results if r.comparison == "CLUSTERIDS vs B1")
+        self.assertGreater(cluster_vs_b1.n_a, 0)
+        self.assertGreater(cluster_vs_b1.n_b, 0)
+
     def test_dry_run_schema_validation(self):
         with tempfile.TemporaryDirectory() as tmp:
             inp = Path(tmp)

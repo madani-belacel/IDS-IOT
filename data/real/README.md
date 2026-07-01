@@ -1,6 +1,6 @@
 # data/real/
 
-**Status:** `BLOCKED` until Phase 2 (Ubuntu + Cooja).
+**Status:** Pilot parsed data available; full validation campaign still pending.
 
 Populated by:
 1. `SIMULATION_CAMPAIGN_READY/run_campaign.sh --full`

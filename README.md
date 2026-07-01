@@ -4,6 +4,8 @@
 **Phase:** 2.1 (pilot campaign data available, full campaign pending, transparency fixes applied)  
 **Tracker:** [`anomalies/opencode.md`](anomalies/opencode.md)
 
+> This repository currently supports a pilot study and a reproducibility-oriented manuscript draft. It should not be treated as a completed large-scale validation package.
+
 ## Repository Structure
 
 ```

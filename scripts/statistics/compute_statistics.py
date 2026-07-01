@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import gzip
 import json
 import sys
 from dataclasses import asdict, dataclass
@@ -68,12 +69,86 @@ class ComparisonResult:
     mwu_p: float
 
 
+def _read_csv_rows(path: Path) -> list[dict[str, str]]:
+    if not path.exists():
+        return []
+    opener = gzip.open if path.suffix == ".gz" else open
+    with opener(path, "rt", encoding="utf-8", newline="") as handle:
+        return list(csv.DictReader(handle))
+
+
+def _normalize_mode(value: str | None) -> str:
+    if value is None:
+        return ""
+    normalized = str(value).strip().lower()
+    if normalized in {"—", "-", "none", "n/a", "na", "", "default"}:
+        return "balanced"
+    return normalized
+
+
 def load_runs(path: Path) -> list[dict[str, str]]:
     summary = path / "summary_runs.csv"
-    if not summary.exists():
-        return []
-    with summary.open(encoding="utf-8", newline="") as f:
-        return list(csv.DictReader(f))
+    if summary.exists():
+        with summary.open(encoding="utf-8", newline="") as handle:
+            return list(csv.DictReader(handle))
+
+    detection_rows = _read_csv_rows(path / "detection_rate.csv")
+    if not detection_rows:
+        detection_rows = _read_csv_rows(path / "detection_rate.csv.gz")
+
+    fpr_rows = _read_csv_rows(path / "fpr.csv")
+    if not fpr_rows:
+        fpr_rows = _read_csv_rows(path / "fpr.csv.gz")
+
+    latency_rows = _read_csv_rows(path / "latency.csv")
+    if not latency_rows:
+        latency_rows = _read_csv_rows(path / "latency.csv.gz")
+
+    energy_rows = _read_csv_rows(path / "energy.csv")
+    if not energy_rows:
+        energy_rows = _read_csv_rows(path / "energy.csv.gz")
+
+    fpr_lookup: dict[tuple[str, str, str], str] = {}
+    for row in fpr_rows:
+        key = (row.get("variant", ""), row.get("seed", ""), row.get("scenario", ""))
+        if key not in fpr_lookup:
+            fpr_lookup[key] = row.get("fpr", "")
+
+    latency_lookup: dict[tuple[str, str, str], str] = {}
+    for row in latency_rows:
+        key = (row.get("variant", ""), row.get("seed", ""), row.get("scenario", ""))
+        if key not in latency_lookup:
+            latency_lookup[key] = row.get("latency_s_mean", "")
+
+    energy_lookup: dict[tuple[str, str], str] = {}
+    for row in energy_rows:
+        key = (row.get("variant", ""), row.get("seed", ""))
+        if key not in energy_lookup:
+            energy_lookup[key] = row.get("energest_delta_pct", row.get("cpu_overhead_pct", ""))
+
+    rows: list[dict[str, str]] = []
+    for row in detection_rows:
+        variant = row.get("variant", "")
+        seed = row.get("seed", "")
+        scenario = row.get("scenario", row.get("attack", ""))
+        mode = _normalize_mode(row.get("mode", "balanced"))
+        nodes = row.get("nodes", "50")
+        rows.append(
+            {
+                "variant": variant,
+                "seed": seed,
+                "attack": scenario,
+                "mode": mode,
+                "nodes": nodes,
+                "detection_rate": row.get("det_rate", row.get("detection_rate", "")),
+                "fpr": fpr_lookup.get((variant, seed, scenario), ""),
+                "detection_latency_s": latency_lookup.get((variant, seed, scenario), ""),
+                "energy_overhead_pct": energy_lookup.get((variant, seed), ""),
+                "alert_overhead_pkt_h": "",
+            }
+        )
+
+    return rows
 
 
 def validate_schema(rows: list[dict[str, str]]) -> list[str]:
@@ -126,7 +201,13 @@ def filter_rows(
     if variant is not None:
         out = [r for r in out if r.get("variant") == variant]
     if mode is not None:
-        out = [r for r in out if r.get("mode", "").lower() == mode.lower()]
+        target = mode.lower()
+        out = [
+            r
+            for r in out
+            if _normalize_mode(r.get("mode", "")) == target
+            or (target == "balanced" and _normalize_mode(r.get("mode", "")) in {"balanced", "default"})
+        ]
     if attack is not None:
         out = [r for r in out if r.get("attack") == attack]
     if nodes is not None:

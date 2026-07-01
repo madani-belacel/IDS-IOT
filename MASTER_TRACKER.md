@@ -13,15 +13,15 @@
 |------|--------|-------|
 | Architecture | DONE | `code_source_RPL_ClusterIDS/` modular firmware |
 | Article (11–13 pp.) | IN_PROGRESS | Real data in Tables II, III, VIII, IX; Figs 4–11 updated |
-| Figures | IN_PROGRESS | Figs. 1–3 illustrative; Figs. 4–11 populated from real data |
-| Tables | IN_PROGRESS | Tables II, III, VIII, IX updated with REAL_RESULT; IV–V design |
+| Figures | IN_PROGRESS | Figs. 1–3 illustrative; Figs. 4–11 populated from pilot data only |
+| Tables | IN_PROGRESS | Tables II, III, VIII, IX updated with pilot values; IV–V design |
 | Dataset / ML | IN_PROGRESS | Pilot campaign collected (21 seeds CLUSTERIDS); full ML pending |
-| Statistics | DONE (real) | `compute_statistics.py` run on real data (8 comparisons) |
-| Reproducibility | IN_PROGRESS | Pipeline validated; full 660-run campaign pending |
-| References | IN_PROGRESS | Bib cleaned (~34); Belacel refs added |
-| Simulations | DONE (pilot) | 21 seeds CLUSTERIDS + 3 seeds ablation; B1/B2/B3 0% DR |
+| Statistics | DONE (pilot) | `compute_statistics.py` run on pilot data (8 comparisons) |
+| Reproducibility | IN_PROGRESS | Pipeline validated; full-scale campaign pending |
+| References | IN_PROGRESS | Bib cleaned; recent references still need a final pass |
+| Simulations | DONE (pilot) | 21 seeds CLUSTERIDS + 3 seeds ablation; full-scale validation pending |
 | Windows tooling | DONE | `WINDOWS_SETUP_GUIDE.md`, Docker, PS scripts |
-| Final Validation | IN_PROGRESS | B1/B2/B3 DR=0% issue needs investigation |
+| Final Validation | IN_PROGRESS | Final submission-level validation remains pending |
 
 **Legend:** `TODO` | `IN_PROGRESS` | `DONE` | `BLOCKED` | `READY_FOR_SIMULATION`
 

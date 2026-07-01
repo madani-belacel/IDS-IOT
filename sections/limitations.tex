@@ -12,8 +12,8 @@ This manuscript reports a pilot campaign rather than a completed real-world depl
   Real deployments may require recalibration or retraining to avoid domain shift.
   \item \textbf{Adversarial cluster heads.} A compromised head could suppress local alerts or inject false cluster-level alarms.
   The current defense relies on randomized head rotation ($T_{\max}$ tenure limit), inter-cluster cross-checking (neighboring heads may detect anomalous suppression patterns), and an optional border-router corroboration path for network-wide campaigns.
-  Future work should strengthen these mechanisms through head attestation protocols, threshold-based quorum confirmation among multiple heads covering overlapping regions, and reputation-aware rotation that penalizes heads exhibiting inconsistent reporting behaviour.
-  \item \textbf{Traffic-priority labeling.} The evaluation assumes that flows can be mapped to $C0,\ldots,C3$ (Table~\ref{tab:traffic-classes}).
+  Future work should strengthen these mechanisms through head attestation protocols, threshold-based quorum confirmation among multiple heads covering overlapping regions, and reputation-aware rotation that penalizes heads exhibiting inconsistent reporting behavior.
+  \item \textbf{Traffic-priority labeling.} The evaluation assumes that flows can be mapped to $C0$--$C3$ (Table~\ref{tab:traffic-classes}).
   Unclassified traffic defaults to \textsc{Balanced} mode, which reduces the benefit of context adaptation.
   \item \textbf{Attack scope.} External denial-of-service attacks against the border router and cryptographic key compromise are outside the present threat model.
   \item \textbf{Optional border corroboration.} Although detection is hierarchical and distributed across clusters, network-wide confirmation may involve the border router; the system is therefore described as a \emph{hierarchical distributed IDS}, not a fully peer-symmetric one.
